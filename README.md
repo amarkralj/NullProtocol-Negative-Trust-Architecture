@@ -2,8 +2,8 @@
 
 <a href="https://xevorislabs.com">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/xevoris-labs-dark.png">
-    <img src=".github/assets/xevoris-labs-light.png" alt="Xevoris Labs" width="320">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amarkralj/NullProtocol-Negative-Trust-Architecture/main/.github/assets/xevoris-labs-dark.png">
+    <img src="https://raw.githubusercontent.com/amarkralj/NullProtocol-Negative-Trust-Architecture/main/.github/assets/xevoris-labs-light.png" alt="Xevoris Labs" width="320">
   </picture>
 </a>
 
