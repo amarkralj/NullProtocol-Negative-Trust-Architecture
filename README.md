@@ -26,7 +26,7 @@
 
 Zero trust (NIST SP 800-207) checks every request, but it leaves open how much a person or an account should be
 trusted once they are inside. **NullProtocol Negative Trust** fills that gap with a trust algorithm built for insider
-threats, by [Xevoris Labs](https://xevorislabs.com).
+threats.
 
 |  |  |
 |---|---|
