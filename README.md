@@ -1,7 +1,11 @@
 <div align="center">
 
 <a href="https://xevorislabs.com">
-  <img src="https://raw.githubusercontent.com/amarkralj/NullProtocol-Negative-Trust-Architecture/main/.github/assets/xevoris-labs.png" alt="Xevoris Labs" width="420">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amarkralj/NullProtocol-Negative-Trust-Architecture/main/.github/assets/xevoris-labs-white.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/amarkralj/NullProtocol-Negative-Trust-Architecture/main/.github/assets/xevoris-labs-black.png">
+    <img src="https://raw.githubusercontent.com/amarkralj/NullProtocol-Negative-Trust-Architecture/main/.github/assets/xevoris-labs-black.png" alt="Xevoris Labs" width="360">
+  </picture>
 </a>
 
 # NullProtocol Negative Trust Architecture
