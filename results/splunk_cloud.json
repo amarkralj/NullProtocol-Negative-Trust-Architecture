@@ -1,0 +1,3492 @@
+{
+ "aws_ec2_multiple_ssh_public_keys_uploaded": {
+  "technique": "T1021.008",
+  "family": "AWS CloudTrail",
+  "events_mapped": 12,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-8c6976"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-8c6976": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_create_policy_version": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-55d9b3"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_createaccesskey": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 68,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "arn:aws:sts::000000000000:assumed-role/AWSReservedSSO_SPLKAdministratorAccess_9dfd000000000000/user-fa9170@example.org",
+     "principal-ea55d9",
+     "principal-68a73b",
+     "principal-2029f2",
+     "principal-1506ab",
+     "principal-b8a78c",
+     "principal-222f34",
+     "root"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/AWSReservedSSO_SPLKAdministratorAccess_9dfd000000000000/user-fa9170@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_createloginprofile": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 37,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {
+    "no_mfa_login": [
+     "acct:principal-e825e1",
+     "principal-1506ab"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "principal-1506ab": 4
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "no_mfa_login": [
+     "acct:principal-e825e1",
+     "principal-1506ab"
+    ],
+    "identity_config_change": [
+     "principal-ea55d9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-1506ab": 4,
+    "principal-ea55d9": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_saml_access_by_provider_user_and_principal": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "aws_saml_update_identity_provider": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "aws_setdefaultpolicyversion": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-e825e1",
+     "principal-ea55d9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-ea55d9": 2,
+    "principal-e825e1": 3
+   }
+  },
+  "status": "detected"
+ },
+ "aws_updateloginprofile": {
+  "technique": "T1078",
+  "family": "AWS CloudTrail",
+  "events_mapped": 3,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "arn:aws:sts::000000000000:assumed-role/SSO/user-f660ab@example.org",
+     "principal-ea55d9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/SSO/user-f660ab@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_multiple_appids_and_useragents_auth": {
+  "technique": "T1078",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 10,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "brute_force": [
+     "acct:user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "acct:user-9dbd12@example.org": 1
+   }
+  },
+  "status": "missed"
+ },
+ "o365_excessive_sso_logon_errors": {
+  "technique": "T1078",
+  "family": "Microsoft 365",
+  "events_mapped": 0,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "status": "not readable"
+ },
+ "o365_multiple_appids_and_useragents_auth": {
+  "technique": "T1078",
+  "family": "Microsoft 365",
+  "events_mapped": 22,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "brute_force": [
+     "acct:user-af218f@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "acct:user-af218f@example.org": 1
+   }
+  },
+  "status": "missed"
+ },
+ "azure_ad_service_principal_authentication": {
+  "technique": "T1078.004",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 43,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "principal-66f62d": 1
+   }
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "principal-66f62d": 1
+   }
+  },
+  "status": "missed"
+ },
+ "o365_security_and_compliance_alert_triggered": {
+  "technique": "T1078.004",
+  "family": "Microsoft 365",
+  "events_mapped": 6,
+  "expected": [
+   "idp_risk"
+  ],
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:principal-66351f"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:principal-66351f": 4
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "idp_risk": [
+     "acct:principal-66351f"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:principal-66351f": 4
+   }
+  },
+  "status": "detected"
+ },
+ "aws_iam_delete_policy": {
+  "technique": "T1098",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "aws_iam_failure_group_deletion": {
+  "technique": "T1098",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "aws_iam_successful_group_deletion": {
+  "technique": "T1098",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "azure_ad_add_serviceprincipal_owner": {
+  "technique": "T1098",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 22,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-b4b94c@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-b4b94c@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_enable_and_reset": {
+  "technique": "T1098",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 6,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-5e30ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-5e30ae@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_guest_user_type_changed_to_member": {
+  "technique": "T1098",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-bd549e@example.org",
+     "user-94e29d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-bd549e@example.org": 2,
+    "user-94e29d@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_set_immutableid": {
+  "technique": "T1098",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-6bc9b3@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-6bc9b3@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_add_app_registration_owner": {
+  "technique": "T1098",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-0d8517@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-0d8517@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_azure_workload_events": {
+  "technique": "T1098",
+  "family": "Microsoft 365",
+  "events_mapped": 10,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "azure_ad_federated_identity_credential": {
+  "technique": "T1098.001",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-38f586@example.org",
+     "user-94e29d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-38f586@example.org": 2,
+    "user-94e29d@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_service_principal_credentials": {
+  "technique": "T1098.001",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-5e30ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-5e30ae@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_service_principal_credentials": {
+  "technique": "T1098.001",
+  "family": "Microsoft 365",
+  "events_mapped": 3,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-bb642d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-bb642d@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "full_access_as_app_permission_assigned": {
+  "technique": "T1098.002",
+  "family": "Microsoft 365",
+  "events_mapped": 37,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {
+    "impossible_travel": [
+     "acct:principal-66f62d"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "principal-66f62d": 1,
+    "principal-724386": 1,
+    "acct:principal-66f62d": 3,
+    "user-b846ae@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "id-eea9fd",
+     "id-d5f4e7",
+     "id-addeec",
+     "id-38e0e1",
+     "id-d937c5",
+     "id-18a3c2"
+    ],
+    "impossible_travel": [
+     "acct:principal-66f62d"
+    ],
+    "identity_config_change": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-66f62d": 1,
+    "id-38e0e1": 1,
+    "id-d5f4e7": 1,
+    "principal-724386": 1,
+    "acct:principal-66f62d": 3,
+    "id-18a3c2": 1,
+    "user-b846ae@example.org": 3,
+    "id-addeec": 1,
+    "id-eea9fd": 1,
+    "id-d937c5": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_full_access_as_app_permission_assigned": {
+  "technique": "T1098.002",
+  "family": "Microsoft 365",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-b846ae@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_mailbox_folder_read_granted": {
+  "technique": "T1098.002",
+  "family": "Microsoft 365",
+  "events_mapped": 11,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-80528e@example.org",
+     "user-d3b631@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-d3b631@example.org": 2,
+    "user-80528e@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_iam_role_created_with_external_trust": {
+  "technique": "T1098.003",
+  "family": "AWS CloudTrail",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "arn:aws:sts::000000000000:assumed-role/test-actor-0001/test-session-0001"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/test-actor-0001/test-session-0001": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_admin_consent": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 7,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "user-053960@example.org"
+    ],
+    "identity_config_change": [
+     "user-053960@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-053960@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_assign_global_administrator": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 16,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-b4b94c@example.org",
+     "user-1c2f22@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-b4b94c@example.org": 2,
+    "user-1c2f22@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_assign_privileged_role": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 3,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-fac5ba@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-fac5ba@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_bypass_admin_consent": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-4509d1"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-4509d1": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_pim_role_activated": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 130,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-1c2f22@example.org": 1,
+    "principal-6be2f2": 1,
+    "user-8d31b7@example.org": 4,
+    "acct:user-f52fdc@example.org": 3
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "unknown"
+    ],
+    "identity_config_change": [
+     "id-89af6c",
+     "Azure MFA StrongAuthenticationService",
+     "MS-PIM",
+     "user-f52fdc@example.org",
+     "user-8d31b7@example.org",
+     "user-e85114@example.org",
+     "user-1c2f22@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-1c2f22@example.org": 3,
+    "principal-6be2f2": 1,
+    "user-8d31b7@example.org": 3,
+    "user-e85114@example.org": 2,
+    "user-f52fdc@example.org": 2,
+    "acct:user-f52fdc@example.org": 3,
+    "Azure MFA StrongAuthenticationService": 2,
+    "id-89af6c": 2,
+    "MS-PIM": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_privileged_graph_perm_assigned": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 52,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "principal-66f62d": 1,
+    "user-b846ae@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "id-9f2561",
+     "id-efe11a",
+     "id-d5f4e7",
+     "id-38e0e1",
+     "id-18a3c2",
+     "id-8b85c6"
+    ],
+    "identity_config_change": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "id-8b85c6": 1,
+    "id-18a3c2": 1,
+    "id-efe11a": 1,
+    "id-38e0e1": 1,
+    "id-9f2561": 1,
+    "principal-66f62d": 1,
+    "id-d5f4e7": 1,
+    "user-b846ae@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_privileged_role_serviceprincipal": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 64,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "principal-6be2f2": 1,
+    "user-1c2f22@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "id-89af6c",
+     "MS-PIM",
+     "user-1c2f22@example.org",
+     "principal-5a9670"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-6be2f2": 1,
+    "user-1c2f22@example.org": 3,
+    "principal-5a9670": 2,
+    "id-89af6c": 2,
+    "MS-PIM": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_spn_privesc": {
+  "technique": "T1098.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-ea3bb6"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-ea3bb6": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_admin_consent": {
+  "technique": "T1098.003",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-bb642d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-bb642d@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_bypass_admin_consent": {
+  "technique": "T1098.003",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-b846ae@example.org": 2
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-e29a7a"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-b846ae@example.org": 2,
+    "principal-e29a7a": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_grant_mail_read": {
+  "technique": "T1098.003",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "user-bb642d@example.org"
+    ],
+    "identity_config_change": [
+     "user-bb642d@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-bb642d@example.org": 2
+   }
+  },
+  "status": "missed"
+ },
+ "o365_high_priv_role_assigned": {
+  "technique": "T1098.003",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-62eace@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-62eace@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_privileged_graph_perm_assigned": {
+  "technique": "T1098.003",
+  "family": "Microsoft 365",
+  "events_mapped": 5,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-b846ae@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-b846ae@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_spn_privesc": {
+  "technique": "T1098.003",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-8b9192"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-8b9192": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_register_new_mfa_method": {
+  "technique": "T1098.005",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 38,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-9dbd12@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "Microsoft App Access Panel",
+     "user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-9dbd12@example.org": 4,
+    "Microsoft App Access Panel": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_suspicious_device_registration": {
+  "technique": "T1098.005",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 10,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-a47d28@example.org",
+     "user-650ffa@example.org",
+     "user-df9f61@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-df9f61@example.org": 2,
+    "user-650ffa@example.org": 2,
+    "user-a47d28@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_register_new_mfa_method": {
+  "technique": "T1098.005",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "principal-283f02",
+     "principal-7bc3cc",
+     "user-1b97e2@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-7bc3cc": 2,
+    "user-1b97e2@example.org": 2,
+    "principal-283f02": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_mfasweep_events": {
+  "technique": "T1110",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 8,
+  "expected": [
+   "brute_force",
+   "mfa_fatigue"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "status": "missed"
+ },
+ "o365_brute_force_login": {
+  "technique": "T1110",
+  "family": "Microsoft 365",
+  "events_mapped": 1942,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:principal-66351f"
+    ],
+    "identity_config_change": [
+     "user-216519@example.org"
+    ],
+    "password_spray": [
+     "acct:user-6d938e@example.org",
+     "acct:user-baf0a0@example.org",
+     "acct:user-0bd7db@example.org",
+     "acct:user-a7d4e0@example.org",
+     "acct:user-216519@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-318e96@example.org": 4,
+    "acct:user-a7d4e0@example.org": 4,
+    "user-a7d4e0@example.org": 4,
+    "acct:user-216519@example.org": 4,
+    "acct:principal-66351f": 4,
+    "user-216519@example.org": 4,
+    "acct:user-0bd7db@example.org": 4,
+    "acct:user-318e96@example.org": 4,
+    "acct:user-6d938e@example.org": 4,
+    "acct:user-baf0a0@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "Microsoft\\ServiceOperator",
+     "S-1-5-18",
+     "principal-69b80a",
+     "principal-b1de14",
+     "user-318e96@example.org",
+     "user-6d938e@example.org",
+     "user-0bd7db@example.org",
+     "user-a7d4e0@example.org",
+     "user-216519@example.org"
+    ],
+    "brute_force": [
+     "acct:user-6d938e@example.org",
+     "acct:user-216519@example.org"
+    ],
+    "new_principal": [
+     "Certificate",
+     "user-318e96@example.org",
+     "user-6d938e@example.org",
+     "user-216519@example.org"
+    ],
+    "bulk_data_access": [
+     "user-318e96@example.org",
+     "user-216519@example.org"
+    ],
+    "idp_risk": [
+     "acct:principal-66351f"
+    ],
+    "mail_forwarding": [
+     "user-a7d4e0@example.org"
+    ],
+    "password_spray": [
+     "acct:user-6d938e@example.org",
+     "acct:user-baf0a0@example.org",
+     "acct:user-0bd7db@example.org",
+     "acct:user-a7d4e0@example.org",
+     "acct:user-216519@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-318e96@example.org": 1,
+    "acct:user-a7d4e0@example.org": 4,
+    "user-a7d4e0@example.org": 4,
+    "principal-b1de14": 3,
+    "principal-69b80a": 3,
+    "user-6d938e@example.org": 3,
+    "acct:user-6d938e@example.org": 4,
+    "acct:user-216519@example.org": 4,
+    "user-216519@example.org": 4,
+    "acct:principal-66351f": 4,
+    "Microsoft\\ServiceOperator": 2,
+    "S-1-5-18": 2,
+    "acct:user-0bd7db@example.org": 4,
+    "user-0bd7db@example.org": 3,
+    "acct:user-318e96@example.org": 4,
+    "acct:user-baf0a0@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_login_failure": {
+  "technique": "T1110.001",
+  "family": "AWS CloudTrail",
+  "events_mapped": 7,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "status": "missed"
+ },
+ "azure_ad_high_number_of_failed_authentications_for_user": {
+  "technique": "T1110.001",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 30,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "brute_force": [
+     "acct:user-8d31b7@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-8d31b7@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_successful_authentication_from_different_ips": {
+  "technique": "T1110.001",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 15,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.5": {
+   "detections": {
+    "impossible_travel": [
+     "acct:user-8d31b7@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-8d31b7@example.org": 4
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "impossible_travel": [
+     "acct:user-8d31b7@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-8d31b7@example.org": 4
+   }
+  },
+  "status": "detected"
+ },
+ "o365_high_number_authentications_for_user": {
+  "technique": "T1110.001",
+  "family": "Microsoft 365",
+  "events_mapped": 20,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "brute_force": [
+     "acct:user-e87556@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-e87556@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_rds_password_reset": {
+  "technique": "T1110.002",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "aws_mulitple_failed_console_login": {
+  "technique": "T1110.003",
+  "family": "AWS CloudTrail",
+  "events_mapped": 31,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {
+    "password_spray": [
+     "acct:principal-0a041b",
+     "acct:principal-5bbf1a",
+     "acct:principal-81115e",
+     "acct:principal-bd3528",
+     "acct:principal-1834e1",
+     "acct:principal-daf799",
+     "acct:principal-2b8b66",
+     "acct:principal-4de415",
+     "acct:principal-2a60ff",
+     "acct:principal-ebc835",
+     "acct:principal-0b6ecb",
+     "acct:principal-6025d1",
+     "acct:principal-7febe5",
+     "acct:principal-8fab3a",
+     "acct:principal-b99920",
+     "acct:principal-2a0fff",
+     "acct:principal-65303a",
+     "acct:principal-dab536",
+     "acct:principal-6356b9",
+     "acct:principal-590b1a",
+     "acct:principal-fdc862",
+     "acct:principal-df3c40",
+     "acct:principal-5860fa",
+     "acct:principal-601fbd",
+     "acct:principal-4ccb2f",
+     "acct:principal-5269ef",
+     "acct:principal-5a39be",
+     "acct:principal-ecb48a",
+     "acct:principal-326815",
+     "acct:principal-f60afa",
+     "acct:principal-0fb8d3"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:principal-5a39be": 1,
+    "acct:principal-5269ef": 1,
+    "acct:principal-6025d1": 1,
+    "acct:principal-5860fa": 1,
+    "acct:principal-0a041b": 1,
+    "acct:principal-ecb48a": 1,
+    "acct:principal-326815": 1,
+    "acct:principal-f60afa": 1,
+    "acct:principal-0fb8d3": 1,
+    "acct:principal-5bbf1a": 1,
+    "acct:principal-81115e": 1,
+    "acct:principal-bd3528": 1,
+    "acct:principal-1834e1": 1,
+    "acct:principal-daf799": 1,
+    "acct:principal-2b8b66": 1,
+    "acct:principal-4de415": 1,
+    "acct:principal-2a60ff": 1,
+    "acct:principal-ebc835": 1,
+    "acct:principal-0b6ecb": 1,
+    "acct:principal-7febe5": 1,
+    "acct:principal-8fab3a": 1,
+    "acct:principal-b99920": 1,
+    "acct:principal-2a0fff": 1,
+    "acct:principal-65303a": 1,
+    "acct:principal-dab536": 1,
+    "acct:principal-6356b9": 1,
+    "acct:principal-590b1a": 1,
+    "acct:principal-fdc862": 1,
+    "acct:principal-df3c40": 1,
+    "acct:principal-601fbd": 1,
+    "acct:principal-4ccb2f": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "password_spray": [
+     "acct:principal-0a041b",
+     "acct:principal-5bbf1a",
+     "acct:principal-81115e",
+     "acct:principal-bd3528",
+     "acct:principal-1834e1",
+     "acct:principal-daf799",
+     "acct:principal-2b8b66",
+     "acct:principal-4de415",
+     "acct:principal-2a60ff",
+     "acct:principal-ebc835",
+     "acct:principal-0b6ecb",
+     "acct:principal-6025d1",
+     "acct:principal-7febe5",
+     "acct:principal-8fab3a",
+     "acct:principal-b99920",
+     "acct:principal-2a0fff",
+     "acct:principal-65303a",
+     "acct:principal-dab536",
+     "acct:principal-6356b9",
+     "acct:principal-590b1a",
+     "acct:principal-fdc862",
+     "acct:principal-df3c40",
+     "acct:principal-5860fa",
+     "acct:principal-601fbd",
+     "acct:principal-4ccb2f",
+     "acct:principal-5269ef",
+     "acct:principal-5a39be",
+     "acct:principal-ecb48a",
+     "acct:principal-326815",
+     "acct:principal-f60afa",
+     "acct:principal-0fb8d3"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:principal-5a39be": 1,
+    "acct:principal-5269ef": 1,
+    "acct:principal-6025d1": 1,
+    "acct:principal-5860fa": 1,
+    "acct:principal-0a041b": 1,
+    "acct:principal-ecb48a": 1,
+    "acct:principal-326815": 1,
+    "acct:principal-f60afa": 1,
+    "acct:principal-0fb8d3": 1,
+    "acct:principal-5bbf1a": 1,
+    "acct:principal-81115e": 1,
+    "acct:principal-bd3528": 1,
+    "acct:principal-1834e1": 1,
+    "acct:principal-daf799": 1,
+    "acct:principal-2b8b66": 1,
+    "acct:principal-4de415": 1,
+    "acct:principal-2a60ff": 1,
+    "acct:principal-ebc835": 1,
+    "acct:principal-0b6ecb": 1,
+    "acct:principal-7febe5": 1,
+    "acct:principal-8fab3a": 1,
+    "acct:principal-b99920": 1,
+    "acct:principal-2a0fff": 1,
+    "acct:principal-65303a": 1,
+    "acct:principal-dab536": 1,
+    "acct:principal-6356b9": 1,
+    "acct:principal-590b1a": 1,
+    "acct:principal-fdc862": 1,
+    "acct:principal-df3c40": 1,
+    "acct:principal-601fbd": 1,
+    "acct:principal-4ccb2f": 1
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_distributed_spray": {
+  "technique": "T1110.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 31,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "status": "missed"
+ },
+ "o365_distributed_spray": {
+  "technique": "T1110.003",
+  "family": "Microsoft 365",
+  "events_mapped": 31,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "status": "missed"
+ },
+ "o365_multiple_users_from_ip": {
+  "technique": "T1110.003",
+  "family": "Microsoft 365",
+  "events_mapped": 31,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {
+    "password_spray": [
+     "acct:user-f4f0b1@example.org",
+     "acct:user-cd4b0e@example.org",
+     "acct:user-34257e@example.org",
+     "acct:user-f13ef7@example.org",
+     "acct:user-bdc20c@example.org",
+     "acct:user-0b7acd@example.org",
+     "acct:user-cd4014@example.org",
+     "acct:user-8a627f@example.org",
+     "acct:user-fd880b@example.org",
+     "acct:user-9776d5@example.org",
+     "acct:user-fa1eed@example.org",
+     "acct:user-caf992@example.org",
+     "acct:user-77c643@example.org",
+     "acct:user-9f1057@example.org",
+     "acct:user-746c24@example.org",
+     "acct:user-08321f@example.org",
+     "acct:user-5ce686@example.org",
+     "acct:user-9cd77f@example.org",
+     "acct:user-8cc22b@example.org",
+     "acct:user-6d2c12@example.org",
+     "acct:user-cc65fd@example.org",
+     "acct:user-0ac9c2@example.org",
+     "acct:user-5657ec@example.org",
+     "acct:user-b27c2f@example.org",
+     "acct:user-2b1a22@example.org",
+     "acct:user-1d4000@example.org",
+     "acct:user-c4213d@example.org",
+     "acct:user-4b674f@example.org",
+     "acct:user-4d5833@example.org",
+     "acct:user-ec76cc@example.org",
+     "acct:user-c0ae42@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-9f1057@example.org": 1,
+    "acct:user-5ce686@example.org": 1,
+    "acct:user-fa1eed@example.org": 1,
+    "acct:user-c0ae42@example.org": 1,
+    "acct:user-746c24@example.org": 1,
+    "acct:user-4d5833@example.org": 1,
+    "acct:user-f13ef7@example.org": 1,
+    "acct:user-0ac9c2@example.org": 1,
+    "acct:user-2b1a22@example.org": 1,
+    "acct:user-5657ec@example.org": 1,
+    "acct:user-ec76cc@example.org": 1,
+    "acct:user-b27c2f@example.org": 1,
+    "acct:user-bdc20c@example.org": 1,
+    "acct:user-8cc22b@example.org": 1,
+    "acct:user-fd880b@example.org": 1,
+    "acct:user-77c643@example.org": 1,
+    "acct:user-6d2c12@example.org": 1,
+    "acct:user-9cd77f@example.org": 1,
+    "acct:user-34257e@example.org": 1,
+    "acct:user-cc65fd@example.org": 1,
+    "acct:user-caf992@example.org": 1,
+    "acct:user-0b7acd@example.org": 1,
+    "acct:user-08321f@example.org": 1,
+    "acct:user-9776d5@example.org": 1,
+    "acct:user-4b674f@example.org": 1,
+    "acct:user-cd4014@example.org": 1,
+    "acct:user-f4f0b1@example.org": 1,
+    "acct:user-c4213d@example.org": 1,
+    "acct:user-1d4000@example.org": 1,
+    "acct:user-cd4b0e@example.org": 1,
+    "acct:user-8a627f@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "password_spray": [
+     "acct:user-f4f0b1@example.org",
+     "acct:user-cd4b0e@example.org",
+     "acct:user-34257e@example.org",
+     "acct:user-f13ef7@example.org",
+     "acct:user-bdc20c@example.org",
+     "acct:user-0b7acd@example.org",
+     "acct:user-cd4014@example.org",
+     "acct:user-8a627f@example.org",
+     "acct:user-fd880b@example.org",
+     "acct:user-9776d5@example.org",
+     "acct:user-fa1eed@example.org",
+     "acct:user-caf992@example.org",
+     "acct:user-77c643@example.org",
+     "acct:user-9f1057@example.org",
+     "acct:user-746c24@example.org",
+     "acct:user-08321f@example.org",
+     "acct:user-5ce686@example.org",
+     "acct:user-9cd77f@example.org",
+     "acct:user-8cc22b@example.org",
+     "acct:user-6d2c12@example.org",
+     "acct:user-cc65fd@example.org",
+     "acct:user-0ac9c2@example.org",
+     "acct:user-5657ec@example.org",
+     "acct:user-b27c2f@example.org",
+     "acct:user-2b1a22@example.org",
+     "acct:user-1d4000@example.org",
+     "acct:user-c4213d@example.org",
+     "acct:user-4b674f@example.org",
+     "acct:user-4d5833@example.org",
+     "acct:user-ec76cc@example.org",
+     "acct:user-c0ae42@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-9f1057@example.org": 1,
+    "acct:user-5ce686@example.org": 1,
+    "acct:user-fa1eed@example.org": 1,
+    "acct:user-c0ae42@example.org": 1,
+    "acct:user-746c24@example.org": 1,
+    "acct:user-4d5833@example.org": 1,
+    "acct:user-f13ef7@example.org": 1,
+    "acct:user-0ac9c2@example.org": 1,
+    "acct:user-2b1a22@example.org": 1,
+    "acct:user-5657ec@example.org": 1,
+    "acct:user-ec76cc@example.org": 1,
+    "acct:user-b27c2f@example.org": 1,
+    "acct:user-bdc20c@example.org": 1,
+    "acct:user-8cc22b@example.org": 1,
+    "acct:user-fd880b@example.org": 1,
+    "acct:user-77c643@example.org": 1,
+    "acct:user-6d2c12@example.org": 1,
+    "acct:user-9cd77f@example.org": 1,
+    "acct:user-34257e@example.org": 1,
+    "acct:user-cc65fd@example.org": 1,
+    "acct:user-caf992@example.org": 1,
+    "acct:user-0b7acd@example.org": 1,
+    "acct:user-08321f@example.org": 1,
+    "acct:user-9776d5@example.org": 1,
+    "acct:user-4b674f@example.org": 1,
+    "acct:user-cd4014@example.org": 1,
+    "acct:user-f4f0b1@example.org": 1,
+    "acct:user-c4213d@example.org": 1,
+    "acct:user-1d4000@example.org": 1,
+    "acct:user-cd4b0e@example.org": 1,
+    "acct:user-8a627f@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_export_pst_file": {
+  "technique": "T1114",
+  "family": "Microsoft 365",
+  "events_mapped": 1942,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:principal-66351f"
+    ],
+    "identity_config_change": [
+     "user-216519@example.org"
+    ],
+    "password_spray": [
+     "acct:user-6d938e@example.org",
+     "acct:user-baf0a0@example.org",
+     "acct:user-0bd7db@example.org",
+     "acct:user-a7d4e0@example.org",
+     "acct:user-216519@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-318e96@example.org": 4,
+    "acct:user-a7d4e0@example.org": 4,
+    "user-a7d4e0@example.org": 4,
+    "acct:user-216519@example.org": 4,
+    "acct:principal-66351f": 4,
+    "user-216519@example.org": 4,
+    "acct:user-0bd7db@example.org": 4,
+    "acct:user-318e96@example.org": 4,
+    "acct:user-6d938e@example.org": 4,
+    "acct:user-baf0a0@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "Microsoft\\ServiceOperator",
+     "S-1-5-18",
+     "principal-69b80a",
+     "principal-b1de14",
+     "user-318e96@example.org",
+     "user-6d938e@example.org",
+     "user-0bd7db@example.org",
+     "user-a7d4e0@example.org",
+     "user-216519@example.org"
+    ],
+    "brute_force": [
+     "acct:user-6d938e@example.org",
+     "acct:user-216519@example.org"
+    ],
+    "new_principal": [
+     "Certificate",
+     "user-318e96@example.org",
+     "user-6d938e@example.org",
+     "user-216519@example.org"
+    ],
+    "bulk_data_access": [
+     "user-318e96@example.org",
+     "user-216519@example.org"
+    ],
+    "idp_risk": [
+     "acct:principal-66351f"
+    ],
+    "mail_forwarding": [
+     "user-a7d4e0@example.org"
+    ],
+    "password_spray": [
+     "acct:user-6d938e@example.org",
+     "acct:user-baf0a0@example.org",
+     "acct:user-0bd7db@example.org",
+     "acct:user-a7d4e0@example.org",
+     "acct:user-216519@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-318e96@example.org": 1,
+    "acct:user-a7d4e0@example.org": 4,
+    "user-a7d4e0@example.org": 4,
+    "principal-b1de14": 3,
+    "principal-69b80a": 3,
+    "user-6d938e@example.org": 3,
+    "acct:user-6d938e@example.org": 4,
+    "acct:user-216519@example.org": 4,
+    "user-216519@example.org": 4,
+    "acct:principal-66351f": 4,
+    "Microsoft\\ServiceOperator": 2,
+    "S-1-5-18": 2,
+    "acct:user-0bd7db@example.org": 4,
+    "user-0bd7db@example.org": 3,
+    "acct:user-318e96@example.org": 4,
+    "acct:user-baf0a0@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_new_forwarding_mailflow_rule_created": {
+  "technique": "T1114",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "mail_forwarding"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "mail_forwarding": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-b846ae@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_suspect_email_actions": {
+  "technique": "T1114",
+  "family": "Microsoft 365",
+  "events_mapped": 21,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "o365_compliance_content_search_exported": {
+  "technique": "T1114.002",
+  "family": "Microsoft 365",
+  "events_mapped": 16,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:principal-66351f"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "acct:principal-66351f": 3
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-695a2e@example.org"
+    ],
+    "idp_risk": [
+     "acct:principal-66351f"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-695a2e@example.org": 4,
+    "acct:principal-66351f": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_compliance_content_search_started": {
+  "technique": "T1114.002",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-695a2e@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-695a2e@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_inbox_shared_with_all_users": {
+  "technique": "T1114.002",
+  "family": "Microsoft 365",
+  "events_mapped": 5,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-3324c1@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-3324c1@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_multiple_mailboxes_accessed_via_api": {
+  "technique": "T1114.002",
+  "family": "Microsoft 365",
+  "events_mapped": 6,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-9dbd12@example.org",
+     "user-3d32d2@example.org",
+     "user-3bf877@example.org",
+     "user-258c34@example.org",
+     "user-899b6f@example.org",
+     "user-99a7f0@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-9dbd12@example.org": 1,
+    "user-3d32d2@example.org": 1,
+    "user-3bf877@example.org": 1,
+    "user-258c34@example.org": 1,
+    "user-899b6f@example.org": 1,
+    "user-99a7f0@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_oauth_app_ews_mailbox_access": {
+  "technique": "T1114.002",
+  "family": "Microsoft 365",
+  "events_mapped": 10,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-9dbd12@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_oauth_app_graph_mailbox_access": {
+  "technique": "T1114.002",
+  "family": "Microsoft 365",
+  "events_mapped": 5,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-9dbd12@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_email_forwarding_rule_created": {
+  "technique": "T1114.003",
+  "family": "Microsoft 365",
+  "events_mapped": 6,
+  "expected": [
+   "mail_forwarding"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "mail_forwarding": [
+     "user-80528e@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-80528e@example.org": 4
+   }
+  },
+  "status": "detected"
+ },
+ "o365_mailbox_forwarding_enabled": {
+  "technique": "T1114.003",
+  "family": "Microsoft 365",
+  "events_mapped": 123,
+  "expected": [
+   "mail_forwarding"
+  ],
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:principal-66351f"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-a7d4e0@example.org": 1,
+    "user-318e96@example.org": 1,
+    "acct:principal-66351f": 4
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-a7d4e0@example.org"
+    ],
+    "mail_forwarding": [
+     "user-a7d4e0@example.org"
+    ],
+    "idp_risk": [
+     "acct:principal-66351f"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-a7d4e0@example.org": 4,
+    "user-318e96@example.org": 1,
+    "acct:principal-66351f": 4
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_add_service_principal": {
+  "technique": "T1136.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 4,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "user-b4b94c@example.org",
+     "unknown"
+    ]
+   },
+   "as_expected": true,
+   "levels": {}
+  },
+  "status": "detected"
+ },
+ "azure_ad_external_guest_user_invited": {
+  "technique": "T1136.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "user-cc478e@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {}
+  },
+  "status": "detected"
+ },
+ "azure_ad_multiple_service_principals_created": {
+  "technique": "T1136.003",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 22,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "user-cfde20@example.org",
+     "principal-4509d1"
+    ]
+   },
+   "as_expected": true,
+   "levels": {}
+  },
+  "status": "detected"
+ },
+ "o365_add_app_role_assignment_grant_user": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 0,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "status": "not readable"
+ },
+ "o365_add_service_principal": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 6,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-216519@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-216519@example.org": 4
+   }
+  },
+  "status": "detected"
+ },
+ "o365_added_service_principal": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 14,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "principal-3bcd0e",
+     "principal-edff9e",
+     "user-f25f46@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-f25f46@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_multiple_service_principals_created": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 22,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "new_principal": [
+     "principal-e29a7a",
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {}
+  },
+  "status": "detected"
+ },
+ "o365_new_federated_domain": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "NT AUTHORITY\\SYSTEM (w3wp)"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "NT AUTHORITY\\SYSTEM (w3wp)": 3
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "NT AUTHORITY\\SYSTEM (w3wp)"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "NT AUTHORITY\\SYSTEM (w3wp)": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_new_federated_domain_added": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "user-abae14@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-abae14@example.org": 2
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-abae14@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-abae14@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_new_federation": {
+  "technique": "T1136.003",
+  "family": "Microsoft 365",
+  "events_mapped": 24,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-c61269@example.org",
+     "user-216519@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-216519@example.org": 4,
+    "user-c61269@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_concurrent_sessions_from_different_ips": {
+  "technique": "T1185",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 22,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-8d31b7@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-8d31b7@example.org": 1
+   }
+  },
+  "status": "missed"
+ },
+ "o365_concurrent_sessions_from_different_ips": {
+  "technique": "T1185",
+  "family": "Microsoft 365",
+  "events_mapped": 9,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-9dbd12@example.org": 2
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-9dbd12@example.org": 4
+   }
+  },
+  "status": "missed"
+ },
+ "aws_updatelambdafunctioncode": {
+  "technique": "T1204",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "aws_ecr_container_upload": {
+  "technique": "T1204.003",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "aws_ecr_image_scanning": {
+  "technique": "T1204.003",
+  "family": "AWS CloudTrail",
+  "events_mapped": 1,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "o365_sus_sharepoint_search": {
+  "technique": "T1213.002",
+  "family": "Microsoft 365",
+  "events_mapped": 4,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "user-9c7406@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-9c7406@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_kms_key": {
+  "technique": "T1486",
+  "family": "AWS CloudTrail",
+  "events_mapped": 405,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-1506ab",
+     "principal-9f86d0"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-9f86d0": 1,
+    "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "s3_file_encryption": {
+  "technique": "T1486",
+  "family": "AWS CloudTrail",
+  "events_mapped": 2,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "principal-4debe4"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-4debe4": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_security_scanner": {
+  "technique": "T1526",
+  "family": "AWS CloudTrail",
+  "events_mapped": 1071,
+  "expected": [
+   "discovery"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "discovery": [
+     "principal-57abd6"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-57abd6": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_user_consent_blocked": {
+  "technique": "T1528",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 6,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "Azure MFA StrongAuthenticationService"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "Azure MFA StrongAuthenticationService": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_user_consent_declined": {
+  "technique": "T1528",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 11,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-9dbd12@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-9dbd12@example.org": 1
+   }
+  },
+  "status": "missed"
+ },
+ "azure_ad_user_consent_granted": {
+  "technique": "T1528",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 10,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-9dbd12@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "Azure MFA StrongAuthenticationService",
+     "user-9dbd12@example.org"
+    ],
+    "new_principal": [
+     "user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "Azure MFA StrongAuthenticationService": 2,
+    "user-9dbd12@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_user_consent_blocked": {
+  "technique": "T1528",
+  "family": "Microsoft 365",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-57f29d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-57f29d@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_user_consent_declined": {
+  "technique": "T1528",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "status": "missed"
+ },
+ "o365_user_consent_file_permissions": {
+  "technique": "T1528",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-f3eabc@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-f3eabc@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_user_consent_mail_permissions": {
+  "technique": "T1528",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-af8d4d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-af8d4d@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_cloudwatch_logs_high_volume_retrieval": {
+  "technique": "T1530",
+  "family": "AWS CloudTrail",
+  "events_mapped": 650,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "principal-09a736"
+    ],
+    "discovery": [
+     "principal-09a736"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-09a736": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_s3_public_bucket": {
+  "technique": "T1530",
+  "family": "AWS CloudTrail",
+  "events_mapped": 9,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "principal-1506ab",
+     "principal-4debe4"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-1506ab": 1,
+    "principal-4debe4": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_ami_shared_public": {
+  "technique": "T1537",
+  "family": "AWS CloudTrail",
+  "events_mapped": 2,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_snapshot_exfil": {
+  "technique": "T1537",
+  "family": "AWS CloudTrail",
+  "events_mapped": 10,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-ea55d9",
+     "principal-e83788",
+     "principal-1506ab"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_getpassworddata": {
+  "technique": "T1552",
+  "family": "AWS CloudTrail",
+  "events_mapped": 80,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "discovery": [
+     "principal-f22dc2"
+    ],
+    "bulk_data_access": [
+     "principal-9f86d0"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-9f86d0": 1
+   }
+  },
+  "status": "detected"
+ },
+ "aws_anomalous_secrets_manager_batch_retrieval": {
+  "technique": "T1555.006",
+  "family": "AWS CloudTrail",
+  "events_mapped": 13,
+  "expected": [
+   "bulk_data_access"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "principal-8f5a90"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-8f5a90": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_sso_logon_errors": {
+  "technique": "T1556",
+  "family": "Microsoft 365",
+  "events_mapped": 46,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-c61269@example.org": 1,
+    "user-18b739@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {
+    "user-c61269@example.org": 1,
+    "user-18b739@example.org": 1
+   }
+  },
+  "status": "missed"
+ },
+ "azure_ad_new_mfa_method_registered_for_user": {
+  "technique": "T1556.006",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-8d31b7@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-8d31b7@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_temporary_access_pass": {
+  "technique": "T1556.006",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-94e29d@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-94e29d@example.org": 2
+   }
+  },
+  "status": "detected"
+ },
+ "o365_disable_blockconsent_for_riskapps": {
+  "technique": "T1562",
+  "family": "Microsoft 365",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-b846ae@example.org": 3
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-b846ae@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-b846ae@example.org": 3
+   }
+  },
+  "status": "missed"
+ },
+ "aws_create_acl": {
+  "technique": "T1562.007",
+  "family": "AWS CloudTrail",
+  "events_mapped": 13204,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "unknown"
+    ],
+    "discovery": [
+     "principal-1506ab"
+    ],
+    "audit_tamper": [
+     "arn:aws:sts::000000000000:assumed-role/principal-9f86d0/user-f660ab@example.org",
+     "principal-1506ab"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/principal-9f86d0/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "aws_delete_acl": {
+  "technique": "T1562.007",
+  "family": "AWS CloudTrail",
+  "events_mapped": 13204,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "unknown"
+    ],
+    "discovery": [
+     "principal-1506ab"
+    ],
+    "audit_tamper": [
+     "arn:aws:sts::000000000000:assumed-role/principal-9f86d0/user-f660ab@example.org",
+     "principal-1506ab"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/principal-9f86d0/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_bypass_mfa_via_trusted_ip": {
+  "technique": "T1562.007",
+  "family": "Microsoft 365",
+  "events_mapped": 32,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "user-6d938e@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-6d938e@example.org": 4
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "identity_config_change": [
+     "user-6d938e@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "user-6d938e@example.org": 4
+   }
+  },
+  "status": "detected"
+ },
+ "aws_delete_security_services": {
+  "technique": "T1562.008",
+  "family": "AWS CloudTrail",
+  "events_mapped": 9,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "arn:aws:sts::22222222222:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-8de6b9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::22222222222:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "delete_cloudwatch_log_group": {
+  "technique": "T1562.008",
+  "family": "AWS CloudTrail",
+  "events_mapped": 5,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "arn:aws:sts::22222222222:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-ea55d9",
+     "principal-8de6b9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::22222222222:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365_advanced_audit_disabled": {
+  "technique": "T1562.008",
+  "family": "Microsoft 365",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper"
+  ],
+  "status": "not readable"
+ },
+ "put_bucketlifecycle": {
+  "technique": "T1562.008",
+  "family": "AWS CloudTrail",
+  "events_mapped": 6,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000",
+     "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-ea55d9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "stop_delete_cloudtrail": {
+  "technique": "T1562.008",
+  "family": "AWS CloudTrail",
+  "events_mapped": 5,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "arn:aws:sts::22222222222:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-ea55d9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::22222222222:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 3,
+    "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "update_cloudtrail": {
+  "technique": "T1562.008",
+  "family": "AWS CloudTrail",
+  "events_mapped": 4,
+  "expected": [
+   "audit_tamper"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "bulk_data_access": [
+     "principal-8de6b9"
+    ],
+    "audit_tamper": [
+     "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org",
+     "principal-8de6b9"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "arn:aws:sts::000000000000:assumed-role/7d40dd7e11854f8/user-f660ab@example.org": 3
+   }
+  },
+  "status": "detected"
+ },
+ "o365": {
+  "technique": "T1564.008",
+  "family": "Microsoft 365",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "mail_forwarding": [
+     "user-17386a@example.org"
+    ]
+   },
+   "as_expected": false,
+   "levels": {
+    "user-17386a@example.org": 2
+   }
+  },
+  "status": "missed"
+ },
+ "o365_various_alerts": {
+  "technique": "T1566",
+  "family": "Microsoft 365",
+  "events_mapped": 19,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "gsuite_outbound_email_to_external": {
+  "technique": "T1566.001",
+  "family": "Google Workspace",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "gsuite_susp_attachment_ext": {
+  "technique": "T1566.001",
+  "family": "Google Workspace",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "gsuite_susp_subj": {
+  "technique": "T1566.001",
+  "family": "Google Workspace",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "gsuite_susp_url": {
+  "technique": "T1566.001",
+  "family": "Google Workspace",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "aws_ec2_startup_script_modification": {
+  "technique": "T1578.005",
+  "family": "AWS CloudTrail",
+  "events_mapped": 0,
+  "expected": null,
+  "status": "out of scope"
+ },
+ "aws_iam_accessdenied_discovery_events": {
+  "technique": "T1580",
+  "family": "AWS CloudTrail",
+  "events_mapped": 1130,
+  "expected": [
+   "discovery"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "discovery": [
+     "principal-9a841a",
+     "principal-57abd6"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-57abd6": 2,
+    "principal-9a841a": 2
+   }
+  },
+  "status": "detected"
+ },
+ "aws_iam_assume_role_policy_brute_force": {
+  "technique": "T1580",
+  "family": "AWS CloudTrail",
+  "events_mapped": 10,
+  "expected": [
+   "brute_force",
+   "password_spray"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "status": "missed"
+ },
+ "aws_iam_excessive_list_command_usage": {
+  "technique": "T1580",
+  "family": "AWS CloudTrail",
+  "events_mapped": 4196,
+  "expected": [
+   "discovery"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "discovery": [
+     "principal-9a841a",
+     "principal-57abd6"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "principal-57abd6": 2,
+    "principal-9a841a": 2
+   }
+  },
+  "status": "detected"
+ },
+ "azure_ad_multiple_denied_mfa_requests": {
+  "technique": "T1621",
+  "family": "Microsoft Entra ID",
+  "events_mapped": 11,
+  "expected": [
+   "brute_force",
+   "mfa_fatigue"
+  ],
+  "v0.5": {
+   "detections": {
+    "mfa_fatigue": [
+     "acct:user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-9dbd12@example.org": 1
+   }
+  },
+  "v0.6": {
+   "detections": {
+    "mfa_fatigue": [
+     "acct:user-9dbd12@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-9dbd12@example.org": 1
+   }
+  },
+  "status": "detected"
+ },
+ "o365_multiple_failed_mfa_requests": {
+  "technique": "T1621",
+  "family": "Microsoft 365",
+  "events_mapped": 445,
+  "expected": [
+   "brute_force",
+   "mfa_fatigue"
+  ],
+  "v0.5": {
+   "detections": {},
+   "as_expected": false,
+   "levels": {}
+  },
+  "v0.6": {
+   "detections": {
+    "brute_force": [
+     "acct:Not Available",
+     "acct:user-e00a60@example.org"
+    ]
+   },
+   "as_expected": true,
+   "levels": {
+    "acct:user-e00a60@example.org": 1,
+    "acct:Not Available": 1
+   }
+  },
+  "status": "detected"
+ }
+}

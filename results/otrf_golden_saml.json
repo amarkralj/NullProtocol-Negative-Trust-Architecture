@@ -1,0 +1,25 @@
+{
+ "dataset": "OTRF Security-Datasets compound/GoldenSAMLADFSMailAccess",
+ "expected": [
+  "identity_config_change",
+  "bulk_data_access"
+ ],
+ "events_mapped": 5,
+ "v0.5": {
+  "detections": {},
+  "levels": {}
+ },
+ "v0.6": {
+  "detections": {
+   "identity_config_change": [
+    "user-ba1171@example.org"
+   ],
+   "bulk_data_access": [
+    "user-ba1171@example.org"
+   ]
+  },
+  "levels": {
+   "user-ba1171@example.org": 4
+  }
+ }
+}

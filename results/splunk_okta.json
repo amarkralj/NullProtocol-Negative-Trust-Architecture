@@ -1,0 +1,557 @@
+{
+ "okta_suspicious_activity_reported_by_user": {
+  "technique": "T1078",
+  "events_mapped": 1,
+  "expected": [
+   "idp_risk"
+  ],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": false,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-80528e@example.org": 2
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-80528e@example.org"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_single_factor_auth": {
+  "technique": "T1078.004",
+  "events_mapped": 4,
+  "expected": [
+   "no_mfa_login"
+  ],
+  "v0.4": {
+   "detections": {
+    "no_mfa_login": [
+     "user-88e518@example.org"
+    ],
+    "off_hours_login": [
+     "user-88e518@example.org"
+    ],
+    "new_device": [
+     "user-88e518@example.org"
+    ]
+   },
+   "levels": {
+    "user-88e518@example.org": 2
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "no_mfa_login": [
+     "user-88e518@example.org"
+    ],
+    "off_hours_login": [
+     "user-88e518@example.org"
+    ],
+    "new_device": [
+     "user-88e518@example.org"
+    ]
+   },
+   "levels": {
+    "user-88e518@example.org": 2
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_threatinsight_threat_detected": {
+  "technique": "T1078.004",
+  "events_mapped": 5,
+  "expected": [
+   "idp_risk"
+  ],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": false,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "idp_risk": [
+     "acct:unknown"
+    ]
+   },
+   "levels": {
+    "acct:unknown": 4
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:unknown"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_unauth_access": {
+  "technique": "T1087.004",
+  "events_mapped": 1,
+  "expected": [
+   "app_denied"
+  ],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": false,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "app_denied": [
+     "user-520efd@example.org"
+    ]
+   },
+   "levels": {},
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_new_api_token_created": {
+  "technique": "T1098.001",
+  "events_mapped": 1,
+  "expected": [
+   "identity_config_change"
+  ],
+  "v0.4": {
+   "detections": {
+    "identity_config_change": [
+     "user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "user-80528e@example.org": 2
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "user-80528e@example.org": 2
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_new_device_enrolled": {
+  "technique": "T1098.005",
+  "events_mapped": 2,
+  "expected": [],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {},
+   "levels": {},
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_multiple_accounts_lockout": {
+  "technique": "T1110",
+  "events_mapped": 7,
+  "expected": [
+   "password_spray"
+  ],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": false,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "password_spray": [
+     "acct:user-8c5aa4@example.org",
+     "acct:user-4d3cc6@example.org",
+     "acct:user-441386@example.org",
+     "acct:user-f1be64@example.org",
+     "acct:user-e2cda6@example.org",
+     "acct:user-dfe334@example.org",
+     "acct:user-2954c5@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-441386@example.org": 1,
+    "acct:user-f1be64@example.org": 1,
+    "acct:user-8c5aa4@example.org": 1,
+    "acct:user-e2cda6@example.org": 1,
+    "acct:user-4d3cc6@example.org": 1,
+    "acct:user-dfe334@example.org": 1,
+    "acct:user-2954c5@example.org": 1
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-8c5aa4@example.org",
+    "acct:user-4d3cc6@example.org",
+    "acct:user-441386@example.org",
+    "acct:user-f1be64@example.org",
+    "acct:user-e2cda6@example.org",
+    "acct:user-dfe334@example.org",
+    "acct:user-2954c5@example.org"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_multiple_users_from_ip": {
+  "technique": "T1110.003",
+  "events_mapped": 13,
+  "expected": [
+   "password_spray"
+  ],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": false,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "password_spray": [
+     "acct:user-61f7df@example.org",
+     "acct:user-42aff4@example.org",
+     "acct:user-467ada@example.org",
+     "acct:user-ab7814@example.org",
+     "acct:user-ed2047@example.org",
+     "acct:user-645326@example.org",
+     "acct:user-be4b60@example.org",
+     "acct:user-b7ed77@example.org",
+     "acct:user-2eea3d@example.org",
+     "acct:user-a73f2b@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-b7ed77@example.org": 1,
+    "acct:user-645326@example.org": 1,
+    "acct:user-ed2047@example.org": 1,
+    "acct:user-be4b60@example.org": 1,
+    "acct:user-ab7814@example.org": 1,
+    "acct:user-2eea3d@example.org": 1,
+    "acct:user-a73f2b@example.org": 1,
+    "acct:user-61f7df@example.org": 1,
+    "acct:user-467ada@example.org": 1,
+    "acct:user-42aff4@example.org": 1
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-61f7df@example.org",
+    "acct:user-42aff4@example.org",
+    "acct:user-467ada@example.org",
+    "acct:user-ab7814@example.org",
+    "acct:user-ed2047@example.org",
+    "acct:user-645326@example.org",
+    "acct:user-be4b60@example.org",
+    "acct:user-b7ed77@example.org",
+    "acct:user-2eea3d@example.org",
+    "acct:user-a73f2b@example.org"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_web_session_multiple_ip": {
+  "technique": "T1539",
+  "events_mapped": 2,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.4": {
+   "detections": {
+    "no_mfa_login": [
+     "user-cda02f@example.org"
+    ],
+    "off_hours_login": [
+     "user-cda02f@example.org"
+    ],
+    "new_device": [
+     "user-cda02f@example.org"
+    ],
+    "session_replay": [
+     "acct:user-cda02f@example.org"
+    ]
+   },
+   "levels": {
+    "user-cda02f@example.org": 1,
+    "acct:user-cda02f@example.org": 3
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-cda02f@example.org"
+   ],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "no_mfa_login": [
+     "user-cda02f@example.org"
+    ],
+    "off_hours_login": [
+     "user-cda02f@example.org"
+    ],
+    "new_device": [
+     "user-cda02f@example.org"
+    ],
+    "impossible_travel": [
+     "acct:user-cda02f@example.org"
+    ],
+    "session_replay": [
+     "acct:user-cda02f@example.org"
+    ]
+   },
+   "levels": {
+    "user-cda02f@example.org": 1,
+    "acct:user-cda02f@example.org": 4
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-cda02f@example.org"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_idp": {
+  "technique": "T1556",
+  "events_mapped": 2,
+  "expected": [
+   "identity_config_change"
+  ],
+  "v0.4": {
+   "detections": {
+    "identity_config_change": [
+     "user-d604bc@example.org"
+    ]
+   },
+   "levels": {
+    "user-d604bc@example.org": 3
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "user-d604bc@example.org"
+    ]
+   },
+   "levels": {
+    "user-d604bc@example.org": 3
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_mfa_method_disabled": {
+  "technique": "T1556.006",
+  "events_mapped": 3,
+  "expected": [
+   "identity_config_change"
+  ],
+  "v0.4": {
+   "detections": {
+    "identity_config_change": [
+     "user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "user-80528e@example.org": 4
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "identity_config_change": [
+     "user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "user-80528e@example.org": 4
+   },
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_multiple_city": {
+  "technique": "T1586.003",
+  "events_mapped": 2,
+  "expected": [
+   "impossible_travel",
+   "session_replay"
+  ],
+  "v0.4": {
+   "detections": {
+    "off_hours_login": [
+     "user-c430ee@example.org"
+    ],
+    "new_device": [
+     "user-c430ee@example.org"
+    ],
+    "session_replay": [
+     "acct:user-c430ee@example.org"
+    ]
+   },
+   "levels": {
+    "user-c430ee@example.org": 1,
+    "acct:user-c430ee@example.org": 3
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-c430ee@example.org"
+   ],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "off_hours_login": [
+     "user-c430ee@example.org"
+    ],
+    "new_device": [
+     "user-c430ee@example.org"
+    ],
+    "session_replay": [
+     "acct:user-c430ee@example.org"
+    ]
+   },
+   "levels": {
+    "user-c430ee@example.org": 1,
+    "acct:user-c430ee@example.org": 3
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-c430ee@example.org"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_mfa_login_failed": {
+  "technique": "T1621",
+  "events_mapped": 1,
+  "expected": [],
+  "v0.4": {
+   "detections": {},
+   "levels": {},
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {},
+   "levels": {},
+   "as_expected": true,
+   "account_level": [],
+   "ledger_ok": true
+  }
+ },
+ "okta_multiple_failed_mfa_pushes": {
+  "technique": "T1621",
+  "events_mapped": 10,
+  "expected": [
+   "mfa_fatigue"
+  ],
+  "v0.4": {
+   "detections": {
+    "mfa_fatigue": [
+     "acct:user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-80528e@example.org": 1
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-80528e@example.org"
+   ],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "mfa_fatigue": [
+     "acct:user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-80528e@example.org": 1
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-80528e@example.org"
+   ],
+   "ledger_ok": true
+  }
+ },
+ "okta_multiple_failed_mfa_requests": {
+  "technique": "T1621",
+  "events_mapped": 33,
+  "expected": [
+   "mfa_fatigue"
+  ],
+  "v0.4": {
+   "detections": {
+    "mfa_fatigue": [
+     "acct:user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-80528e@example.org": 1
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-80528e@example.org"
+   ],
+   "ledger_ok": true
+  },
+  "v0.5": {
+   "detections": {
+    "mfa_fatigue": [
+     "acct:user-80528e@example.org"
+    ]
+   },
+   "levels": {
+    "acct:user-80528e@example.org": 1
+   },
+   "as_expected": true,
+   "account_level": [
+    "acct:user-80528e@example.org"
+   ],
+   "ledger_ok": true
+  }
+ }
+}

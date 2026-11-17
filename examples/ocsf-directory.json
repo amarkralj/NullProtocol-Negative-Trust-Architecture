@@ -1,0 +1,62 @@
+{
+ "departments": {
+  "u000": "Engineering",
+  "u001": "Sales",
+  "u002": "Finance",
+  "u003": "HR",
+  "u004": "Legal",
+  "u005": "Product",
+  "u006": "Engineering",
+  "u007": "Sales",
+  "u008": "Finance",
+  "u009": "HR",
+  "u010": "Legal",
+  "u011": "Product",
+  "u012": "Sales",
+  "u013": "Engineering",
+  "u014": "Engineering",
+  "u015": "Legal",
+  "u016": "Product",
+  "u017": "Product",
+  "u018": "Sales",
+  "u019": "Engineering",
+  "u020": "Engineering",
+  "u021": "Product",
+  "u022": "Engineering",
+  "u023": "Product",
+  "u024": "Sales",
+  "u025": "Engineering",
+  "u026": "Sales",
+  "u027": "Product",
+  "u028": "Sales",
+  "u029": "Product",
+  "u030": "Engineering",
+  "u031": "Engineering",
+  "u032": "Legal",
+  "u033": "HR",
+  "u034": "Finance",
+  "u035": "Engineering",
+  "u036": "Engineering",
+  "u037": "Engineering",
+  "u038": "Engineering",
+  "u039": "Engineering"
+ },
+ "path_departments": {
+  "//fs/Engineering/": "Engineering",
+  "//fs/Sales/": "Sales",
+  "//fs/Finance/": "Finance",
+  "//fs/HR/": "HR",
+  "//fs/Legal/": "Legal",
+  "//fs/Product/": "Product"
+ },
+ "partner_domains": [
+  "auditor-kpmg.example",
+  "bank-partner.example",
+  "supplier.example",
+  "client.example"
+ ],
+ "home_countries": [
+  "DE"
+ ],
+ "epoch_ms": 1767225600000
+}

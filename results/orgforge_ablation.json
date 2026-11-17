@@ -1,0 +1,58 @@
+{
+ "nt (full)": {
+  "triage_f1": 1.0,
+  "verdict_f1": 1.0,
+  "baseline_fp_rate": 0.0,
+  "escalated": [
+   "Jax",
+   "Tasha"
+  ],
+  "vishing_detected": true,
+  "host_trail_reconstructed": true
+ },
+ "without person/account attribution": {
+  "triage_f1": 0.8,
+  "verdict_f1": 0.8,
+  "baseline_fp_rate": 0.0208,
+  "escalated": [
+   "Chris",
+   "Jax",
+   "Tasha"
+  ],
+  "vishing_detected": true,
+  "host_trail_reconstructed": true
+ },
+ "without message-sentiment signal": {
+  "triage_f1": 1.0,
+  "verdict_f1": 1.0,
+  "baseline_fp_rate": 0.0,
+  "escalated": [
+   "Jax",
+   "Tasha"
+  ],
+  "vishing_detected": true,
+  "host_trail_reconstructed": true
+ },
+ "symmetric trust": {
+  "triage_f1": 1.0,
+  "verdict_f1": 1.0,
+  "baseline_fp_rate": 0.0,
+  "escalated": [
+   "Jax",
+   "Tasha"
+  ],
+  "vishing_detected": true,
+  "host_trail_reconstructed": true
+ },
+ "without correlation evidence (chain, vishing link)": {
+  "triage_f1": 1.0,
+  "verdict_f1": 1.0,
+  "baseline_fp_rate": 0.0,
+  "escalated": [
+   "Jax",
+   "Tasha"
+  ],
+  "vishing_detected": true,
+  "host_trail_reconstructed": true
+ }
+}

@@ -1,0 +1,798 @@
+{
+ "triage": {
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "tp": 2,
+  "fp": 0,
+  "fn": 0,
+  "baseline_fp_rate": 0.0,
+  "onset_sensitivity_official": 1.0,
+  "escalated_before_onset": 0,
+  "escalated": [
+   "Jax",
+   "Tasha"
+  ]
+ },
+ "verdict": {
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "tp": 2,
+  "fp": 0,
+  "fn": 0,
+  "vishing_detected": true,
+  "host_trail_reconstructed": true,
+  "by_behavior": {
+   "data_exfil_email": {
+    "tp": 1,
+    "fp": 0
+   },
+   "host_data_hoarding": {
+    "tp": 1,
+    "fp": 0
+   },
+   "sentiment_drift": {
+    "tp": 2,
+    "fp": 0
+   },
+   "social_engineering": {
+    "tp": 1,
+    "fp": 0
+   },
+   "unusual_hours_access": {
+    "tp": 2,
+    "fp": 0
+   }
+  },
+  "flagged": [
+   "Jax",
+   "Tasha"
+  ]
+ },
+ "compromised_accounts": {
+  "acct:Chris": -2.1,
+  "acct:Jax": -2.45
+ },
+ "threat_actors_in_ground_truth": [
+  "Jax",
+  "Tasha"
+ ],
+ "n_actors": 50,
+ "n_evidence": 159,
+ "clean_period_escalations": [],
+ "clean_period_fp_rate": 0.0,
+ "verdicts": [
+  {
+   "name": "Alex",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Ariana",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Ben",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Blake",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Chloe",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Chris",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Cooper",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Dave",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Deepa",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Desmond",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Elena",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Felix",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Hanna",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Jamie",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Janice",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Jax",
+   "verdict": "likely_threat",
+   "behaviors_observed": [
+    "data_exfil_email",
+    "host_data_hoarding",
+    "sentiment_drift",
+    "social_engineering",
+    "unusual_hours_access"
+   ],
+   "evidence": [
+    {
+     "day": 18,
+     "description": "repository access at 23.0h, outside business hours"
+    },
+    {
+     "day": 19,
+     "description": "IdP login to github-enterprise at 01.0h, outside business hours"
+    },
+    {
+     "day": 19,
+     "description": "IdP login at 01.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 19,
+     "description": "IdP auth from 100.64.250.184 (residential), outside the corporate range"
+    },
+    {
+     "day": 19,
+     "description": "repository access at 03.0h, outside business hours"
+    },
+    {
+     "day": 19,
+     "description": "negative Slack message in #engineering_backend (baseline negative rate 0 %)"
+    },
+    {
+     "day": 19,
+     "description": "bulk copy of 20 files (778 MB) staged to C:\\Users\\jax\\AppData\\Local\\Temp\\backup from ['//fileserver02/Product/roadmaps' '//nas01/Legal/contracts'\n '//nas01/Sales/pipeline-data']"
+    },
+    {
+     "day": 20,
+     "description": "email 'Backup - do not delete' sent to personal webmail jax.personal@webmail.example outside business hours"
+    },
+    {
+     "day": 20,
+     "description": "repository access at 02.0h, outside business hours"
+    },
+    {
+     "day": 20,
+     "description": "negative Slack message in #standup (baseline negative rate 0 %)"
+    },
+    {
+     "day": 22,
+     "description": "IdP login to aws-console at 01.0h, outside business hours"
+    },
+    {
+     "day": 22,
+     "description": "IdP login at 01.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 22,
+     "description": "IdP auth from 10.0.54.218 (residential), outside the corporate range"
+    },
+    {
+     "day": 23,
+     "description": "IdP login to confluence-cloud at 23.0h, outside business hours"
+    },
+    {
+     "day": 23,
+     "description": "IdP login at 23.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 23,
+     "description": "IdP auth from 192.0.2.54.232 (vpn), outside the corporate range"
+    },
+    {
+     "day": 24,
+     "description": "negative Slack message in #engineering_backend (baseline negative rate 0 %)"
+    },
+    {
+     "day": 24,
+     "description": "archive backup_20260402.zip created (compress / zip) from staged data"
+    },
+    {
+     "day": 24,
+     "description": "repository access at 23.0h, outside business hours"
+    },
+    {
+     "day": 24,
+     "description": "IdP login to confluence-cloud at 23.0h, outside business hours"
+    },
+    {
+     "day": 24,
+     "description": "IdP login at 23.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 24,
+     "description": "IdP auth from 10.0.216.35 (residential), outside the corporate range"
+    },
+    {
+     "day": 25,
+     "description": "email 'RE: Q3 planning' sent to personal webmail jax.personal@webmail.example outside business hours"
+    },
+    {
+     "day": 25,
+     "description": "repository access at 22.0h, outside business hours"
+    },
+    {
+     "day": 26,
+     "description": "IdP login to github-enterprise at 22.0h, outside business hours"
+    },
+    {
+     "day": 26,
+     "description": "IdP login at 22.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 26,
+     "description": "IdP auth from 100.64.150.37 (residential), outside the corporate range"
+    },
+    {
+     "day": 26,
+     "description": "repository access at 23.0h, outside business hours"
+    },
+    {
+     "day": 27,
+     "description": "IdP login to aws-console at 00.0h, outside business hours"
+    },
+    {
+     "day": 27,
+     "description": "IdP login at 00.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 27,
+     "description": "IdP auth from 10.0.183.231 (residential), outside the corporate range"
+    },
+    {
+     "day": 28,
+     "description": "repository access at 03.0h, outside business hours"
+    },
+    {
+     "day": 28,
+     "description": "IdP login to github-enterprise at 23.0h, outside business hours"
+    },
+    {
+     "day": 28,
+     "description": "IdP login at 23.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 29,
+     "description": "IdP login to confluence-cloud at 02.0h, outside business hours"
+    },
+    {
+     "day": 29,
+     "description": "IdP login at 02.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 29,
+     "description": "negative Slack message in #engineering_backend (baseline negative rate 0 %)"
+    },
+    {
+     "day": 29,
+     "description": "slack_pretexting message to Chris impersonating IT/Security"
+    },
+    {
+     "day": 29,
+     "description": "repository access at 23.0h, outside business hours"
+    },
+    {
+     "day": 29,
+     "description": "archive backup_20260402.zip moved to ~/Google Drive/personal-archive (cloud_sync_dir, sync / move)"
+    }
+   ],
+   "recommended_action": "isolate session, open case for human review",
+   "min_trust": -16.71
+  },
+  {
+   "name": "Jenna",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "John",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Jordan",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Kaitlyn",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Karen",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Liam",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Marc",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Marcus",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Mike",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Miki",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Morgan",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Nadia",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_22",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_24",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_26",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_28",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_30",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_42",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "NewHire_46",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Patty",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Priya",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Raj",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Reese",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Sam",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Sanjay",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Sarah",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Sophie",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Tasha",
+   "verdict": "likely_threat",
+   "behaviors_observed": [
+    "sentiment_drift",
+    "unusual_hours_access"
+   ],
+   "evidence": [
+    {
+     "day": 12,
+     "description": "IdP login to google-workspace at 19.0h, outside business hours"
+    },
+    {
+     "day": 12,
+     "description": "IdP login at 19.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 13,
+     "description": "negative Slack message in #standup (baseline negative rate 0 %)"
+    },
+    {
+     "day": 14,
+     "description": "IdP login to google-workspace at 07.0h, outside business hours"
+    },
+    {
+     "day": 14,
+     "description": "IdP login at 07.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 15,
+     "description": "negative Slack message in #standup (baseline negative rate 0 %)"
+    },
+    {
+     "day": 16,
+     "description": "repository access at 02.0h, outside business hours"
+    },
+    {
+     "day": 16,
+     "description": "negative Slack message in #sales_marketing (baseline negative rate 0 %)"
+    },
+    {
+     "day": 18,
+     "description": "IdP login to jira-cloud at 06.0h, outside business hours"
+    },
+    {
+     "day": 18,
+     "description": "IdP login at 06.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 19,
+     "description": "repository access at 02.0h, outside business hours"
+    },
+    {
+     "day": 19,
+     "description": "negative Slack message in #dm_blake_tasha (baseline negative rate 0 %)"
+    },
+    {
+     "day": 20,
+     "description": "negative Slack message in #dm_tasha_vince (baseline negative rate 0 %)"
+    },
+    {
+     "day": 20,
+     "description": "repository access at 22.0h, outside business hours"
+    },
+    {
+     "day": 21,
+     "description": "IdP login to google-workspace at 06.0h, outside business hours"
+    },
+    {
+     "day": 21,
+     "description": "IdP login at 06.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 23,
+     "description": "IdP login to jira-cloud at 06.0h, outside business hours"
+    },
+    {
+     "day": 23,
+     "description": "IdP login at 06.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 23,
+     "description": "negative Slack message in #standup (baseline negative rate 0 %)"
+    },
+    {
+     "day": 24,
+     "description": "repository access at 02.0h, outside business hours"
+    },
+    {
+     "day": 24,
+     "description": "negative Slack message in #sales_marketing (baseline negative rate 0 %)"
+    },
+    {
+     "day": 28,
+     "description": "repository access at 03.0h, outside business hours"
+    },
+    {
+     "day": 29,
+     "description": "repository access at 02.0h, outside business hours"
+    },
+    {
+     "day": 29,
+     "description": "negative Slack message in #dm_blake_tasha (baseline negative rate 0 %)"
+    },
+    {
+     "day": 30,
+     "description": "repository access at 01.0h, outside business hours"
+    },
+    {
+     "day": 30,
+     "description": "IdP login to confluence-cloud at 07.0h, outside business hours"
+    },
+    {
+     "day": 30,
+     "description": "IdP login at 07.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 30,
+     "description": "negative Slack message in #sales_marketing (baseline negative rate 0 %)"
+    },
+    {
+     "day": 31,
+     "description": "IdP login to google-workspace at 19.0h, outside business hours"
+    },
+    {
+     "day": 31,
+     "description": "IdP login at 19.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 32,
+     "description": "IdP login to confluence-cloud at 20.0h, outside business hours"
+    },
+    {
+     "day": 32,
+     "description": "IdP login at 20.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 34,
+     "description": "negative Slack message in #sales_marketing (baseline negative rate 0 %)"
+    },
+    {
+     "day": 34,
+     "description": "repository access at 22.0h, outside business hours"
+    },
+    {
+     "day": 35,
+     "description": "repository access at 02.0h, outside business hours"
+    },
+    {
+     "day": 35,
+     "description": "negative Slack message in #sales_marketing (baseline negative rate 0 %)"
+    },
+    {
+     "day": 36,
+     "description": "repository access at 23.0h, outside business hours"
+    },
+    {
+     "day": 39,
+     "description": "IdP login to confluence-cloud at 21.0h, outside business hours"
+    },
+    {
+     "day": 39,
+     "description": "IdP login at 21.0h with no corroborating Slack/Jira/email activity (ghost login)"
+    },
+    {
+     "day": 40,
+     "description": "repository access at 03.0h, outside business hours"
+    }
+   ],
+   "recommended_action": "isolate session, open case for human review",
+   "min_trust": -4.04
+  },
+  {
+   "name": "Taylor",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Tom",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Umji",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Vince",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Yusuf",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  },
+  {
+   "name": "Zoe",
+   "verdict": "innocent",
+   "behaviors_observed": [],
+   "evidence": [],
+   "recommended_action": "none",
+   "min_trust": 0.0
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nullprotocol-negative-trust"
+version = "0.9.0"
+description = "Reference implementation of Negative Trust architectures against insider threats"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "AGPL-3.0-only"
+authors = [{name = "amarkralj"}]
+dependencies = []
+
+[project.optional-dependencies]
+bench = ["pandas>=2", "pyarrow>=14", "huggingface_hub>=0.20", "scikit-learn>=1.4", "numpy>=1.26"]
+dev = ["pytest>=8"]
+
+[project.urls]
+Author = "https://github.com/amarkralj"
+Repository = "https://github.com/amarkralj/NullProtocol-Negative-Trust-Architecture"
+
+[project.scripts]
+npcore = "npcore.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

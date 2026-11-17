@@ -1,0 +1,3267 @@
+{
+ "msf_record_mic": {
+  "tactic": "collection",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_dumping_ntds_dit_file_ntdsutil": {
+  "tactic": "credential_access",
+  "events_mapped": 1,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "administrator"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "administrator": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "administrator"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "administrator": 2
+   }
+  }
+ },
+ "cmd_dumping_ntds_dit_file_volume_shadow_copy": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "administrator"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "administrator": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "administrator"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "administrator": 4
+   }
+  }
+ },
+ "cmd_lsass_memory_dumpert_syscalls": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 4
+   }
+  }
+ },
+ "cmd_psexec_lsa_secrets_dump": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ],
+    "edr_low": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ],
+    "edr_low": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 3
+   }
+  }
+ },
+ "cmd_sam_copy_esentutl": {
+  "tactic": "credential_access",
+  "events_mapped": 1,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 2
+   }
+  }
+ },
+ "covenant_dcsync_dcerpc_drsuapi_DsGetNCChanges": {
+  "tactic": "credential_access",
+  "events_mapped": 1,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 2
+   }
+  }
+ },
+ "empire_dcsync_dcerpc_drsuapi_DsGetNCChanges": {
+  "tactic": "credential_access",
+  "events_mapped": 3,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 4,
+    "S-1-5-21-sid-349398": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 4,
+    "S-1-5-21-sid-349398": 2
+   }
+  }
+ },
+ "empire_mimikatz_backupkeys_dcerpc_smb_lsarpc": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-4b1b13"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "S-1-5-21-sid-4b1b13": 2,
+    "principal-55e9c6": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-4b1b13"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "S-1-5-21-sid-4b1b13": 2,
+    "principal-55e9c6": 2
+   }
+  }
+ },
+ "empire_mimikatz_extract_keys": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 2,
+    "S-1-5-21-sid-349398": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 2,
+    "S-1-5-21-sid-349398": 2
+   }
+  }
+ },
+ "empire_mimikatz_logonpasswords": {
+  "tactic": "credential_access",
+  "events_mapped": 1,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  }
+ },
+ "empire_mimikatz_lsadump_inject_protected_mode": {
+  "tactic": "credential_access",
+  "events_mapped": 0,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_mimikatz_lsadump_patch": {
+  "tactic": "credential_access",
+  "events_mapped": 5,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "s-1-5-18",
+     "S-1-5-21-sid-87556f"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 3,
+   "levels": {
+    "s-1-5-18": 2,
+    "S-1-5-21-sid-87556f": 4,
+    "principal-55e9c6": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "s-1-5-18",
+     "S-1-5-21-sid-87556f"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 3,
+   "levels": {
+    "s-1-5-18": 2,
+    "S-1-5-21-sid-87556f": 4,
+    "principal-55e9c6": 4
+   }
+  }
+ },
+ "empire_mimikatz_sam_access": {
+  "tactic": "credential_access",
+  "events_mapped": 3,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "s-1-5-18",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 3,
+   "levels": {
+    "s-1-5-18": 2,
+    "S-1-5-21-sid-349398": 2,
+    "principal-55e9c6": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "s-1-5-18",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 3,
+   "levels": {
+    "s-1-5-18": 2,
+    "S-1-5-21-sid-349398": 2,
+    "principal-55e9c6": 2
+   }
+  }
+ },
+ "empire_ninjacopy_dumping_ntds_dit_file": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "administrator"
+    ],
+    "remote_access_tool": [
+     "administrator"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "administrator": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "administrator"
+    ],
+    "remote_access_tool": [
+     "administrator"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "administrator": 3
+   }
+  }
+ },
+ "empire_over_pth_patch_lsass": {
+  "tactic": "credential_access",
+  "events_mapped": 3,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18",
+     "S-1-5-21-sid-62ed76",
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 3,
+   "levels": {
+    "s-1-5-18": 2,
+    "principal-da6f01": 2,
+    "S-1-5-21-sid-62ed76": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18",
+     "S-1-5-21-sid-62ed76",
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 3,
+   "levels": {
+    "s-1-5-18": 2,
+    "principal-da6f01": 2,
+    "S-1-5-21-sid-62ed76": 2
+   }
+  }
+ },
+ "empire_powerdump_sam_access": {
+  "tactic": "credential_access",
+  "events_mapped": 1,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  }
+ },
+ "empire_shell_reg_dump_sam": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 2,
+    "S-1-5-21-sid-349398": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 2,
+    "S-1-5-21-sid-349398": 2
+   }
+  }
+ },
+ "empire_shell_rubeus_asktgt_createnetonly": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "S-1-5-21-sid-62ed76",
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-da6f01": 2,
+    "S-1-5-21-sid-62ed76": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "S-1-5-21-sid-62ed76",
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-da6f01": 2,
+    "S-1-5-21-sid-62ed76": 2
+   }
+  }
+ },
+ "empire_shell_rubeus_asktgt_ptt": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "S-1-5-21-sid-62ed76",
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-da6f01": 2,
+    "S-1-5-21-sid-62ed76": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "S-1-5-21-sid-62ed76",
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-da6f01": 2,
+    "S-1-5-21-sid-62ed76": 2
+   }
+  }
+ },
+ "psh_input_capture_promptforcreds": {
+  "tactic": "credential_access",
+  "events_mapped": 0,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_lsass_memory_dump_comsvcs": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 4
+   }
+  }
+ },
+ "psh_windows_vault_web_credentials": {
+  "tactic": "credential_access",
+  "events_mapped": 0,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "rdp_interactive_taskmanager_lsass_dump": {
+  "tactic": "credential_access",
+  "events_mapped": 2,
+  "expected": [
+   "edr_high"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 3
+   }
+  }
+ },
+ "auditpol_system_user_auditpolicy_modification": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "principal-3a8d22"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-3a8d22": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "principal-3a8d22"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-3a8d22": 4
+   }
+  }
+ },
+ "cmd_bitsadmin_download_psh_script": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_disable_eventlog_service_startuptype_modification_via_registry": {
+  "tactic": "defense_evasion",
+  "events_mapped": 4,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  }
+ },
+ "cmd_mshta_javascript_getobject_sct": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_mshta_vbscript_execute_psh": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_netsh_fw_mod_open_ports": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_process_herpaderping_mimiexplorer": {
+  "tactic": "defense_evasion",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 2
+   }
+  }
+ },
+ "cmd_process_herpaderping_snippingtool": {
+  "tactic": "defense_evasion",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da6f01"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-da6f01": 2
+   }
+  }
+ },
+ "cmd_psh_stop_netprofm_eventlog_after_reboot": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  }
+ },
+ "cmd_psh_stop_netprofm_eventlog_before_reboot": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  }
+ },
+ "cmd_stop_event_logging_controlset001_minint_key": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  }
+ },
+ "cmd_stop_event_logging_controlset_minint_key": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  }
+ },
+ "cmd_wevtutil_modify_security_eventlog_path": {
+  "tactic": "defense_evasion",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 3
+   }
+  }
+ },
+ "covenant_installutil": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_lolbin_wuauclt_createremotethread": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_dllinjection_LoadLibrary_CreateRemoteThread": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_launcher_sct_regsvr32": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_monologue_netntlm_downgrade": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_powerview_ldap_ntsecuritydescriptor": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "remote_access_tool": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": false,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 1,
+    "S-1-5-21-sid-349398": 1
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "remote_access_tool": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": false,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 1,
+    "S-1-5-21-sid-349398": 1
+   }
+  }
+ },
+ "empire_psinject_PEinjection": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_wmic_add_user_backdoor": {
+  "tactic": "lateral_movement",
+  "events_mapped": 7,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_low": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-1c7ffb",
+     "principal-da6f01"
+    ],
+    "identity_config_change": [
+     "principal-55e9c6"
+    ],
+    "new_principal": [
+     "principal-55e9c6"
+    ],
+    "audit_tamper": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 4,
+   "levels": {
+    "principal-55e9c6": 3,
+    "s-1-5-18": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_low": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-1c7ffb",
+     "principal-da6f01"
+    ],
+    "identity_config_change": [
+     "principal-55e9c6"
+    ],
+    "new_principal": [
+     "principal-55e9c6"
+    ],
+    "audit_tamper": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 4,
+   "levels": {
+    "principal-55e9c6": 3,
+    "s-1-5-18": 3
+   }
+  }
+ },
+ "psh_cmstp_execution_bypassuac": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_control_panel_execution": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_disable_eventlog_service_startuptype_modification": {
+  "tactic": "defense_evasion",
+  "events_mapped": 4,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ],
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ],
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  }
+ },
+ "psh_hh_local_html_payload": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_mavinject_dll_notepad": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_metasploit_stop_netprofm_eventlog_after_reboot": {
+  "tactic": "defense_evasion",
+  "events_mapped": 4,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ],
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ],
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  }
+ },
+ "psh_metasploit_stop_netprofm_eventlog_before_reboot": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-da92dd"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 1,
+    "principal-da92dd": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-da92dd"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 1,
+    "principal-da92dd": 2
+   }
+  }
+ },
+ "psh_mshta_html_application_execution": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_register_cimprovider_execute_dll": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_stop_event_logging_controlset001_minint_key": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 3
+   }
+  }
+ },
+ "psh_stop_event_logging_controlset_minint_key": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 3
+   }
+  }
+ },
+ "purplesharp_pe_injection_createremotethread": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "reg_cmd_process_commandline_logging_disabled": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-3a8d22": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-3a8d22": 1
+   }
+  }
+ },
+ "reg_disable_eventlog_service_startuptype_modification_via_registry": {
+  "tactic": "defense_evasion",
+  "events_mapped": 3,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "principal-ee5cd7"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-ee5cd7": 4
+   }
+  }
+ },
+ "reg_meterpreter_process_commandline_logging_disabled": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-3a8d22": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-3a8d22": 1
+   }
+  }
+ },
+ "reg_stop_event_logging_controlset001_minint_key": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  }
+ },
+ "reg_stop_event_logging_controlset_minint_key": {
+  "tactic": "defense_evasion",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-ee5cd7": 1
+   }
+  }
+ },
+ "wmic_remote_xsl_jscript": {
+  "tactic": "defense_evasion",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_discover_iexplorer_version_registry": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_seatbelt_group_user": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_getdomaingroup_ldap_searchrequest_domain_admins": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_find_localadmin_smb_svcctl_OpenSCManager": {
+  "tactic": "discovery",
+  "events_mapped": 4,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "remote_access_tool": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ],
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 3,
+    "S-1-5-21-sid-349398": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "remote_access_tool": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ],
+    "edr_high": [
+     "principal-55e9c6",
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "principal-55e9c6": 3,
+    "S-1-5-21-sid-349398": 3
+   }
+  }
+ },
+ "empire_getsession_dcerpc_smb_srvsvc_NetSessEnum": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_shell_net_local_users": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_shell_net_localgroup_administrators": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_shell_rpc_samr_smb_group_domain_admins_standard_user": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_shell_samr_EnumDomainUsers": {
+  "tactic": "discovery",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_sharpview_pcre_net": {
+  "tactic": "execution",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_launcher_vbs": {
+  "tactic": "execution",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_powershell_httplistener": {
+  "tactic": "execution",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "psh_python_webserver": {
+  "tactic": "execution",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "aadinternals_export_adfsdatabaseconfig_remotely": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_com_wsman_automation": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_copy_smb_CreateRequest": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_dcom_executeexcel4macro_allowed": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_dcom_executeexcel4macro_blocked": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_dcom_iertutil_dll_hijack": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_dcom_registerxll": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_psremoting_command": {
+  "tactic": "lateral_movement",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 3
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 3
+   }
+  }
+ },
+ "covenant_psremoting_grunt": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_sc_query_dcerpc_smb_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_sharpsc_create_dcerpc_smb_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-87556f"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-87556f"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {}
+  }
+ },
+ "covenant_sharpsc_query_dcerpc_smb_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_sharpsc_start_dcerpc_smb_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_sharpsc_stop_dcerpc_smb_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_sharpwmi_create_dcerpc_wmi": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "covenant_wmi_remote_event_subscription_ActiveScriptEventConsumers": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "covenant_wmi_wbemcomn_dll_hijack": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  }
+ },
+ "empire_dcom_shellwindows_stager": {
+  "tactic": "lateral_movement",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2,
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 2,
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "empire_msbuild_dcerpc_wmi_smb": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "empire_psexec_dcerpc_tcp_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {}
+  }
+ },
+ "empire_psremoting_stager": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "empire_shell_dcerpc_smb_service_dll_hijack": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_smbexec_dcerpc_smb_svcctl": {
+  "tactic": "lateral_movement",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-349398"
+    ],
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-349398"
+    ],
+    "edr_high": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 2,
+   "levels": {
+    "s-1-5-18": 2
+   }
+  }
+ },
+ "empire_wmi_dcerpc_wmi_IWbemServices_ExecMethod": {
+  "tactic": "lateral_movement",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_low": [
+     "S-1-5-21-sid-349398"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 1
+   }
+  }
+ },
+ "mimikatz_CVE-2020-1472_Unauthenticated_NetrServerAuthenticate2": {
+  "tactic": "lateral_movement",
+  "events_mapped": 1,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 2
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "principal-55e9c6"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 2
+   }
+  }
+ },
+ "purplesharp_ad_playbook_I": {
+  "tactic": "lateral_movement",
+  "events_mapped": 9,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1,
+    "acct:principal-43529a": 1,
+    "acct:principal-495f24": 1,
+    "acct:principal-55e9c6": 1,
+    "acct:principal-c59346": 1,
+    "acct:principal-a84d84": 1,
+    "acct:principal-e8c33b": 1,
+    "acct:principal-f85056": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-55e9c6": 1,
+    "acct:principal-43529a": 1,
+    "acct:principal-495f24": 1,
+    "acct:principal-55e9c6": 1,
+    "acct:principal-c59346": 1,
+    "acct:principal-a84d84": 1,
+    "acct:principal-e8c33b": 1,
+    "acct:principal-f85056": 1
+   }
+  }
+ },
+ "schtask_create": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "schtask_modification": {
+  "tactic": "lateral_movement",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "cmd_userinitmprlogonscript_batch": {
+  "tactic": "persistence",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_persistence_registry_modification_run_keys_elevated_user": {
+  "tactic": "persistence",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_persistence_registry_modification_run_keys_standard_user": {
+  "tactic": "persistence",
+  "events_mapped": 5,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 3,
+    "principal-55e9c6": 4,
+    "acct:principal-99cd11": 1,
+    "acct:principal-3b5f39": 1
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 3,
+    "principal-55e9c6": 4,
+    "acct:principal-99cd11": 1,
+    "acct:principal-3b5f39": 1
+   }
+  }
+ },
+ "empire_schtasks_creation_execution_elevated_user": {
+  "tactic": "persistence",
+  "events_mapped": 6,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "audit_tamper": [
+     "s-1-5-18"
+    ],
+    "edr_low": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 3,
+    "principal-55e9c6": 4,
+    "acct:principal-99cd11": 1,
+    "acct:principal-3b5f39": 1
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "audit_tamper": [
+     "s-1-5-18"
+    ],
+    "edr_low": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "s-1-5-18": 3,
+    "principal-55e9c6": 4,
+    "acct:principal-99cd11": 1,
+    "acct:principal-3b5f39": 1
+   }
+  }
+ },
+ "empire_schtasks_creation_standard_user": {
+  "tactic": "persistence",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_wmi_local_event_subscriptions_elevated_user": {
+  "tactic": "persistence",
+  "events_mapped": 8,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ],
+    "audit_tamper": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 4,
+    "s-1-5-18": 4,
+    "acct:principal-99cd11": 1,
+    "acct:principal-3b5f39": 1
+   }
+  },
+  "v0.7": {
+   "detections": {
+    "edr_high": [
+     "s-1-5-18"
+    ],
+    "audit_tamper": [
+     "s-1-5-18"
+    ]
+   },
+   "as_expected": true,
+   "accounts_with_evidence": 1,
+   "levels": {
+    "principal-55e9c6": 4,
+    "s-1-5-18": 4,
+    "acct:principal-99cd11": 1,
+    "acct:principal-3b5f39": 1
+   }
+  }
+ },
+ "proxylogon_ssrf_rce_poc": {
+  "tactic": "persistence",
+  "events_mapped": 2,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-aa168c": 1
+   }
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {
+    "principal-aa168c": 1
+   }
+  }
+ },
+ "cmd_service_mod_fax": {
+  "tactic": "privilege_escalation",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ },
+ "empire_uac_shellapi_fodhelper": {
+  "tactic": "privilege_escalation",
+  "events_mapped": 0,
+  "expected": [
+   "audit_tamper",
+   "edr_high",
+   "edr_low",
+   "identity_config_change",
+   "new_principal",
+   "remote_access_tool"
+  ],
+  "v0.6": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  },
+  "v0.7": {
+   "detections": {},
+   "as_expected": false,
+   "accounts_with_evidence": 0,
+   "levels": {}
+  }
+ }
+}

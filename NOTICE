@@ -1,0 +1,27 @@
+NullProtocol Negative Trust Architecture
+Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+
+Everything in this repository (code, documents and results) is licensed under the GNU Affero General Public License,
+version 3 only (AGPL-3.0-only, see LICENSE).
+Commercial licences for use without the AGPL obligations are available from contact@xevorislabs.com.
+
+Identities from public datasets in results/ (account names, e-mail addresses, cloud account numbers, Windows
+SIDs) are replaced by pseudonyms.
+
+This product contains a re-implementation of the scoring logic (score_triage, score_verdicts) of the
+OrgForge insider-threat evaluation, https://github.com/aeriesec/orgforge, licensed under the MIT License,
+Copyright (c) Jeffrey Flynt / aeriesec. The OrgForge-IT dataset (MIT) is not redistributed; it is downloaded
+by scripts/fetch_orgforge.py.
+
+Recorded attack logs from splunk/attack_data (https://github.com/splunk/attack_data, Apache License 2.0,
+Copyright Splunk Inc.) are used for evaluation only; they are not redistributed and are downloaded by
+scripts/fetch_splunk_attack_data.py.
+
+Samples from Azure/Azure-Sentinel (https://github.com/Azure/Azure-Sentinel, MIT License, Copyright Microsoft
+Corporation) and OTRF/Security-Datasets (https://github.com/OTRF/Security-Datasets, MIT License, Copyright Open Threat
+Research Forge) are used for tests and evaluation only and are not redistributed.
+
+The CERT Insider Threat Test Dataset (Lindauer, B. (2020), Carnegie Mellon University, doi:10.1184/R1/12841247,
+test data Copyright (c) 2011 ExactData, LLC, All Rights Reserved) is used for evaluation only. It is not
+redistributed; it is downloaded by scripts/fetch_cert.sh. Reports in this repository describe the performance of
+the systems tested and refer to the general qualities of the data, as the ExactData end-user agreement permits.

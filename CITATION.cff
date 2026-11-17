@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "NullProtocol Negative Trust: an extension of zero trust for insider threats"
+message: "If you use this work, please cite it as below."
+type: software
+version: "0.9.0"
+date-released: "2026-11-17"
+authors:
+  - alias: amarkralj
+    website: "https://github.com/amarkralj"
+    affiliation: "Xevoris Labs"
+url: "https://xevorislabs.com"
+repository: "https://github.com/amarkralj/NullProtocol-Negative-Trust-Architecture"
+license: AGPL-3.0-only
+keywords:
+  - zero trust
+  - insider threat
+  - negative trust
+  - NIST SP 800-207
+  - UEBA
+  - OpenID CAEP
