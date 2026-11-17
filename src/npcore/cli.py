@@ -33,12 +33,12 @@ def _demo(seed: int, scenario: str, preset_name: str) -> None:
     sc = next(s for s in org.scenarios if s["name"] == scenario)
     subs = responsible(org)[scenario]
     watch = set(subs) | ({sc["victim"]} if "victim" in sc else set())
-    eng = Engine(preset(preset_name, v03=True), {p: p for p in org.people}, {p: org.people[p].dept for p in org.people},
+    eng = Engine(preset(preset_name, v09=True), {p: p for p in org.people}, {p: org.people[p].dept for p in org.people},
                  org.decoys, partner_domains=PARTNER_DOMAINS)
     hostile = {a for s in org.scenarios if s["name"] in HOSTILE for a in s["actors"]} | \
               {"acct:" + s["victim"] for s in org.scenarios if s["name"] == "compromised"}
     rng = random.Random(seed)
-    print(f"Scenario '{scenario}' (seed {seed}, architecture {preset_name}, v0.3); onset day {sc['onset']}")
+    print(f"Scenario '{scenario}' (seed {seed}, architecture {preset_name}, v0.9); onset day {sc['onset']}")
     print(f"Responsible subject(s): {', '.join(subs)}" + (f"; victim: {sc['victim']}" if "victim" in sc else ""))
     print("-" * 100)
     day = 1

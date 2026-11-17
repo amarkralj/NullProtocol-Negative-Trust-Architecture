@@ -28,6 +28,12 @@ Zero trust (NIST SP 800-207) checks every request, but it leaves open how much a
 trusted once they are inside. **NullProtocol Negative Trust** fills that gap with a trust algorithm built for insider
 threats.
 
+<p align="center">
+  <img src=".github/assets/demo.gif" alt="npcore demo: a hijacked account falls below zero and is blocked, while the employee is not blamed" width="900">
+  <br><sub>Real output of <code>npcore demo --scenario compromised</code>: after a vishing call, the hijacked <b>account</b> falls to L4 and every
+  further access is blocked, while the employee behind it is not blamed. Long lines shortened.</sub>
+</p>
+
 |  |  |
 |---|---|
 | **Signed trust** | Trust starts at zero, rises slowly with normal behaviour, falls quickly with evidence of misuse and can become negative. |
