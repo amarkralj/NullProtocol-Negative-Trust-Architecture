@@ -1,6 +1,6 @@
 # NullProtocol Negative Trust: definition, principles and a formal model
 
-*NullProtocol Negative Trust Architecture, working paper v0.3, 17 November 2026. Author: [github.com/amarkralj](https://github.com/amarkralj). Status: draft for discussion.*
+*NullProtocol Negative Trust Architecture, working paper v0.9. Author: [github.com/amarkralj](https://github.com/amarkralj). Status: draft for discussion.*
 
 ## Abstract
 

@@ -3,7 +3,6 @@ title: "NullProtocol Negative Trust: an extension of zero trust for insider thre
 message: "If you use this work, please cite it as below."
 type: software
 version: "0.9.0"
-date-released: "2026-11-17"
 authors:
   - alias: amarkralj
     website: "https://github.com/amarkralj"
