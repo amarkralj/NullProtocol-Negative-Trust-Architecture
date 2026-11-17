@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.0 (2026-11-17)
+## 0.9.0
 
 * Upload routine judged by breadth: someone who routinely uploads to many different sites is not flagged for one more
   (personal cloud storage, sensitive data and bursts keep their weight).
@@ -13,7 +13,7 @@
 * `scripts/run_otrf_golden_saml.py` reproduces `results/otrf_golden_saml.json` (previously produced by a one-off run).
 * CI runs lint, tests and the self-test on every push to main.
 
-## 0.8.0 (2026-11-17)
+## 0.8.0
 
 * HR notice periods: routine USB copies, uploads and e-mails home count as evidence again while a resignation is
   pending (`lifecycle` event with status `notice`; for CERT derived from the monthly LDAP snapshots).
@@ -22,7 +22,7 @@
   r4.2 detection and false alarms are no worse than v0.7. CERT r6.2 held out: 2 of 5 insiders (v0.7: 1 of 5).
 * All earlier results are unchanged: simulation, Okta, cloud and Windows logs give identical results to v0.7.
 
-## 0.7.0 (2026-11-17)
+## 0.7.0
 
 * Windows endpoint adapter (`npcore.windows`): Windows Security, Sysmon and PowerShell logs. Public indicators for
   credential theft (LSASS memory access, dumping tools, DCSync), log tampering, remote execution, remote-access tools,
@@ -33,7 +33,7 @@
   transfers; 1 of 5 insiders detected by every architecture.
 * Simulation results are identical to 0.4.0.
 
-## 0.6.0 (2026-11-17)
+## 0.6.0
 
 * Cloud log adapters (`npcore.cloudlogs`): Microsoft Entra ID sign-in and audit logs, Microsoft Graph sign-ins,
   Microsoft 365 audit log, AWS CloudTrail (native and OCSF), and the same sources as Microsoft Sentinel tables.
@@ -44,7 +44,7 @@
   OTRF Golden SAML dataset (`scripts/run_splunk_cloud.py`, `results/splunk_cloud.json`, `results/otrf_golden_saml.json`).
 * Simulation results are identical to 0.4.0 (the new rules react only to the new event types).
 
-## 0.5.0 (2026-11-17)
+## 0.5.0
 
 * Okta System Log adapter (`npcore.okta`) and a replay of the recorded Okta attack logs from
   [splunk/attack_data](https://github.com/splunk/attack_data) (`scripts/fetch_splunk_attack_data.py`,
@@ -54,7 +54,7 @@
 * Authenticator push answers are part of their session and no longer count towards session replay.
 * Simulation results are identical to 0.4.0 (the new rules react only to identity-provider events).
 
-## 0.4.0 (2026-11-17)
+## 0.4.0
 
 * Reconstructions of eight documented incidents (MGM Resorts 2023, Uber 2022, Okta support 2023, Snowflake 2024,
   Salesloft Drift 2025, Coinbase 2024/25, Cash App 2022, KnowBe4 2024) with benign look-alikes (scenario set `cases`).
@@ -65,7 +65,7 @@
 * OCSF mappings for Account Change (3001), Detection Finding (2004) and API Activity (6003).
 * The zero-trust baselines explicitly have no person/account attribution.
 
-## 0.3.0 (2026-11-17)
+## 0.3.0
 
 * Stolen session tokens: a session used from two networks at once is treated as replayed; the account session is
   contained and its owner is not blamed.
@@ -76,13 +76,13 @@
 * Organisation profiles in the simulator and cross-organisation tuning (`npcore.tune`).
 * Earlier releases remain reproducible: `version_preset("v0.1")`, `("v0.2")`.
 
-## 0.2.0 (2026-11-17)
+## 0.2.0
 
 * Personal baselines for egress channels; attribution between colleagues (device owner); lookalike destinations;
   removable-media rate spikes; web-gateway categories.
 * CERT r4.2 shadow-mode replay with calibration; Isolation Forest baseline; adaptive attack scenarios.
 * OCSF input and OpenID CAEP output.
 
-## 0.1.0 (2026-11-16)
+## 0.1.0
 
 * Definition, formal model, reference architecture, engine, simulator, OrgForge-IT adapter.
