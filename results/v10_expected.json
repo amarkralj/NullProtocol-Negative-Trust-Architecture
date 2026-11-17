@@ -1,0 +1,77 @@
+{
+  "_about": "v1.0 pre-registration. Expected evidence per recorded dataset, written from the dataset names and Splunk's descriptions BEFORE any of these files were downloaded or read. A dataset counts as detected if at least one expected kind is raised on the first run. null = out of scope (not scored), with the reason. First-run results are kept next to any later ones.",
+  "_source": "splunk/attack_data (Apache-2.0), https://github.com/splunk/attack_data",
+  "session_hijacking": {
+    "T1185/o365_concurrent_sessions_from_different_ips": ["session_replay"],
+    "T1185/azure_ad_concurrent_sessions_from_different_ips": ["session_replay"],
+    "T1185/aws_concurrent_sessions_from_different_ips": ["session_replay"],
+    "T1539/okta_web_session_multiple_ip": ["session_replay"],
+    "T1110.003/azure_ad_distributed_spray": ["password_spray"],
+    "T1528/device_code_authentication": ["device_code_phish"]
+  },
+  "github_supply_chain": {
+    "T1562.001/github_disable_classic_branch_protection": ["control_disabled"],
+    "T1562.001/github_delete_branch_ruleset": ["control_disabled"],
+    "T1562.001/github_disable_two_factor_requirement": ["control_disabled"],
+    "T1562.001/github_disable_ip_allow_list": ["control_disabled"],
+    "T1562.008/github_audit_log_stream_disabled": ["audit_tamper"],
+    "T1562.008/github_audit_log_stream_modified": ["audit_tamper"],
+    "T1195.002/github_actions_disable_security_workflow": ["control_disabled"],
+    "T1562.001/github_created_self_hosted_runner": ["new_principal"],
+    "T1485/github_delete_repository": ["destructive_change"],
+    "T1485/github_remove_organization": ["destructive_change"],
+    "T1485/github_archived_repository": ["destructive_change"],
+    "T1199/github_push_master": ["protected_push"],
+    "T1195.001/github_pull_request": null,
+    "T1195.001/github_security_advisor_alert": null,
+    "_null_reasons": "pull-request content review and vendor vulnerability alerts are not insider actions"
+  },
+  "google_workspace_gcp": {
+    "T1567.002/gsuite_share_drive": ["external_share"],
+    "T1566.001/gdrive_susp_file_share": ["external_share"],
+    "T1566.001/gsuite_outbound_email_to_external": ["external_share"],
+    "T1621/gcp_failed_mfa": ["mfa_fatigue", "brute_force"],
+    "T1621/multiple_failed_mfa_gws": ["mfa_fatigue", "brute_force"],
+    "T1110.003/gcp_gws_multiple_login_failure": ["password_spray", "brute_force"],
+    "T1556/gcp_disable_mfa": ["identity_config_change"],
+    "T1078.004/gcp_single_factor_auth": ["no_mfa_login"],
+    "T1078/gcploit_exploitation_framework": ["identity_config_change", "new_principal"],
+    "T1566.001/gsuite_susp_attachment_ext": null,
+    "T1566.001/gsuite_susp_subj": null,
+    "T1566.001/gsuite_susp_url": null,
+    "_null_reasons": "inbound phishing content is for e-mail security, not an insider-trust engine"
+  },
+  "kubernetes": {
+    "T1552.007/kube_audit_get_secret": ["secret_access"],
+    "T1204/kubernetes_privileged_pod": ["privileged_workload"],
+    "T1204/kubernetes_audit_daemonset_created": ["privileged_workload"],
+    "T1204/kube_audit_create_node_port_service": ["privileged_workload"],
+    "T1053.007/kubernetes_audit_cron_job_creation": ["privileged_workload"],
+    "T1204/kubernetes_unauthorized_access": ["discovery", "brute_force"],
+    "T1046/kubernetes_scanning": ["discovery"],
+    "T1526/kubernetes_kube_hunter": ["discovery"],
+    "T1526/kubernetes_audit_pull_image": null,
+    "_null_reasons": "container image pulls are supply-chain scanning, not an insider action"
+  },
+  "aws_exfiltration": {
+    "T1119/aws_exfil_datasync": ["bulk_data_access"],
+    "T1530/aws_exfil_high_no_getobject": ["bulk_data_access"],
+    "T1537/aws_exfil_risk_events": null,
+    "_null_reasons": "vendor-generated risk events, not raw activity"
+  },
+  "ai_agents": {
+    "aws_bedrock_claude/aws_bedrock_claude_possible_prompt_injection": ["prompt_injection"],
+    "aws_bedrock_claude/aws_bedrock_claude_sensitive_data_in_prompts": ["sensitive_prompt"],
+    "aws_bedrock_claude/aws_bedrock_claude_high_risk_filesystem_and_exec_tool_invocation": ["agent_high_risk_tool"],
+    "aws_bedrock_claude/aws_bedrock_claude_excessive_use_of_tokens": ["ai_usage_spike"],
+    "aws_bedrock_claude/aws_bedrock_claude_unusually_large_prompts": ["ai_usage_spike"],
+    "aws_bedrock_claude/aws_bedrock_claude_cross_region_possible_inference_abuse": ["ai_usage_spike"],
+    "aws_bedrock_claude/aws_bedrock_claude_hostile_prompt_sentiment": null,
+    "m365_copilot/copilot_prompt_logs": ["prompt_injection"],
+    "T1480/ai_cli_override": ["agent_autonomy_override"],
+    "mcp/mcp_server_data": "format test",
+    "ollama/ollama_server_data": "format test",
+    "_null_reasons": "prompt sentiment is not used as evidence by design (message tone is off in every release); MCP and Ollama server logs carry no attack label, so they only test that the adapter reads them",
+    "_note": "Splunk labels the Bedrock files as synthetic model-invocation logs; they are reported as such."
+  }
+}
