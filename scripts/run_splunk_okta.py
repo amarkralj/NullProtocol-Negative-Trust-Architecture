@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Replay the recorded Okta attack logs from splunk/attack_data through the engine (v0.4 and v0.5).
 
 The expected detection for each dataset is fixed here, before running, from the dataset's own description

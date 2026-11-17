@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Windows endpoint adapter: synthetic Sysmon / Security / PowerShell events in OTRF's field layout."""
 import json
 

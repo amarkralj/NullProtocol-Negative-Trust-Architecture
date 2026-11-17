@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Download the Windows host datasets of OTRF Security-Datasets (MIT, https://github.com/OTRF/Security-Datasets).
 
 Safety: only datasets/atomic/windows/*/host/*.zip from the official repository; each zip is opened in Python and only

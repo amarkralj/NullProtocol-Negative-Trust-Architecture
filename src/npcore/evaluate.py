@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Experiment harness: runs the simulator against each architecture and computes metrics.
 
 The harness plays the humans: it answers step-up prompts, second-approver requests and case

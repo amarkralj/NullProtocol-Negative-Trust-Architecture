@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """v0.3: session-replay detection (token theft), proportionality, embedding API and HTTP service."""
 import json
 import threading

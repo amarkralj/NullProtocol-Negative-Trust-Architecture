@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Replay recorded cloud attack logs from splunk/attack_data (Microsoft Entra ID, Microsoft 365, AWS CloudTrail,
 Google Workspace) through the engine (v0.5 and v0.6). Writes results/splunk_cloud.json.
 

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """End-to-end: simulator events -> OCSF records -> engine gives the same decisions as running the
 engine directly on the same events (for the event kinds OCSF carries)."""
 from npcore import policy as P

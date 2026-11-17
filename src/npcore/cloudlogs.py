@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Cloud identity and audit log adapters (v0.6): Microsoft Entra ID, Microsoft 365, Microsoft Graph sign-ins,
 AWS CloudTrail (native and OCSF) -> engine events.
 

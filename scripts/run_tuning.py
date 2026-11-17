@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Tune NT and the zero-trust baseline with correlation and decoys on three organisation types, test on two unseen ones.
 Writes results/tuning.json."""
 import json, multiprocessing as mp, pathlib, time

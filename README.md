@@ -149,7 +149,7 @@ Reproduce the results: `python scripts/evaluate_release.py sim` (also `cert`, `s
 
 ## Contact
 
-* **Website:** [xevorislabs.com](https://xevorislabs.com)
+* **Website:** [xevorislabs.com](https://xevorislabs.com). Xevoris Labs is the project name of an independent developer, not a registered company.
 * **Questions, pilots, commercial licences:** contact@xevorislabs.com
 * **Issues and contributions:** see [CONTRIBUTING.md](CONTRIBUTING.md)
 * **Security issues:** please report privately, see [SECURITY.md](SECURITY.md)

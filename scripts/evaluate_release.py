@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Release evaluation (all numbers in README and docs/evaluation.md).
 
     python scripts/evaluate_release.py sim     # fresh seeds: office 301-320, unseen profiles 601-610

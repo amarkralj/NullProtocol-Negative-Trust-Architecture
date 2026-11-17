@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Windows endpoint adapter (v0.7): Windows Security, Sysmon and PowerShell event logs -> engine events.
 
 NullProtocol Negative Trust does not replace endpoint detection and response (EDR). This adapter turns a small set of

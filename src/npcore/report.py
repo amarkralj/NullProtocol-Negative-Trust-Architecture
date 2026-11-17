@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Turn results/release_*.json into results/RESULTS.md (the tables used in README and docs/04-evaluation.md)."""
 from __future__ import annotations
 

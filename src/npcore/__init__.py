@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """NullProtocol Negative Trust Architecture: a reference implementation of NullProtocol Negative Trust (NT) architectures
 for detecting and containing insider threats.
 

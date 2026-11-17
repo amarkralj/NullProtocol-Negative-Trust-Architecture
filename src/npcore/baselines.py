@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Independent machine-learning baseline: Isolation Forest UEBA.
 
 The zero-trust baseline presets in engine.py share the architecture's signal library. This baseline

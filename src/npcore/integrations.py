@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Standards-based integration: OCSF events in, OpenID CAEP signals out.
 
 This is how NullProtocol Negative Trust Architecture runs *outside* its own simulator: any log pipeline that can emit the

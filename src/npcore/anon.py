@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Pseudonymise identities before results are written to disk.
 
 Public attack datasets (splunk/attack_data, OTRF Security-Datasets, Microsoft Sentinel samples) were recorded in

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Privacy by design: keyed pseudonymisation and four-eyes re-identification.
 
 Analysts and the trust engine only ever see pseudonyms (HMAC-SHA256 of the identity under a

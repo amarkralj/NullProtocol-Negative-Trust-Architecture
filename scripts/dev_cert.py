@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Development replay: python scripts/dev_cert.py r6.2 "nt v0.9" "zt_strong@v0.9" ...
 Same protocol as the release (calibration to 5 cases / week / 1,000 users in days 60-150, HR notice periods for all).
 Prints detected, prevented and innocent users restricted (L3+) per 1,000. Optional weights: W:kind=value."""

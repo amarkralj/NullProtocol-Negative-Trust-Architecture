@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """v0.2 mechanisms: adaptive scenarios, device-owner attribution, habitual egress, lookalike domains."""
 from npcore.engine import Engine, preset
 from npcore.evaluate import run_one

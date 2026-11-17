@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Train the two v0.8 signal weights on CERT r4.2 (70 incidents) only; r6.2 is held out.
 
 Grid: channel_burst x leaver_egress weights. Each point is a full calibrated shadow-mode replay of r4.2 (same protocol

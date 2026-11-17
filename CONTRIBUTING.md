@@ -37,7 +37,8 @@ npcore selftest
 right to submit it), and you agree that
 
 * it is licensed under AGPL-3.0-only, like the rest of the repository, and
-* you grant Xevoris Labs a perpetual, worldwide, royalty-free right to also license your contribution under other
+* you grant the project maintainer (amarkralj) and any legal entity the maintainer creates to continue the project
+  a perpetual, worldwide, royalty-free right to also license your contribution under other
   terms, including commercial licences.
 
 The second point keeps the project able to offer commercial licences; you keep the copyright to your contribution.

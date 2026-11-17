@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Case scenarios modelled on publicly documented incidents (scenario_set="cases", v0.4).
 
 Each scenario reproduces the attack path of a real incident in the simulated organisation, and each

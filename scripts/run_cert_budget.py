@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """CERT replay under the v0.9 calibration protocol: every architecture is calibrated (days 60-150, no labels) to at most
 5 cases per week and at most 1 user restricted (L3+) per week, both per 1,000 users. Releases r4.2, r6.2 and r6.1
 (r6.1 was not used in any development). Writes results/cert_budget.json; earlier protocols' results are kept.

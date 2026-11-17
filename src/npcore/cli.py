@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Command line interface.
 
     npcore suite    [--seeds 20] [--adaptive] quick comparison of all architectures (v0.3 signals) -> results/suite.json

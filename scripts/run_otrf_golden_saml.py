@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """OTRF Golden SAML (compound/GoldenSAMLADFSMailAccess): forged federation token, then mailbox access.
 
 Download the two JSON files from https://github.com/OTRF/Security-Datasets (datasets/compound/GoldenSAMLADFSMailAccess)

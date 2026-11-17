@@ -1,10 +1,11 @@
 NullProtocol Negative Trust Architecture
-Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
+Xevoris Labs is the project name of an independent developer, not a registered company.
 
 Everything in this repository (code, documents and results) is licensed under the GNU Affero General Public License,
 version 3 only (AGPL-3.0-only, see LICENSE).
 Commercial licences for use without the AGPL obligations are available from contact@xevorislabs.com.
-The Xevoris Labs name and logo (.github/assets/) are trademarks of Xevoris Labs and are not licensed under the AGPL.
+The Xevoris Labs name and logo (.github/assets/) belong to the maintainer and are not licensed under the AGPL.
 
 Identities from public datasets in results/ (account names, e-mail addresses, cloud account numbers, Windows
 SIDs) are replaced by pseudonyms.

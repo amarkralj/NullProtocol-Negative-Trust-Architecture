@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Cross-organisation tuning: learn parameters on some kinds of organisation, test on kinds never seen.
 
 The parameters are few and stay human-readable: a threshold scale, the half-lives of strong and weak

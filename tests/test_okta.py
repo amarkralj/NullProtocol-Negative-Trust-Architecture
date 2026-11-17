@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Okta System Log adapter and v0.5 identity-provider rules (synthetic Okta-format events)."""
 from npcore import okta
 from npcore.engine import Engine, version_preset

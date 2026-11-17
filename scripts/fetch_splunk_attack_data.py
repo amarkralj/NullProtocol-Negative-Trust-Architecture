@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Download selected identity attack logs from splunk/attack_data (Apache-2.0, https://github.com/splunk/attack_data).
 
 Safety: only dataset descriptor files (.yml) and the log files they name are fetched, only from the official repository,

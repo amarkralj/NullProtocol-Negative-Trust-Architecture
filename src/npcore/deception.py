@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Deception layer: active falsification of the insider hypothesis.
 
 Decoys are assets that no legitimate workflow needs: a payroll export no process reads, a cloud

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """Okta System Log adapter (v0.5): Okta events -> engine events.
 
 Okta System Log is the audit log every Okta tenant produces (JSON, one object per event). The mapping uses

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-# Copyright (C) 2026 amarkralj (https://github.com/amarkralj), Xevoris Labs
+# Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """CERT Insider Threat Test Dataset r6.2 (4,000 users, 5 labelled insiders, one per scenario), same protocol as the
 r4.2 release replay (HR notice periods from the LDAP snapshots are given to every architecture; v0.8 weights come
 from results/train_v08.json, trained on r4.2 only): 60-day learning period, threshold calibration in days 60-150 (before the first labelled incident,
