@@ -6,7 +6,8 @@ v0.9 runs exactly as released (its own adapters); v1.0 runs with npcore.sources 
 was the pre-registered detection kept, and which evidence kinds does v1.0 raise that v0.9 did not (each one is a
 possible new false alarm and is listed). Writes results/v10_regression.json.
 """
-import json, pathlib
+import json, pathlib, sys
+NEW = sys.argv[1] if len(sys.argv) > 1 else "v1.0"
 from collections import defaultdict
 from npcore import cloudlogs, okta, sources, windows
 from npcore.engine import Engine, version_preset
@@ -61,19 +62,19 @@ for suite, (prev, base, load_old, load_new) in suites.items():
             t["not readable"] += 1
             continue
         k9 = replay(ev_old, "v0.9") if ev_old else {}
-        k10 = replay(ev_new, "v1.0") if ev_new else {}
+        k10 = replay(ev_new, NEW) if ev_new else {}
         hit9, hit10 = bool(set(exp) & set(k9)), bool(set(exp) & set(k10))
         new_kinds = sorted(set(k10) - set(k9))
         t["scored"] += 1
         t["v0.9 detected"] += hit9
-        t["v1.0 detected"] += hit10
+        t[NEW + " detected"] += hit10
         t["lost"] += hit9 and not hit10
         t["gained"] += hit10 and not hit9
         t["datasets with new kinds"] += bool(new_kinds)
-        out[f"{suite}/{name}"] = {"expected": exp, "v0.9": hit9, "v1.0": hit10, "new_kinds_v1.0": new_kinds,
+        out[f"{suite}/{name}"] = {"expected": exp, "v0.9": hit9, NEW: hit10, "new_kinds_" + NEW: new_kinds,
                                   "new_kinds_expected": sorted(set(new_kinds) & set(exp))}
         if new_kinds or hit9 != hit10:
-            print(f"{suite:13s} {name[:50]:50s} v0.9 {'Y' if hit9 else '-'} v1.0 {'Y' if hit10 else '-'} new {new_kinds}")
+            print(f"{suite:13s} {name[:50]:50s} v0.9 {'Y' if hit9 else '-'} {NEW} {'Y' if hit10 else '-'} new {new_kinds}")
     total[suite] = dict(t)
 print(json.dumps(total, indent=1))
-pathlib.Path("results/v10_regression.json").write_text(json.dumps({"summary": total, "datasets": out}, indent=1))
+pathlib.Path("results/v10_regression.json" if NEW == "v1.0" else f"results/{NEW.replace('.', '')}_regression.json").write_text(json.dumps({"summary": total, "datasets": out}, indent=1))

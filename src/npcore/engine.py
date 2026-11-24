@@ -71,15 +71,17 @@ class EngineConfig:
     signals_v07: bool = False        # v0.7: Windows endpoint logs (same rules; version marks the endpoint adapter)
     signals_v08: bool = False        # v0.8: bursts on habitual egress channels, HR notice periods
     signals_v09: bool = False        # v0.9: upload routine judged by breadth, not per destination
+    signals_v11: bool = False        # v1.1: denied attempts to tamper, disable or destroy (adapters classify by verb/object)
     signals_v10: bool = False        # v1.0: GitHub, Google, Kubernetes, data-movement services, AI assistants and agents,
                                      #       concurrent networks, distributed spraying, device-code sign-ins
 
 
 def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v05: bool = False,
-           v06: bool = False, v07: bool = False, v08: bool = False, v09: bool = False, v10: bool = False) -> EngineConfig:
+           v06: bool = False, v07: bool = False, v08: bool = False, v09: bool = False, v10: bool = False, v11: bool = False) -> EngineConfig:
     """Architecture preset on a signal-library version. v02=True / v03=True give every architecture the
     same newer signals (fair comparison); NT presets also get that version's NT mechanisms."""
     cfg = _preset(name)
+    v10 = v10 or v11
     v09 = v09 or v10
     v08 = v08 or v09
     v07 = v07 or v08
@@ -101,6 +103,8 @@ def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v
         cfg.signals_v09 = True
     if v10:
         cfg.signals_v10 = True
+    if v11:
+        cfg.signals_v11 = True
     if v02 or v03:
         cfg.signals_v02 = True
         if name.startswith("nt") and name not in ("nt_no_attribution",):
@@ -115,9 +119,9 @@ def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v
 
 def version_preset(version: str) -> EngineConfig:
     """The recommended NT configuration of each release (message-tone signal off)."""
-    cfg = preset("nt_no_sentiment", v02=version in ("v0.2", "v0.3", "v0.4", "v0.5", "v0.6", "v0.7", "v0.8", "v0.9", "v1.0"),
+    cfg = preset("nt_no_sentiment", v02=version in ("v0.2", "v0.3", "v0.4", "v0.5", "v0.6", "v0.7", "v0.8", "v0.9", "v1.0", "v1.1"),
                  v03=version == "v0.3", v04=version == "v0.4", v05=version == "v0.5", v06=version == "v0.6",
-                 v07=version == "v0.7", v08=version == "v0.8", v09=version == "v0.9", v10=version == "v1.0")
+                 v07=version == "v0.7", v08=version == "v0.8", v09=version == "v0.9", v10=version == "v1.0", v11=version == "v1.1")
     cfg.name = f"nt {version}"
     return cfg
 
@@ -593,6 +597,10 @@ class Engine:
         elif k == "destructive_change":
             once("destructive_change", person, 1.0 if what == "repo.archived" else 2.0, f"destructive change: {what}",
                  "sabotage", what)
+        elif k == "denied_change" and self.cfg.signals_v11:                         # v1.1: a denied attempt to tamper, disable or destroy
+            intended, w = str(what).split("|", 1)
+            kind = {"audit_change": "audit_tamper", "control_change": "control_disabled"}.get(intended, "destructive_change")
+            once(kind, person, 1.0, f"attempted, denied: {w}", "defense_evasion", "denied:" + w)
         elif k == "protected_push":
             once("protected_push", person, 1.5, f"branch protection overridden to push to {what}", "defense_evasion", what)
         elif k == "external_share":

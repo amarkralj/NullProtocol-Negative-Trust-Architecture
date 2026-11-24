@@ -36,7 +36,7 @@ import re
 from collections import defaultdict
 from typing import Iterable, List
 
-from . import cloudlogs, okta
+from . import cloudlogs, okta, opclass
 from .sim import Event
 
 _t = cloudlogs._t
@@ -220,6 +220,9 @@ def from_gcp(e: dict) -> List[Event]:
         out.append(_ev(t, user, "config_change", True, what="privilege_grant", detail=f"runs as {sa}", ip=ip))
     elif any(p.endswith(GCP_PRIV) for p in perms) or method.endswith("SetIamPolicy"):
         out.append(_ev(t, user, "config_change", True, what="privilege_grant", detail=method or perms[0], ip=ip))
+    elif method:                                           # v1.1: any other method, by verb and object
+        req = (e.get("protoPayload") or {}).get("request") if "protoPayload" in e else None
+        out += _opclass_event(t, user, method, req, None, ip)
     return out
 
 
@@ -430,6 +433,56 @@ def ollama(path: pathlib.Path) -> List[Event]:
     return out
 
 
+# ------------------------------------------------------------------------------------------------ v1.1: by verb and object
+def _aws_user(e: dict) -> str:
+    ui = e.get("userIdentity") or {}
+    return ui.get("userName") or (ui.get("sessionContext") or {}).get("sessionIssuer", {}).get("userName") or \
+        ui.get("arn") or ui.get("principalId") or "unknown"
+
+
+def _opclass_event(t, user, op, params, error, ip=None, ua=None) -> List[Event]:
+    c = opclass.classify(op, params, error)
+    if not c:
+        return []
+    kind, what = c
+    return [_ev(t, user, kind, True, what=what, op=op, ip=ip, ua=ua)]
+
+
+def aws_by_verb(e: dict) -> List[Event]:
+    return _opclass_event(_t(e["eventTime"]), _aws_user(e), e.get("eventName", ""), e.get("requestParameters"),
+                          e.get("errorCode"), e.get("sourceIPAddress"), e.get("userAgent"))
+
+
+def ocsf_by_verb(e: dict) -> List[Event]:
+    api = e.get("api") or {}
+    actor = (e.get("actor") or {}).get("user") or {}
+    req = (api.get("request") or {}).get("data")
+    try:
+        req = json.loads(req) if isinstance(req, str) else req
+    except ValueError:
+        pass
+    err = (api.get("response") or {}).get("error") or None
+    return _opclass_event(_t(e.get("time")), actor.get("name") or actor.get("uid") or "unknown", api.get("operation", ""),
+                          req, err, (e.get("src_endpoint") or {}).get("ip"))
+
+
+def from_azure_activity(e: dict) -> List[Event]:
+    """Azure Activity log (subscription level): authorization.action or operationName, caller, status."""
+    opn = e.get("operationName")
+    op = (e.get("authorization") or {}).get("action") or ((opn or {}).get("value") if isinstance(opn, dict) else opn)
+    status = e.get("status")
+    status = (status or {}).get("value") if isinstance(status, dict) else status
+    if str(status or "Succeeded") not in ("Succeeded", "Started", "Accepted", "Success"):
+        return []
+    phase = e.get("eventName")
+    phase = (phase or {}).get("value") if isinstance(phase, dict) else phase
+    if phase and phase not in ("EndRequest", "Write", "Delete", "Action"):
+        return []                                          # BeginRequest and EndRequest describe the same call
+    t = _t(e.get("eventTimestamp") or e.get("time"))
+    return _opclass_event(t, e.get("caller") or "unknown", str(op or ""), e.get("properties"), None,
+                          (e.get("httpRequest") or {}).get("clientIpAddress") if isinstance(e.get("httpRequest"), dict) else None)
+
+
 # ------------------------------------------------------------------------------------------------ dispatch
 def _entra_extra(e: dict) -> List[Event]:
     p = e.get("properties") or {}
@@ -465,6 +518,17 @@ def convert(e: dict) -> List[Event]:
         return from_gmail(e)
     if e.get("sourcetype") == "mcp:jsonrpc" or ("jsonrpc" in e and "direction" in e):
         return from_mcp(e)
+    if "authorization" in e and "caller" in e or (isinstance(e.get("operationName"), dict) and "caller" in e):
+        return from_azure_activity(e)
+    if e.get("category") in ("UserRiskEvents", "RiskyUsers", "RiskyServicePrincipals") or \
+            e.get("operationName") in ("User Risk Detection", "Risky user"):
+        p = e.get("properties") or {}
+        who = p.get("userPrincipalName") or e.get("identity") or "unknown"
+        lvl = str(p.get("riskLevel") or p.get("riskLevelAggregated") or "high").lower()
+        return [_ev(_t(e.get("time").replace(" ", "T")) if "/" not in str(e.get("time")) else
+                    _t(__import__("datetime").datetime.strptime(e["time"], "%m/%d/%Y %I:%M:%S %p").isoformat()),
+                    who, "idp_risk", severity="high" if lvl in ("high", "none", "hidden") else lvl,
+                    source=f"Entra ID {p.get('riskEventType') or p.get('riskType') or 'risk detection'}")]
     if "eventType" in e and "actor" in e and isinstance(e.get("actor"), dict):
         x = okta.to_event(e, 0.0)
         return [x] if x else []
@@ -473,6 +537,11 @@ def convert(e: dict) -> List[Event]:
         out += aws_extra(e)
         if (e.get("eventName") or "").lower() in AWS_MOVE or e.get("eventName") == "GetObject":
             return out
+        base = cloudlogs.convert(e)
+        return base if base else aws_by_verb(e)            # v1.1: unknown operations classified by verb and object
+    if "api" in e and "metadata" in e:
+        base = cloudlogs.convert(e)
+        return base if base else ocsf_by_verb(e)
     if "properties" in e and "category" in e:
         out += _entra_extra(e)
     return out + cloudlogs.convert(e)
