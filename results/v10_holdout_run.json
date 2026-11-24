@@ -1,0 +1,715 @@
+{
+ "summary": {
+  "pre_registration": "results/v10_holdout_expected.json",
+  "pre_registration_sha256": "1268ae8b21f5fd2b5d42c8b9b88fe6ce11d7eed8f176ed811d834df07351186d",
+  "rule_files_sha256": {
+   "src/npcore/engine.py": "c6293ddd98f2bff9e059e9f065fc2a0f6dc0ce7a457242f13942bcd91a0797b2",
+   "src/npcore/sources.py": "0482965dfee4db5c906058ea43bd25bad1d07a69cec7e8d44ea633d982f5dc7a",
+   "src/npcore/aiguard.py": "9f3ae4fc6ec51c4cbe021abaaf47dbab21b733474e710e26f9048e4883c0f602",
+   "src/npcore/signals.py": "d936b603007d186ecde5167eb5ec77043b5f65b7a8e27994fba2ee3e515620d9",
+   "src/npcore/cloudlogs.py": "8f5172c9989e44733bd265e6c6eb1e184de3296fb3dc03de714c9141b184f463",
+   "src/npcore/okta.py": "f89d41b0b631e4ec023d7ae180ba04dbc731c696d39c5220daff2e3d2c69b591",
+   "src/npcore/trust.py": "2816b3c688348969959073266894a2a457a248a9672570405392c056d92e0ec5",
+   "src/npcore/policy.py": "68ec3a31df2dcf9689dfd469f740e0392136a1a01c11e39f36cb5094c25081fe"
+  },
+  "scored": 23,
+  "detected_v1.0": 5,
+  "detected_v0.9": 5,
+  "not_readable": 14,
+  "by_group": {
+   "holdout": {
+    "detected": 5,
+    "v0.9 detected": 5,
+    "not readable": 14,
+    "missed": 4,
+    "not scored": 7
+   }
+  }
+ },
+ "datasets": {
+  "T1078.004/aws_login_sfa": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1078.004/aws_login_sfa/cloudtrail.json"
+   ],
+   "events_mapped": 2,
+   "expected": [
+    "no_mfa_login"
+   ],
+   "v0.9": {
+    "detections": {
+     "no_mfa_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "off_hours_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "new_device": [
+      "arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "arn:aws:iam::000000000000:root": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "no_mfa_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "off_hours_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "new_device": [
+      "arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "arn:aws:iam::000000000000:root": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1078.004/azure_automation_runbook": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1078.004/azure_automation_runbook/azure-activity.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "new_principal",
+    "identity_config_change"
+   ],
+   "status": "not readable"
+  },
+  "T1078.004/azure_runbook_webhook": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1078.004/azure_runbook_webhook/azure-activity.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "new_principal",
+    "identity_config_change"
+   ],
+   "status": "not readable"
+  },
+  "T1087.004/aws_invoke_model_access_denied": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1087.004/aws_invoke_model_access_denied/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "discovery"
+   ],
+   "status": "not readable"
+  },
+  "T1087.004/azurehound": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1087.004/azurehound/azurehound.log"
+   ],
+   "events_mapped": 12,
+   "expected": [
+    "discovery"
+   ],
+   "v0.9": {
+    "detections": {
+     "bulk_data_access": [
+      "id-dfe662"
+     ]
+    },
+    "as_expected": false,
+    "levels": {
+     "id-dfe662": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "bulk_data_access": [
+      "id-dfe662"
+     ]
+    },
+    "as_expected": false,
+    "levels": {
+     "id-dfe662": 1
+    }
+   },
+   "status": "missed"
+  },
+  "T1110.003/aws_multiple_login_fail_per_user": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1110.003/aws_multiple_login_fail_per_user/cloudtrail.json"
+   ],
+   "events_mapped": 28,
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": {
+    "detections": {
+     "brute_force": [
+      "acct:principal-058829"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-058829": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "brute_force": [
+      "acct:principal-058829"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-058829": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1110.003/azuread_highrisk": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1110.003/azuread_highrisk/azure-audit.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "idp_risk"
+   ],
+   "status": "not readable"
+  },
+  "T1110.003/password_spraying_azuread": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1110.003/password_spraying_azuread/azuread_signin.log"
+   ],
+   "events_mapped": 31,
+   "expected": [
+    "password_spray",
+    "brute_force"
+   ],
+   "v0.9": {
+    "detections": {
+     "password_spray": [
+      "acct:user-aa4197@example.org",
+      "acct:user-e61b1b@example.org",
+      "acct:user-9665b3@example.org",
+      "acct:user-519e39@example.org",
+      "acct:user-a58528@example.org",
+      "acct:user-c1ef1b@example.org",
+      "acct:user-f4a1fb@example.org",
+      "acct:user-ecaee6@example.org",
+      "acct:user-e9dedd@example.org",
+      "acct:user-e609cd@example.org",
+      "acct:user-6c10d5@example.org",
+      "acct:user-020941@example.org",
+      "acct:user-5be038@example.org",
+      "acct:user-8253a7@example.org",
+      "acct:user-62077e@example.org",
+      "acct:user-413ae3@example.org",
+      "acct:user-6aa5d6@example.org",
+      "acct:user-1caf6c@example.org",
+      "acct:user-c87d76@example.org",
+      "acct:user-02674f@example.org",
+      "acct:user-6fb684@example.org",
+      "acct:user-8ea25e@example.org",
+      "acct:user-ffd9cb@example.org",
+      "acct:user-e48c8d@example.org",
+      "acct:user-07cdd4@example.org",
+      "acct:user-dedad2@example.org",
+      "acct:user-069c6f@example.org",
+      "acct:user-da9401@example.org",
+      "acct:user-d6ab25@example.org",
+      "acct:user-286998@example.org",
+      "acct:user-e4b176@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-e9dedd@example.org": 1,
+     "acct:user-07cdd4@example.org": 1,
+     "acct:user-e48c8d@example.org": 1,
+     "acct:user-dedad2@example.org": 1,
+     "acct:user-069c6f@example.org": 1,
+     "acct:user-a58528@example.org": 1,
+     "acct:user-1caf6c@example.org": 1,
+     "acct:user-c87d76@example.org": 1,
+     "acct:user-8253a7@example.org": 1,
+     "acct:user-ecaee6@example.org": 1,
+     "acct:user-6aa5d6@example.org": 1,
+     "acct:user-020941@example.org": 1,
+     "acct:user-e4b176@example.org": 1,
+     "acct:user-6fb684@example.org": 1,
+     "acct:user-413ae3@example.org": 1,
+     "acct:user-e61b1b@example.org": 1,
+     "acct:user-da9401@example.org": 1,
+     "acct:user-02674f@example.org": 1,
+     "acct:user-ffd9cb@example.org": 1,
+     "acct:user-aa4197@example.org": 1,
+     "acct:user-286998@example.org": 1,
+     "acct:user-8ea25e@example.org": 1,
+     "acct:user-62077e@example.org": 1,
+     "acct:user-c1ef1b@example.org": 1,
+     "acct:user-519e39@example.org": 1,
+     "acct:user-f4a1fb@example.org": 1,
+     "acct:user-5be038@example.org": 1,
+     "acct:user-6c10d5@example.org": 1,
+     "acct:user-e609cd@example.org": 1,
+     "acct:user-d6ab25@example.org": 1,
+     "acct:user-9665b3@example.org": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "password_spray": [
+      "acct:user-aa4197@example.org",
+      "acct:user-e61b1b@example.org",
+      "acct:user-9665b3@example.org",
+      "acct:user-519e39@example.org",
+      "acct:user-a58528@example.org",
+      "acct:user-c1ef1b@example.org",
+      "acct:user-f4a1fb@example.org",
+      "acct:user-ecaee6@example.org",
+      "acct:user-e9dedd@example.org",
+      "acct:user-e609cd@example.org",
+      "acct:user-6c10d5@example.org",
+      "acct:user-020941@example.org",
+      "acct:user-5be038@example.org",
+      "acct:user-8253a7@example.org",
+      "acct:user-62077e@example.org",
+      "acct:user-413ae3@example.org",
+      "acct:user-6aa5d6@example.org",
+      "acct:user-1caf6c@example.org",
+      "acct:user-c87d76@example.org",
+      "acct:user-02674f@example.org",
+      "acct:user-6fb684@example.org",
+      "acct:user-8ea25e@example.org",
+      "acct:user-ffd9cb@example.org",
+      "acct:user-e48c8d@example.org",
+      "acct:user-07cdd4@example.org",
+      "acct:user-dedad2@example.org",
+      "acct:user-069c6f@example.org",
+      "acct:user-da9401@example.org",
+      "acct:user-d6ab25@example.org",
+      "acct:user-286998@example.org",
+      "acct:user-e4b176@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-e9dedd@example.org": 1,
+     "acct:user-07cdd4@example.org": 1,
+     "acct:user-e48c8d@example.org": 1,
+     "acct:user-dedad2@example.org": 1,
+     "acct:user-069c6f@example.org": 1,
+     "acct:user-a58528@example.org": 1,
+     "acct:user-1caf6c@example.org": 1,
+     "acct:user-c87d76@example.org": 1,
+     "acct:user-8253a7@example.org": 1,
+     "acct:user-ecaee6@example.org": 1,
+     "acct:user-6aa5d6@example.org": 1,
+     "acct:user-020941@example.org": 1,
+     "acct:user-e4b176@example.org": 1,
+     "acct:user-6fb684@example.org": 1,
+     "acct:user-413ae3@example.org": 1,
+     "acct:user-e61b1b@example.org": 1,
+     "acct:user-da9401@example.org": 1,
+     "acct:user-02674f@example.org": 1,
+     "acct:user-ffd9cb@example.org": 1,
+     "acct:user-aa4197@example.org": 1,
+     "acct:user-286998@example.org": 1,
+     "acct:user-8ea25e@example.org": 1,
+     "acct:user-62077e@example.org": 1,
+     "acct:user-c1ef1b@example.org": 1,
+     "acct:user-519e39@example.org": 1,
+     "acct:user-f4a1fb@example.org": 1,
+     "acct:user-5be038@example.org": 1,
+     "acct:user-6c10d5@example.org": 1,
+     "acct:user-e609cd@example.org": 1,
+     "acct:user-d6ab25@example.org": 1,
+     "acct:user-9665b3@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1110.003/generic_password_spray": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1110.003/generic_password_spray/password_spray_attack.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "password_spray",
+    "brute_force"
+   ],
+   "status": "not readable"
+  },
+  "T1136.003/azure_automation_account": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1136.003/azure_automation_account/azure-activity.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "new_principal"
+   ],
+   "status": "not readable"
+  },
+  "T1201/aws_password_policy": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1201/aws_password_policy/amazon_security_lake.json",
+    "attack_techniques/T1201/aws_password_policy/cloudtrail.json"
+   ],
+   "events_mapped": 4,
+   "expected": [
+    "discovery"
+   ],
+   "v0.9": {
+    "detections": {},
+    "as_expected": false,
+    "levels": {}
+   },
+   "v1.0": {
+    "detections": {},
+    "as_expected": false,
+    "levels": {}
+   },
+   "status": "missed"
+  },
+  "T1485/aws_delete_knowledge_base": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1485/aws_delete_knowledge_base/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "destructive_change"
+   ],
+   "status": "not readable"
+  },
+  "T1490/aws_bucket_version": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1490/aws_bucket_version/asl_ocsf_cloudtrail.json",
+    "attack_techniques/T1490/aws_bucket_version/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "destructive_change",
+    "audit_tamper",
+    "control_disabled"
+   ],
+   "status": "not readable"
+  },
+  "T1556.006/aws_new_mfa_method_registered_for_user": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1556.006/aws_new_mfa_method_registered_for_user/amazon_security_lake.json",
+    "attack_techniques/T1556.006/aws_new_mfa_method_registered_for_user/asl_ocsf_cloudtrail.json",
+    "attack_techniques/T1556.006/aws_new_mfa_method_registered_for_user/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "identity_config_change"
+   ],
+   "status": "not readable"
+  },
+  "T1562.008/aws_bedrock_delete_guardrails": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1562.008/aws_bedrock_delete_guardrails/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "control_disabled",
+    "audit_tamper"
+   ],
+   "status": "not readable"
+  },
+  "T1562.008/aws_bedrock_delete_model_invocation_logging": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1562.008/aws_bedrock_delete_model_invocation_logging/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "audit_tamper",
+    "control_disabled"
+   ],
+   "status": "not readable"
+  },
+  "T1562/azuread_disable_blockconsent_for_riskapps": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1562/azuread_disable_blockconsent_for_riskapps/azuread_disable_blockconsent_for_riskapps.log"
+   ],
+   "events_mapped": 2,
+   "expected": [
+    "audit_tamper",
+    "control_disabled"
+   ],
+   "v0.9": {
+    "detections": {
+     "identity_config_change": [
+      "user-62eace@example.org"
+     ],
+     "off_hours_login": [
+      "user-62eace@example.org"
+     ],
+     "new_device": [
+      "user-62eace@example.org"
+     ],
+     "multi_signal": [
+      "user-62eace@example.org"
+     ]
+    },
+    "as_expected": false,
+    "levels": {
+     "user-62eace@example.org": 3
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "identity_config_change": [
+      "user-62eace@example.org"
+     ],
+     "off_hours_login": [
+      "user-62eace@example.org"
+     ],
+     "new_device": [
+      "user-62eace@example.org"
+     ],
+     "multi_signal": [
+      "user-62eace@example.org"
+     ]
+    },
+    "as_expected": false,
+    "levels": {
+     "user-62eace@example.org": 3
+    }
+   },
+   "status": "missed"
+  },
+  "T1578.005/aws_authorize_security_group": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1578.005/aws_authorize_security_group/aws_authorize_security_group.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "control_disabled",
+    "audit_tamper"
+   ],
+   "status": "not readable"
+  },
+  "T1580/aws_bedrock_list_foundation_model_failures": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1580/aws_bedrock_list_foundation_model_failures/cloudtrail.json"
+   ],
+   "events_mapped": 12,
+   "expected": [
+    "discovery"
+   ],
+   "v0.9": {
+    "detections": {
+     "discovery": [
+      "principal-6a3939"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-6a3939": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "discovery": [
+      "principal-6a3939"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-6a3939": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1586.003/aws_console_login_multiple_ips": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1586.003/aws_console_login_multiple_ips/cloudtrail.json"
+   ],
+   "events_mapped": 8,
+   "expected": [
+    "session_replay",
+    "impossible_travel"
+   ],
+   "v0.9": {
+    "detections": {
+     "no_mfa_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "off_hours_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "new_device": [
+      "arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": false,
+    "levels": {
+     "arn:aws:iam::000000000000:root": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "no_mfa_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "off_hours_login": [
+      "arn:aws:iam::000000000000:root"
+     ],
+     "new_device": [
+      "arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": false,
+    "levels": {
+     "arn:aws:iam::000000000000:root": 1
+    }
+   },
+   "status": "missed"
+  },
+  "T1621/aws_failed_mfa": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1621/aws_failed_mfa/cloudtrail.json"
+   ],
+   "events_mapped": 14,
+   "expected": [
+    "mfa_fatigue",
+    "brute_force"
+   ],
+   "v0.9": {
+    "detections": {
+     "brute_force": [
+      "acct:arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:arn:aws:iam::000000000000:root": 1
+    }
+   },
+   "v1.0": {
+    "detections": {
+     "brute_force": [
+      "acct:arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:arn:aws:iam::000000000000:root": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1621/aws_mfa_disabled": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1621/aws_mfa_disabled/amazon_security_lake.json",
+    "attack_techniques/T1621/aws_mfa_disabled/asl_ocsf_cloudtrail.json",
+    "attack_techniques/T1621/aws_mfa_disabled/cloudtrail.json"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "identity_config_change"
+   ],
+   "status": "not readable"
+  },
+  "T1567/gdrive": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1567/gdrive/gdrive_linux.log",
+    "attack_techniques/T1567/gdrive/gdrive_windows.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "external_share"
+   ],
+   "status": "not readable"
+  },
+  "T1078.004/azuread": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1078.004/azuread/azure-audit.log"
+   ],
+   "events_mapped": 2,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1078.004/azuread_pws": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1078.004/azuread_pws/azure-audit.log"
+   ],
+   "events_mapped": 5,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1556/azuread": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1556/azuread/azure-audit.log"
+   ],
+   "events_mapped": 1,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1621/azuread": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1621/azuread/azure-audit.log"
+   ],
+   "events_mapped": 2,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1204/kubernetes_falco_shell_spawned": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1204/kubernetes_falco_shell_spawned/kubernetes_falco_shell_spawned.log"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1212/kubernetes_nginx_lfi_attack": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1212/kubernetes_nginx_lfi_attack/kubernetes_nginx_lfi_attack.log"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1212/kuberntest_nginx_rfi_attack": {
+   "group": "holdout",
+   "files": [
+    "attack_techniques/T1212/kuberntest_nginx_rfi_attack/kubernetes_nginx_rfi_attack.log"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  }
+ }
+}
