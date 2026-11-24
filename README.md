@@ -79,6 +79,8 @@ Reconstructions in simulation, not the original breach data. Details: [docs/08-r
 | Microsoft Entra ID, Microsoft 365 and AWS attack logs (splunk/attack_data) | **89 / 105** detected on the first run |
 | Windows credential theft ([OTRF Security-Datasets](https://github.com/OTRF/Security-Datasets)) | **20 / 23** detected |
 | Golden SAML, forged federation token (OTRF) | detected, evidence on the impersonated administrator |
+| v1.0: GitHub, Google, Kubernetes, AWS, AI assistants and agents (splunk/attack_data, pre-registered) | **44 / 45** on the development set (v0.9: 11) |
+| v1.0 **blind hold-out**, rules frozen before download | **5 / 23**, the same as v0.9 ([why](docs/09-v1.0.md)) |
 | CERT insider threat datasets r4.2, r6.2, r6.1 (Carnegie Mellon) | **3 / 3**: at least as many insiders found as our strongest zero-trust baseline, fewer innocent users restricted |
 
 <details>
@@ -107,8 +109,9 @@ Full method, every version, the limits and the misses: [docs/04-evaluation.md](d
 raw numbers in [results/](results/) ([summary](results/RESULTS.md)) · every result can be regenerated with
 [scripts/](scripts/). Identities from public datasets are pseudonymised.
 
-> **Status: v0.9, research prototype.** Tested in simulation, on recorded attack logs and on three CERT datasets.
-> Not yet deployed in a real organisation; a shadow-mode pilot is next.
+> **Status: v1.0, research prototype.** Tested in simulation, on recorded attack logs and on three CERT datasets.
+> The response layer plans documented API calls (Entra, Okta, Google, AWS, GitHub, Kubernetes, Shared Signals) and is
+> tested against a local receiver, not yet against real tenants. Not yet deployed in a real organisation.
 
 ## Quick start
 
@@ -151,6 +154,7 @@ Reproduce the results: `python scripts/evaluate_release.py sim` (also `cert`, `s
 | [06 Integration](docs/06-integration.md) | OCSF in, CAEP out, Python API, HTTP service, Docker |
 | [07 Roadmap](docs/07-roadmap.md) | What comes next |
 | [08 Real-world cases](docs/08-real-world-cases.md) | Eight documented incidents, reproduced and detected |
+| [09 v1.0](docs/09-v1.0.md) | New log sources, the response layer, and the blind hold-out test |
 | [Changelog](CHANGELOG.md) | Every version since v0.1 |
 
 ## Contact

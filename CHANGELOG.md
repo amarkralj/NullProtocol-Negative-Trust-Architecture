@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.0
+
+* New log sources (`npcore.sources`): GitHub audit log and Actions workflow runs, Google Workspace (login, admin,
+  Drive, Gmail), Google Cloud audit logs, Kubernetes audit and events, AWS DataSync / replication / S3 object reads,
+  Amazon Bedrock model-invocation logs, Microsoft 365 Copilot (Purview export), Linux audit (AI coding CLIs), MCP
+  JSON-RPC and Ollama server logs; Okta and Entra device-code sign-ins through the same loader.
+* New evidence (`signals_v10`): security control disabled, destructive change, protected push, external share, secret
+  access, privileged workload, denied-request and scanner discovery, object-read volume, device-code phishing,
+  distributed spraying, concurrent networks used by different clients, a session cookie that jumps, prompt injection,
+  credentials in prompts, high-risk agent tools, AI usage spikes, AI CLIs with every approval off (`npcore.aiguard`).
+  What an AI agent does is evidence about the agent's own account (`acct:agent:<id>`), not about the person.
+* Response layer (`npcore.respond`, `npcore respond`): signed CAEP events (JWS HS256), session revocation in Entra,
+  Okta, Google and AWS, suspension (always with approval), GitHub branch-protection restore, Kubernetes pod deletion
+  (approval), dry run by default, every action in the hash-chained ledger before it runs, undo for every action.
+* Evaluation (`docs/09-v1.0.md`): 44 / 45 on the 55 pre-registered development datasets (first run 43; v0.9: 11).
+  **Blind hold-out, rules frozen before download: 5 / 23, the same as v0.9.** No detection lost on 118 earlier
+  datasets; simulator identical to v0.9. Proof bundle with commits and SHA-256 of every input: `results/v10_proof.json`.
+* Fixed after the freeze (no recorded result changes): card numbers with only two distinct digits were ignored.
+
 ## 0.9.0
 
 * Upload routine judged by breadth: someone who routinely uploads to many different sites is not flagged for one more

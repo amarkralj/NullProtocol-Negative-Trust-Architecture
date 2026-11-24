@@ -5,7 +5,7 @@
   "rule_files_sha256": {
    "src/npcore/engine.py": "c6293ddd98f2bff9e059e9f065fc2a0f6dc0ce7a457242f13942bcd91a0797b2",
    "src/npcore/sources.py": "0482965dfee4db5c906058ea43bd25bad1d07a69cec7e8d44ea633d982f5dc7a",
-   "src/npcore/aiguard.py": "9f3ae4fc6ec51c4cbe021abaaf47dbab21b733474e710e26f9048e4883c0f602",
+   "src/npcore/aiguard.py": "e84d133724f6747fb48de79beb8044793bc6f3841dc2baf11f08c408f8dfe7db",
    "src/npcore/signals.py": "d936b603007d186ecde5167eb5ec77043b5f65b7a8e27994fba2ee3e515620d9",
    "src/npcore/cloudlogs.py": "8f5172c9989e44733bd265e6c6eb1e184de3296fb3dc03de714c9141b184f463",
    "src/npcore/okta.py": "f89d41b0b631e4ec023d7ae180ba04dbc731c696d39c5220daff2e3d2c69b591",
@@ -889,9 +889,9 @@
     "as_expected": true,
     "levels": {
      "acct:user-c6b61e@example.org": 1,
-     "acct:user-cdd5e0@example.org": 1,
-     "acct:user-3b3307@example.org": 1,
      "acct:user-d892fb@example.org": 1,
+     "acct:user-3b3307@example.org": 1,
+     "acct:user-cdd5e0@example.org": 1,
      "acct:user-cfc8c1@example.org": 1,
      "acct:user-26bd77@example.org": 1,
      "acct:user-c8ba88@example.org": 1,
@@ -956,9 +956,9 @@
     "as_expected": true,
     "levels": {
      "acct:user-c6b61e@example.org": 1,
-     "acct:user-cdd5e0@example.org": 1,
-     "acct:user-3b3307@example.org": 1,
      "acct:user-d892fb@example.org": 1,
+     "acct:user-3b3307@example.org": 1,
+     "acct:user-cdd5e0@example.org": 1,
      "acct:user-cfc8c1@example.org": 1,
      "acct:user-26bd77@example.org": 1,
      "acct:user-c8ba88@example.org": 1,

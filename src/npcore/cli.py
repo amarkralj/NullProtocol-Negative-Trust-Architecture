@@ -149,6 +149,14 @@ def main(argv=None) -> int:
     sv.add_argument("--host", default="127.0.0.1"); sv.add_argument("--port", type=int, default=8080)
     sub.add_parser("selftest")
     co = sub.add_parser("check-ocsf"); co.add_argument("file"); co.add_argument("--directory", required=True)
+    rp = sub.add_parser("respond", help="v1.0: read recorded logs, decide, and plan (or run) the response actions")
+    rp.add_argument("files", nargs="+")
+    rp.add_argument("--systems", default="ssf", help="connectors that exist: ssf,entra,okta,google,aws,github,kubernetes,host")
+    rp.add_argument("--okta-domain", default="example.okta.com"); rp.add_argument("--k8s-api", default="https://kubernetes.default.svc")
+    rp.add_argument("--audience", default="https://receiver.example/ssf", help="SSF receiver URL for signed CAEP events")
+    rp.add_argument("--execute", action="store_true", help="run actions whose connector token is set (NP_*_TOKEN); default: dry run")
+    rp.add_argument("--approve", default="", help="comma list of action ids a person has approved")
+    rp.add_argument("--out", default="results/response_plan.json")
     a = ap.parse_args(argv)
     out = pathlib.Path("results"); out.mkdir(exist_ok=True)
     if a.cmd == "suite":
@@ -199,6 +207,25 @@ def main(argv=None) -> int:
         return _selftest()
     elif a.cmd == "check-ocsf":
         _check_ocsf(a.file, a.directory)
+    elif a.cmd == "respond":
+        from . import sources
+        from .respond import Responder, respond_replay
+        events = sources.load([pathlib.Path(f) for f in a.files])
+        if not events:
+            print("no events could be read from", a.files); return 1
+        eng, r = respond_replay(events, systems=tuple(a.systems.split(",")),
+                                cfg={"okta_domain": a.okta_domain, "k8s_api": a.k8s_api})
+        r.audience = a.audience
+        for act in r.plan:
+            print(f"{act.id}  {act.system:10s} {act.action:26s} {'NEEDS APPROVAL' if act.approval else 'auto':14s} "
+                  f"{act.method} {act.url}")
+        res = r.execute(approved=set(filter(None, a.approve.split(",")))) if a.execute else []
+        for x in res:
+            print("result", x)
+        pathlib.Path(a.out).write_text(json.dumps({"actions": [x.to_dict() for x in r.plan], "results": res,
+                                                   "ledger_ok": r.ledger.verify()[0]}, indent=1))
+        r.ledger.dump_jsonl(pathlib.Path(a.out).with_suffix(".ledger.jsonl"))
+        print(f"{len(r.plan)} actions ({'executed where possible' if a.execute else 'dry run'}); plan: {a.out}")
     elif a.cmd == "verify-ledger":
         from .ledger import Ledger
         ok, bad = Ledger.load_jsonl(a.file).verify()

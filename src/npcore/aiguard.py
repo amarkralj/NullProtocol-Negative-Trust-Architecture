@@ -78,7 +78,7 @@ def secrets(text: str) -> List[str]:
     found = [k for k, rx in SECRET_RX.items() if rx.search(text)]
     for m in _CARD.finditer(text):
         d = re.sub(r"\D", "", m.group())
-        if 13 <= len(d) <= 19 and len(set(d)) > 2 and _luhn(d):
+        if 13 <= len(d) <= 19 and len(set(d)) > 1 and _luhn(d):
             found.append("card_number")
             break
     return found

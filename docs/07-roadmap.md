@@ -62,6 +62,21 @@ API Activity 6003).
 * CERT r4.2, r6.2 and the untouched r6.1: at least as many insiders detected as every baseline, fewer innocent
   users restricted; the baselines still prevent more of each incident.
 
+## v1.0: more systems, the response chain, a blind test
+
+* GitHub, Google Workspace and Cloud, Kubernetes, AWS data movement, AI assistants and AI agents (agents as their own
+  principals); signed CAEP events and documented session-revocation, suspension and remediation calls with approval
+  gates and a hash-chained action record ([09](09-v1.0.md)).
+* Development set 44 / 45; **blind hold-out 5 / 23, the same as v0.9**: name-based operation mapping does not generalise.
+
+## Next: v1.1
+
+1. Classify cloud operations by verb and object instead of by name; Azure Activity log and Entra risk-detection adapters.
+2. A new blind test on data no release has seen (for example the public flaws.cloud CloudTrail logs or new
+   splunk/attack_data folders), pre-registered before download.
+3. Execute the response layer against real test tenants (a GitHub organisation, an Okta developer tenant, an Entra
+   test tenant) and record the API responses.
+
 ## Next: data
 
 | Source | Status | Safe on a laptop |
