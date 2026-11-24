@@ -1,0 +1,97 @@
+{
+ "_about": "v1.0 HOLD-OUT pre-registration. Written on 2026-11-24 BEFORE any of these datasets was downloaded or read: expected evidence follows only from each dataset's folder name. The v1.0 rules are developed on the 55 datasets of v10_expected.json only, then frozen (SHA-256 of every rule file recorded in v10_holdout_run.json) and run ONCE on these files; that first run is the result. A dataset counts as detected if at least one expected kind is raised. null = not scored, with the reason.",
+ "_source": "splunk/attack_data (Apache-2.0), https://github.com/splunk/attack_data",
+ "_selection": "every dataset folder in splunk/attack_data whose name starts with azure|aad|o365|m365|aws|gcp|okta|entra|github|gsuite|kube|google, or names an AI service, password spraying or Google Drive, and that no earlier release downloaded",
+ "datasets": {
+  "T1078.004/aws_login_sfa": [
+   "no_mfa_login"
+  ],
+  "T1078.004/azure_automation_runbook": [
+   "new_principal",
+   "identity_config_change"
+  ],
+  "T1078.004/azure_runbook_webhook": [
+   "new_principal",
+   "identity_config_change"
+  ],
+  "T1087.004/aws_invoke_model_access_denied": [
+   "discovery"
+  ],
+  "T1087.004/azurehound": [
+   "discovery"
+  ],
+  "T1110.003/aws_multiple_login_fail_per_user": [
+   "brute_force",
+   "password_spray"
+  ],
+  "T1110.003/azuread_highrisk": [
+   "idp_risk"
+  ],
+  "T1110.003/password_spraying_azuread": [
+   "password_spray",
+   "brute_force"
+  ],
+  "T1110.003/generic_password_spray": [
+   "password_spray",
+   "brute_force"
+  ],
+  "T1136.003/azure_automation_account": [
+   "new_principal"
+  ],
+  "T1201/aws_password_policy": [
+   "discovery"
+  ],
+  "T1485/aws_delete_knowledge_base": [
+   "destructive_change"
+  ],
+  "T1490/aws_bucket_version": [
+   "destructive_change",
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "T1556.006/aws_new_mfa_method_registered_for_user": [
+   "identity_config_change"
+  ],
+  "T1562.008/aws_bedrock_delete_guardrails": [
+   "control_disabled",
+   "audit_tamper"
+  ],
+  "T1562.008/aws_bedrock_delete_model_invocation_logging": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "T1562/azuread_disable_blockconsent_for_riskapps": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "T1578.005/aws_authorize_security_group": [
+   "control_disabled",
+   "audit_tamper"
+  ],
+  "T1580/aws_bedrock_list_foundation_model_failures": [
+   "discovery"
+  ],
+  "T1586.003/aws_console_login_multiple_ips": [
+   "session_replay",
+   "impossible_travel"
+  ],
+  "T1621/aws_failed_mfa": [
+   "mfa_fatigue",
+   "brute_force"
+  ],
+  "T1621/aws_mfa_disabled": [
+   "identity_config_change"
+  ],
+  "T1567/gdrive": [
+   "external_share"
+  ],
+  "T1078.004/azuread": null,
+  "T1078.004/azuread_pws": null,
+  "T1556/azuread": null,
+  "T1621/azuread": null,
+  "T1204/kubernetes_falco_shell_spawned": null,
+  "T1212/kubernetes_nginx_lfi_attack": null,
+  "T1212/kuberntest_nginx_rfi_attack": null,
+  "_null_reasons": "folders named only 'azuread' / 'azuread_pws' do not say which attack they hold; Falco runtime alerts have no adapter; file-inclusion attacks on a web server are not insider actions"
+ }
+}
