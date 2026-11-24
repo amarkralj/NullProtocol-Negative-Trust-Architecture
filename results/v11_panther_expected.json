@@ -1,0 +1,1496 @@
+{
+ "_about": "v1.1 blind test, step 1: pre-register expectations for the unit-test logs of panther-labs/panther-analysis\n(Apache-2.0), written from RULE FILE NAMES ONLY, before any rule file or test log is downloaded.\n\nWrites results/v11_panther_expected.json. The keyword table below is the whole pre-registration: the first matching row\ndecides the expected evidence kinds of a rule (None = not scored, with the reason).\n\nMetrics, fixed here:\n  * detection: a test log marked ExpectedResult: true, replayed alone through the engine, raises at least one expected\n    kind (weight > 0). Reported per rule (all of its positive tests detected / some / none) and per test log.\n  * false alarm: a test log marked ExpectedResult: false, of ANY in-scope rule, raises evidence of weight >= 1.0 (enough\n    to move a principal to L1 on its own). Reported per test log.\n  * logs our adapters cannot read count as missed (positives) and as no alarm (negatives); both are also reported.\nCaveat fixed in advance: these are hand-written unit-test logs, not recordings of attacks.",
+ "_source": "https://github.com/panther-labs/panther-analysis at commit e9c67b0820fda3031778b116b58bc660bf7f2d03 (Apache-2.0)",
+ "_commit": "e9c67b0820fda3031778b116b58bc660bf7f2d03",
+ "_written": "2026-11-24, before any rule file or test log was downloaded",
+ "_counts": {
+  "rules": 427,
+  "scored": 304,
+  "not_scored": 123
+ },
+ "rules": {
+  "rules/aws_bedrockmodelinvocation_rules/aws_bedrockmodelinvocation_abnormaltokenusage.yml": [
+   "ai_usage_spike"
+  ],
+  "rules/aws_bedrockmodelinvocation_rules/aws_bedrockmodelinvocation_guardrailintervened.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/aws_cloudtrail_rules/aws_add_malicious_lambda_extension.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/aws_cloudtrail_rules/aws_ami_modified_for_public_access.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/aws_cloudtrail_rules/aws_backdoor_lambda_function.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_bedrock_deletemodelinvocationloggingconfiguration.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_bedrock_guardrail_update_delete.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_account_discovery.yml": [
+   "discovery"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_attempt_to_leave_org.yml": [
+   "control_disabled",
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_created.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_event_selectors_disabled.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_loginprofilecreatedormodified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_password_policy_discovery.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_password_spraying.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_region_enabled.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_ses_check_identity_verifications.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_ses_check_send_quota.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_ses_check_ses_sending_enabled.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_ses_enumeration.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_ses_list_identities.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_short_lifecycle.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_stopped.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_unsuccessful_mfa_attempt.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_cloudtrail_useraccesskeyauth.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_codebuild_made_public.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/aws_cloudtrail_rules/aws_config_service_created.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_config_service_disabled_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_console_getsignintoken.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_console_login.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_console_login_without_mfa.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_console_login_without_saml.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_console_root_login.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_console_root_login_failed.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_console_signin.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_dns_logs_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_download_instance_user_data.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_ebs_encryption_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_gateway_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_launch_unusual_ec2_instances.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_ec2_manual_security_group_changes.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_many_passwors_read_attempts.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_ec2_monitoring.yml": {
+   "not_scored": "informational activity, not misuse by itself"
+  },
+  "rules/aws_cloudtrail_rules/aws_ec2_multi_instance_connect.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_ec2_network_acl_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_route_table_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_security_group_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_startup_script_change.yml": [
+   "identity_config_change",
+   "new_principal",
+   "privileged_workload"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_stopinstances.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_ec2_traffic_mirroring.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_vpc_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ec2_vulnerable_xz_image_launched.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/aws_cloudtrail_rules/aws_ecr_crud.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_ecr_events.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_iam_anything_changed.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_assume_role_blocklist_ignored.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_attach_admin_role_policy.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_attach_admin_user_policy.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_backdoor_role.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_compromised_key_quarantine.yml": [
+   "idp_risk",
+   "identity_config_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_create_role.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_create_user.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_entity_created_without_cloudformation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_group_read_only_events.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_policy_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_user_key_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_iam_user_recon_denied.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_imds_credential_exfiltration.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access",
+   "identity_config_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ipset_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_key_compromised.yml": [
+   "idp_risk",
+   "identity_config_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_kms_cmk_loss.yml": [
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_lambda_crud.yml": {
+   "not_scored": "informational activity, not misuse by itself"
+  },
+  "rules/aws_cloudtrail_rules/aws_macie_evasion.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_modify_cloud_compute_infrastructure.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_network_acl_permissive_entry.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_overwrite_lambda_code.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_activity_stream_stopped.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_automated_backup_deleted.yml": [
+   "control_disabled",
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_cluster_failover.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_rds_deletion_protection_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_iam_role_added.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_instance_deletion.yml": [
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_instance_made_public.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_instance_rebooted.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_rds_log_file_downloaded.yml": [
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_manual_snapshot_created.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_rds_master_pass_updated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_publicrestore.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_security_group_ingress_authorized.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_snapshot_copied_cross_region.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_snapshot_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_snapshot_enumeration.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_rds_snapshot_export.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_rds_snapshot_shared.yml": [
+   "external_share",
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_resource_made_public.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/aws_cloudtrail_rules/aws_root_access_key_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_root_activity.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_root_password_changed.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_bucket_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_bucket_policy_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_copy_object_cross_account_kms.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_copy_object_to_external_account_bucket.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_copy_object_with_client_side_encryption.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_s3_delete_bucket_encryption.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_delete_bucket_replication.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_delete_object.yml": [
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_delete_objects.yml": [
+   "destructive_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_delete_public_access_block.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_disable_bucket_logging.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_disable_mfa_delete.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_ransomware_note_upload.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/aws_cloudtrail_rules/aws_s3_security_control_disabling.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_s3_suspend_versioning.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_saml_activity.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_secretsmanager_retrieve_secrets.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_secretsmanager_retrieve_secrets_batch.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_secretsmanager_retrieve_secrets_catchall.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_secretsmanager_retrieve_secrets_multiregion.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_security_configuration_change.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_securityhub_finding_evasion.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_snapshot_made_public.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/aws_cloudtrail_rules/aws_software_discovery.yml": [
+   "discovery"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ssm_decrypt_ssm_params.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/aws_cloudtrail_rules/aws_ssm_distributed_command.yml": [
+   "privileged_workload",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_sts_getcalleridentity_trufflehog.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/aws_cloudtrail_rules/aws_sts_getsessiontoken_misuse.yml": [
+   "session_replay",
+   "identity_config_change"
+  ],
+  "rules/aws_cloudtrail_rules/aws_unauthorized_api_call.yml": [
+   "discovery"
+  ],
+  "rules/aws_cloudtrail_rules/aws_unused_region.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_cloudtrail_rules/aws_update_credentials.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_user_login_profile_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/aws_vpc_flow_logs_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/aws_vpce_access_denied.yml": [
+   "discovery"
+  ],
+  "rules/aws_cloudtrail_rules/aws_vpce_external_principal.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_vpce_s3_external_ip.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_vpce_sensitive_api_calls.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/aws_waf_disassociation.yml": [
+   "control_disabled"
+  ],
+  "rules/aws_cloudtrail_rules/retrieve_sso_access_token.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_cloudtrail_rules/role_assumed_by_aws_service.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/role_assumed_by_user.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/aws_cloudtrail_rules/signin_with_aws_cli_prompt.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/aws_eks_rules/anonymous_api_access.yml": [
+   "discovery"
+  ],
+  "rules/aws_eks_rules/source_ip_multiple_403.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/aws_eks_rules/system_namespace_public_ip.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/azure_activity_rules/azure_action_groups_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_advisor_security_recommendation.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/azure_activity_rules/azure_alert_rules_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_alert_suppression_rule_created.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_automation_account_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_automation_runbook_created_or_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_automation_runbook_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_automation_schedule_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_automation_webhook_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_diagnostic_settings_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_disk_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_event_hub_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_firewall_policy_deleted.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_keyvault_certificate_accessed.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/azure_activity_rules/azure_keyvault_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_keyvault_key_accessed_or_recovered.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/azure_activity_rules/azure_keyvault_key_purged.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_keyvault_purged.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_keyvault_secret_accessed_or_recovered.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/azure_activity_rules/azure_kubernetes_rolebinding_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_log_analytics_workspace_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_network_ip_discovery.yml": [
+   "discovery"
+  ],
+  "rules/azure_activity_rules/azure_network_packet_capture_enabled.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/azure_activity_rules/azure_network_port_mapping.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_network_watcher_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_nsg_deleted_or_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_policy_deployifnotexists.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_policy_violation.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/azure_activity_rules/azure_recovery_services_container_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_resource_group_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_resource_lock_deleted.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_restore_point_collection_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_role_assignment_privileged_or_elevated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_serverless_execution.yml": [
+   "privileged_workload",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_sql_server_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_storage_account_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_storage_account_key_access_enabled.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_account_key_regenerated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_storage_account_keys_listed.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/azure_activity_rules/azure_storage_account_public_network_access_enabled.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/azure_activity_rules/azure_storage_account_versioning_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_blob_anonymous_access_enabled.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/azure_activity_rules/azure_storage_blob_bulk_deletion.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/azure_activity_rules/azure_storage_blob_bulk_extraction.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/azure_activity_rules/azure_storage_blob_cpk_encryption_detected.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/azure_activity_rules/azure_storage_blob_permissions_modified.yml": [
+   "external_share",
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_blob_soft_delete_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_blob_uploaded.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/azure_activity_rules/azure_storage_container_soft_delete_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_fileshare_modified.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/azure_activity_rules/azure_storage_https_only_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_immutability_policy_deleted.yml": [
+   "control_disabled"
+  ],
+  "rules/azure_activity_rules/azure_storage_sas_external_access.yml": [
+   "external_share",
+   "bulk_data_access"
+  ],
+  "rules/azure_activity_rules/azure_virtual_network_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_vm_command_executed.yml": [
+   "privileged_workload",
+   "new_principal"
+  ],
+  "rules/azure_activity_rules/azure_vm_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_activity_rules/azure_vm_disk_sas_uri_generated.yml": [
+   "external_share",
+   "bulk_data_access"
+  ],
+  "rules/azure_activity_rules/azure_vm_snapshot_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/azure_signin_rules/azure_auth_methods_policy_oidc_change.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_device_code_broker_client.yml": [
+   "device_code_phish"
+  ],
+  "rules/azure_signin_rules/azure_domain_trust_settings_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_elevate_user_access_admin.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_excessive_account_lockouts.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/azure_signin_rules/azure_failed_signins.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/azure_signin_rules/azure_graph_session_multiple_ips.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/azure_signin_rules/azure_high_risk_signin.yml": [
+   "idp_risk"
+  ],
+  "rules/azure_signin_rules/azure_invite_external_users.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_legacyauth.yml": [
+   "no_mfa_login"
+  ],
+  "rules/azure_signin_rules/azure_mfa_disabled.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_multiple_protection_alerts.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/azure_signin_rules/azure_policy_changed.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_risklevel_passthrough.yml": [
+   "idp_risk"
+  ],
+  "rules/azure_signin_rules/azure_role_changed_pim.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_ropc_login_no_mfa.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_service_principal_credentials_added.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/azure_signin_rules/azure_vscode_oauth_phishing.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gcp_audit_rules/gcp_access_attempts_violating_vpc_service_controls.yml": [
+   "discovery"
+  ],
+  "rules/gcp_audit_rules/gcp_bigquery_large_scan.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gcp_audit_rules/gcp_cloud_run_service_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_cloud_run_set_iam_policy.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_cloud_storage_buckets_modified_or_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/gcp_audit_rules/gcp_cloudbuild_potential_privilege_escalation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_cloudfunctions_functions_create.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_cloudfunctions_functions_update.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_compute_set_iam_policy.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_compute_ssh_connection.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_computeinstances_create_privilege_escalation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_destructive_queries.yml": [
+   "destructive_change"
+  ],
+  "rules/gcp_audit_rules/gcp_dns_zone_modified_or_deleted.yml": [
+   "destructive_change"
+  ],
+  "rules/gcp_audit_rules/gcp_firewall_rule_created.yml": [
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_firewall_rule_deleted.yml": [
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_firewall_rule_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_gcs_bulk_deletion.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gcp_audit_rules/gcp_gcs_iam_changes.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_gcs_object_exfiltration.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access",
+   "identity_config_change"
+  ],
+  "rules/gcp_audit_rules/gcp_gcs_object_rewrite.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_gcs_public.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/gcp_audit_rules/gcp_gcs_ransom_note_upload.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gcp_audit_rules/gcp_iam_corp_email.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_custom_role_changes.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_org_folder_changes.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_roles_update_privilege_escalation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_service_account_key_create.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_service_accounts_get_access_token_privilege_escalation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_service_accounts_sign_blob.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_serviceaccounts_signjwt.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_iam_tag_enumeration.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gcp_audit_rules/gcp_inbound_sso_profile_created_or_updated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_invite_external_user_as_owner.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_kms_bulk_encryption.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gcp_audit_rules/gcp_kms_cross_project_encryption.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_kms_enable_key.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_kms_erase_key.yml": [
+   "destructive_change"
+  ],
+  "rules/gcp_audit_rules/gcp_log_bucket_or_sink_deleted.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_logging_settings_modified.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_logging_sink_modified.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_permissions_granted_to_create_or_manage_service_account_key.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_privilege_escalation_by_deployments_create.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_privileged_operation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_service_account_access_denied.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_service_account_or_keys_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_serviceusage_apikeys_create_privilege_escalation.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_snapshot_insert.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_sql_config_changes.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_storage_hmac_keys_create.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_tag_binding_creation.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gcp_audit_rules/gcp_unused_regions.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gcp_audit_rules/gcp_user_added_to_iap_protected_service.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_user_added_to_privileged_group.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_vpc_flow_logs_disabled.yml": [
+   "audit_tamper",
+   "control_disabled"
+  ],
+  "rules/gcp_audit_rules/gcp_workforce_pool_created_or_updated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_audit_rules/gcp_workload_identity_pool_created_or_updated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_cron_job_created_or_modified.yml": [
+   "privileged_workload"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_exec_into_pod.yml": [
+   "privileged_workload"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_ioc_activity.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gcp_k8s_rules/gcp_k8s_new_daemonset_deployed.yml": [
+   "privileged_workload"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_pod_attached_to_node_host_network.yml": [
+   "privileged_workload"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_pod_create_or_modify_host_path_vol_mount.yml": [
+   "privileged_workload"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_pod_using_host_pid_namespace.yml": [
+   "privileged_workload"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_privileged_pod_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gcp_k8s_rules/gcp_k8s_service_type_node_port_deployed.yml": [
+   "privileged_workload"
+  ],
+  "rules/github_rules/github_action_failed.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_advanced_security_change.yml": [
+   "control_disabled"
+  ],
+  "rules/github_rules/github_branch_policy_override.yml": [
+   "protected_push",
+   "control_disabled"
+  ],
+  "rules/github_rules/github_branch_protection_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/github_rules/github_crossfork_workflow_run.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_malicious_comment_content.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/github_rules/github_malicious_commit_content.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/github_rules/github_malicious_issue_pages.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/github_rules/github_malicious_pr_titles.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/github_rules/github_org_auth_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/github_rules/github_org_ip_allowlist.yml": [
+   "control_disabled"
+  ],
+  "rules/github_rules/github_org_moderators_add.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_org_modified.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_organization_app_integration_installed.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_public_repository_created.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/github_rules/github_pull_request_target_usage.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_repo_archived.yml": [
+   "destructive_change"
+  ],
+  "rules/github_rules/github_repo_collaborator_change.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_repo_created.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_repo_hook_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_repo_initial_access.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_repo_ruleset_modified.yml": [
+   "control_disabled"
+  ],
+  "rules/github_rules/github_repo_visibility_change.yml": [
+   "external_share",
+   "control_disabled"
+  ],
+  "rules/github_rules/github_repo_vulnerability_dismissed.yml": [
+   "control_disabled"
+  ],
+  "rules/github_rules/github_repository_transfer.yml": [
+   "destructive_change",
+   "external_share"
+  ],
+  "rules/github_rules/github_secret_scanning_alert_created.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/github_rules/github_self_hosted_runner_used.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_shai_hulud_repo_created.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/github_rules/github_supply_chain_suspicious_user_agents.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_team_modified.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_user_access_key_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_user_role_updated.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_webhook_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_workflow_artifact_download.yml": {
+   "not_scored": "informational activity, not misuse by itself"
+  },
+  "rules/github_rules/github_workflow_contains_checkout.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/github_rules/github_workflow_dispatch_by_github_bot.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/github_rules/github_workflow_permission_modified.yml": [
+   "control_disabled",
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/github_rules/github_workflow_skip_commits.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/google_workspace_admin_custom_role.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gsuite_activityevent_rules/google_workspace_advanced_protection_program.yml": [
+   "control_disabled"
+  ],
+  "rules/gsuite_activityevent_rules/google_workspace_apps_marketplace_allowlist.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gsuite_activityevent_rules/google_workspace_apps_marketplace_new_domain_application.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gsuite_activityevent_rules/google_workspace_apps_new_mobile_app_installed.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gsuite_activityevent_rules/google_workspace_many_docs_downloaded.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_advanced_protection.yml": [
+   "control_disabled"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_attachments_downloaded_from_spam_email.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_bypass_spam_filter_email.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_calendar_made_public.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_doc_ownership_transfer.yml": [
+   "external_share"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_drive_many_docs_deleted.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_external_forwarding.yml": [
+   "mail_forwarding",
+   "external_share"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_google_access.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_gov_attack.yml": [
+   "idp_risk"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_group_banned_user.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_is_suspicious_tag.yml": [
+   "idp_risk"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_leaked_password.yml": [
+   "idp_risk"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_links_clicked_in_spam_email.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_login_type.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_malicious_smtp_response.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_malware_in_email.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_mobile_device_compromise.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_mobile_device_screen_unlock_fail.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_mobile_device_suspicious_activity.yml": [
+   "idp_risk"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_oauth_privileged_scopes.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_passthrough_rule.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_potential_spoofed_email.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_spam_email.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_suspicious_logins.yml": [
+   "idp_risk"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_two_step_verification.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_user_suspended.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_workspace_calendar_external_sharing.yml": [
+   "external_share"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_workspace_data_export_created.yml": [
+   "bulk_data_access",
+   "external_share",
+   "secret_access"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_workspace_gmail_default_routing_rule.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/gsuite_activityevent_rules/gsuite_workspace_gmail_enhanced_predelivery_scanning.yml": [
+   "control_disabled"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_workspace_gmail_security_sandbox_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_workspace_password_enforce_strong_disabled.yml": [
+   "control_disabled"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_workspace_password_reuse_enabled.yml": [
+   "control_disabled"
+  ],
+  "rules/gsuite_activityevent_rules/gsuite_workspace_trusted_domains_allowlist.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/gsuite_reports_rules/gsuite_drive_external_share.yml": [
+   "external_share"
+  ],
+  "rules/gsuite_reports_rules/gsuite_drive_overly_visible.yml": [
+   "external_share"
+  ],
+  "rules/gsuite_reports_rules/gsuite_drive_visibility_change.yml": [
+   "external_share",
+   "control_disabled"
+  ],
+  "rules/kubernetes_rules/k8s_admission_controller_created.yml": [
+   "identity_config_change",
+   "new_principal",
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_anonymous_api_access.yml": [
+   "discovery"
+  ],
+  "rules/kubernetes_rules/k8s_client_certificate_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_clusterrolebinding_privileged.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_cronjob_created_or_modified.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_daemonset_created.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_exec_into_pod.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_ingress_without_tls.yml": {
+   "not_scored": "informational activity, not misuse by itself"
+  },
+  "rules/kubernetes_rules/k8s_ioc_activity.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/kubernetes_rules/k8s_kubectl_cp_operation.yml": [
+   "bulk_data_access"
+  ],
+  "rules/kubernetes_rules/k8s_multiple_403_public_ip.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/kubernetes_rules/k8s_pod_created_in_system_namespace.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_pod_dangerous_capabilities.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_pod_host_ipc.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_pod_host_network.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_pod_host_pid.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_pod_hostpath_volume.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_privileged_pod_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_role_node_proxy_permissions.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_role_pod_exec.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_role_wildcard.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_role_write_permissions.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_secret_access_denied.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/kubernetes_rules/k8s_secret_enumeration.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/kubernetes_rules/k8s_secrets_dump_all_namespaces.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/kubernetes_rules/k8s_service_nodeport.yml": [
+   "privileged_workload"
+  ],
+  "rules/kubernetes_rules/k8s_serviceaccount_token_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/kubernetes_rules/k8s_steal_serviceaccount_token.yml": [
+   "secret_access"
+  ],
+  "rules/kubernetes_rules/k8s_system_principal_public_ip.yml": [
+   "control_disabled",
+   "external_share"
+  ],
+  "rules/kubernetes_rules/k8s_system_role_modified.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_account_support_access.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_ad_agent_auth_zscore_anomaly.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_ad_agent_token_abuse_behavioral.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_admin_disabled_mfa.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_admin_role_assigned.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_anonymizing_vpn_login.yml": {
+   "not_scored": "needs IP reputation data"
+  },
+  "rules/okta_rules/okta_api_key_created.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_api_key_revoked.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/okta_rules/okta_app_refresh_access_token_reuse.yml": [
+   "session_replay"
+  ],
+  "rules/okta_rules/okta_app_unauthorized_access_attempt.yml": [
+   "discovery"
+  ],
+  "rules/okta_rules/okta_group_admin_role_assigned.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_idp_create_modify.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_idp_signin.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_login_signal.yml": {
+   "not_scored": "vendor-generated detection or alert passed through"
+  },
+  "rules/okta_rules/okta_login_without_push_marker.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/okta_rules/okta_new_behavior_accessing_admin_console.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_org2org_creation_modification.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_password_accessed.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/okta_rules/okta_password_extraction_via_scim.yml": [
+   "secret_access",
+   "bulk_data_access"
+  ],
+  "rules/okta_rules/okta_phishing_attempt_blocked_by_fastpass.yml": {
+   "not_scored": "content inspection of mail, code or comments; out of scope"
+  },
+  "rules/okta_rules/okta_potentially_stolen_session.yml": [
+   "session_replay"
+  ],
+  "rules/okta_rules/okta_rate_limits.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_skeleton_key_bypass_behavioral.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_sso_to_aws.yml": {
+   "not_scored": "informational activity, not misuse by itself (no keyword matched)"
+  },
+  "rules/okta_rules/okta_support_reset.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_swa_bulk_access_behavioral.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_swa_offhours_access_behavioral.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_threatinsight_security_threat_detected.yml": [
+   "idp_risk"
+  ],
+  "rules/okta_rules/okta_user_account_locked.yml": {
+   "not_scored": "needs a sequence or a count of events; each Panther test is one event"
+  },
+  "rules/okta_rules/okta_user_mfa_factor_suspend.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_user_mfa_reset.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_user_mfa_reset_all.yml": [
+   "identity_config_change",
+   "new_principal"
+  ],
+  "rules/okta_rules/okta_user_reported_suspicious_activity.yml": [
+   "idp_risk"
+  ]
+ }
+}
