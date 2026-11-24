@@ -3,10 +3,10 @@
   "splunk_cloud": {
    "scored": 106,
    "v0.9 detected": 89,
-   "v1.0.2 detected": 93,
-   "lost": 0,
+   "v1.0.2 detected": 92,
+   "lost": 1,
    "gained": 4,
-   "datasets with new kinds": 16,
+   "datasets with new kinds": 18,
    "not readable": 8
   },
   "splunk_okta": {
@@ -769,7 +769,9 @@
    "v0.9": true,
    "v1.0.2": true,
    "new_kinds_v1.0.2": [
-    "control_disabled"
+    "control_disabled",
+    "destructive_change",
+    "multi_signal"
    ],
    "new_kinds_expected": []
   },
@@ -884,8 +886,10 @@
     "bulk_data_access"
    ],
    "v0.9": true,
-   "v1.0.2": true,
-   "new_kinds_v1.0.2": [],
+   "v1.0.2": false,
+   "new_kinds_v1.0.2": [
+    "external_share"
+   ],
    "new_kinds_expected": []
   },
   "splunk_cloud/aws_snapshot_exfil": {
@@ -894,7 +898,9 @@
    ],
    "v0.9": true,
    "v1.0.2": true,
-   "new_kinds_v1.0.2": [],
+   "new_kinds_v1.0.2": [
+    "external_share"
+   ],
    "new_kinds_expected": []
   },
   "splunk_cloud/aws_getpassworddata": {

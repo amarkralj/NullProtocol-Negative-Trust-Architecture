@@ -80,7 +80,9 @@ def _words(op: str) -> Tuple[str, str]:
         obj = "".join(res).lower().replace(".", "")        # the whole resource path, so runbooks/draft keeps "runbook"
         if last == "action" and res:
             m = re.match(r"([a-z]+)([A-Z].*)?$", res[-1])
-            verb = m.group(1) if m and m.group(2) else "invoke"
+            low = res[-1].lower()
+            verb = m.group(1) if m and m.group(2) else (low if low in OFF | MAKE | READ | {"recover", "restore", "backup"}
+                                                        else "invoke")
             return verb.lower(), obj
         return {"write": "write", "delete": "delete", "read": "read"}.get(last, last), obj
     segs = [x for x in op.split(".") if x]
@@ -113,6 +115,16 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
         return None
     verb, obj = _words(op)
     p0 = json.dumps(params, separators=(",", ":"), default=str) if params not in (None, "", {}) else ""
+    if ".logging." in op.lower() or op.lower().startswith("logging."):
+        obj = "logging" + obj                              # everything inside the logging service is about logs
+    pl = p0.lower()
+    if verb in ("get", "describe") and ('"withdecryption":true' in pl.replace(" ", "") or
+                                         re.search(r'"attribute"\s*:\s*"userdata"', pl)):
+        return "data_access", f"{verb} {obj} decrypted / user data"     # secrets in parameters or startup scripts
+    if verb in MAKE and re.search(r'"(allusers|allauthenticatedusers)"', pl):
+        return "control_change", f"{verb} {obj} public (allUsers)"
+    if verb in ("schedule", "disable") and "keydeletion" in obj + verb or op.lower() in ("schedulekeydeletion",):
+        return "destructive_change", "schedule key deletion"
     if verb == "download" and _has(obj, ("log", "dump", "backup", "snapshot", "export")):
         return "data_access", f"{verb} {obj}"
     if verb in ("send", "start", "run", "invoke") and _has(obj, ("command", "session", "script")):
@@ -122,6 +134,8 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
         return "data_access", f"key vault {verb} {obj}"   # secrets, keys and certificates retrieved or restored
     if verb in ("begin", "invoke", "generate") and _has(obj, ("getaccess", "disk", "listkeys", "sas")) and "access" in op.lower() + obj:
         return "data_access", f"{verb} {obj}"             # a download link to a whole disk
+    if verb in ("start", "create", "write", "invoke") and _has(obj, ("packetcapture", "trafficmirror")):
+        return "data_access", f"{verb} {obj} (network traffic captured)"
     if verb in MAKE and _has(obj, ("suppression",)):
         return "audit_change", f"{verb} {obj}"            # alerts suppressed
     if verb in READ or not verb:
@@ -147,7 +161,7 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
         if m:
             return ("audit_change" if "log" in m.group(0).lower() or _has(obj, LOGGING) else "control_change"), \
                 f"{verb} {obj} switched off ({m.group(0)[:60]})"
-        if p and re.search(r'"(allow[a-z]*public[a-z]*|allowsharedkeyaccess)"\s*:\s*"?true|"publicnetworkaccess"\s*:\s*"enabled"'
+        if p and re.search(r'"publicaccess"\s*:\s*"(container|blob)"|"(allow[a-z]*public[a-z]*|allowsharedkeyaccess)"\s*:\s*"?true|"publicnetworkaccess"\s*:\s*"enabled"'
                            r'|"supportshttpstrafficonly"\s*:\s*"?false', p, re.I):
             return "control_change", f"{verb} {obj} opened"
         if p and WIDE_OPEN.search(p) and "egress" not in obj:   # open egress is the AWS default, not exposure
@@ -171,7 +185,7 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
         if verb in ("create", "add", "register", "invite") and _has(obj, ("user", "role", "serviceaccount",
                                                                          "serviceprincipal", "group")):
             return "config_change", "new_principal"
-        if verb in ("create", "write", "put", "register") and _has(obj, RUNS_CODE):
+        if verb in ("create", "write", "put", "register", "insert", "publish", "deploy", "invoke") and _has(obj, RUNS_CODE):
             return "config_change", "new_principal"
     return None
 
@@ -180,7 +194,7 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
 # GitHub audit actions (org.saml_disabled), Okta event types (user.session.impersonation.grant), Google Workspace
 # event names (2sv_disable, ADD_TRUSTED_DOMAINS): tokens split on '.', '_' and '-'; adjectives count as verbs.
 ADJ_ = None
-ADJ = {"updated": "update", "added": "add", "disabled": "disable", "enabled": "enable", "removed": "remove", "deleted": "delete", "created": "create",
+ADJ = {"elevated": "grant", "set": "set", "updated": "update", "added": "add", "disabled": "disable", "enabled": "enable", "removed": "remove", "deleted": "delete", "created": "create",
        "granted": "grant", "suspended": "suspend", "unenrolled": "unenroll", "dismissed": "dismiss"}
 SEC_WORDS = ("saml", "sso", "two", "2sv", "2fa", "mfa", "factor", "oauth_app_restrictions", "app_restrictions", "secret",
              "scanning", "dependabot", "advanced_security", "code_scanning", "allow_list", "allowlist", "ip_allow",
@@ -228,6 +242,11 @@ def classify_dotted(name: str, params=None) -> Optional[Tuple[str, str]]:
                                  '"new_value": "true"' if "allow" in p or "reuse" in p else "@@")) and \
                 any(w in n + p for w in SEC_WORDS + ("reuse", "allow")):
             return "control_change", n + " weakened"
+        if any(w in n for w in ("federation", "identity provider", "identity_provider", "saml", "sso")) and \
+                v in ("set", "add", "create", "update", "change", "modify"):
+            return "config_change", "federation"
+        if n.strip() == "authorize" or n.endswith(".authorize"):
+            return "config_change", "new_principal"         # an OAuth app granted access to a user's data
         if "trusted_domain" in n and v == "add":
             return "control_change", n
         if any(w in n for w in ("mfa", "factor", "2sv")) and v in ("reset",):
@@ -239,7 +258,8 @@ def classify_dotted(name: str, params=None) -> Optional[Tuple[str, str]]:
         if any(w in n for w in PRIV_WORDS) or any(w in p for w in ('"role": "admin"', "super_admin", '"permission": "admin"')):
             if v in ("grant", "assign", "add", "create", "update", "set", "invite", "promote", "change", "modify"):
                 return "config_change", "privilege_grant"
-        if any(w in n for w in ("hook", "application", "integration", "oauth", "app")) and v in ("create", "add", "install", "authorize"):
+        if "setting" not in n and any(w in n for w in ("hook", "application", "integration", "oauth", "app")) and \
+                v in ("create", "add", "install", "authorize"):
             return "config_change", "new_principal"
         if any(w in n + " " + p for w in SHARE_WORDS) and any(w in n for w in ("access", "visibility", "acl", "share", "owner")):
             return "external_share", n

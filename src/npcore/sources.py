@@ -29,6 +29,7 @@ Engine._v10_check):
 from __future__ import annotations
 
 import csv
+from urllib.parse import unquote as urllib_unquote
 import datetime as dt
 import json
 import pathlib
@@ -64,9 +65,32 @@ def _when(e: dict):
     return ((e.get("id") or {}).get("time") if isinstance(e.get("id"), dict) else None)
 
 
+KNOWN = ["eventName", "eventSource", "eventTime", "eventType", "eventVersion", "eventCategory", "userIdentity", "sourceIPAddress",
+         "userAgent", "requestParameters", "responseElements", "errorCode", "errorMessage", "awsRegion", "recipientAccountId",
+         "invokedBy", "userName", "sessionContext", "sessionIssuer", "principalId", "accessKeyId", "protoPayload", "methodName",
+         "authenticationInfo", "principalEmail", "requestMetadata", "callerIp", "callerSuppliedUserAgent", "resourceName",
+         "serviceName", "authorizationInfo", "authenticationContext", "debugContext", "debugData", "displayMessage",
+         "securityContext", "externalSessionId", "alternateId", "ipAddress", "geographicalContext", "rawUserAgent", "outcome",
+         "objectRef", "requestURI", "sourceIPs", "responseStatus", "requestObject", "requestReceivedTimestamp", "stageTimestamp",
+         "apiVersion", "operationName", "resultType", "callerIpAddress", "activityDisplayName", "initiatedBy",
+         "userPrincipalName", "legacyEventType", "insertId", "logName", "receiveTimestamp", "dtHash", "detailEntry"]
+_LOWER = {k.lower(): k for k in KNOWN}
+
+
+def _decase(v, depth=0):
+    """Some exports lower-case every key; restore the documented names (only names this module reads)."""
+    if depth > 6:
+        return v
+    if isinstance(v, dict):
+        return {_LOWER.get(k, k) if isinstance(k, str) and k not in KNOWN else k: _decase(x, depth + 1) for k, x in v.items()}
+    if isinstance(v, list):
+        return [_decase(x, depth + 1) for x in v[:200]]
+    return v
+
+
 def normalize(e: dict) -> dict:
     """Field-name variants seen across pipelines (exports, SIEM normalisers) -> the vendor's native names."""
-    e = dict(e)
+    e = _decase(e) if any(isinstance(k, str) and k in _LOWER and k not in KNOWN for k in e) else dict(e)
     if "at_sign_timestamp" in e and "@timestamp" not in e:
         e["@timestamp"] = e["at_sign_timestamp"]
     if "eventSource" in e and "eventName" in e and not e.get("eventTime"):
@@ -195,8 +219,11 @@ def from_gws(e: dict) -> List[Event]:
                 return [_ev(t + i / 3600, user, "mfa_push", result="deny", **ctx) for i in range(n2)]
             return [_ev(t, user, "login_failure", **ctx)]
         if name == "login_success":
-            return [_ev(t, user, "login", mfa=n2 > 0, **ctx)]
-        return []
+            out = [_ev(t, user, "login", mfa=n2 > 0, **ctx)]
+            if str(p.get("is_suspicious", "")).lower() == "true":
+                out.append(_ev(t, user, "idp_risk", severity="high", source="Google login marked suspicious", ip=ip))
+            return out
+        return _dotted_event(t, user, name, p, ip)        # risk warnings, 2SV and Advanced Protection changes
     if app == "admin":
         if name in GWS_MFA_OFF and str(p.get("NEW_VALUE", "false")).lower() not in ("true", "enforced"):
             return [_ev(t, user, "config_change", True, what="disable_mfa", target=p.get("USER_EMAIL"), ip=ip)]
@@ -348,6 +375,8 @@ def from_k8s_audit(e: dict) -> List[Event]:
         return []                                          # load-balancer and kubelet health checks
     if SCANNERS.search(ua):
         out.append(_ev(t, acct, "scanner_seen", what=SCANNERS.search(ua).group(), **ctx))
+    if code in (401, 403) and res == "secrets" and user != "system:anonymous":
+        out.append(_ev(t, user, "denied_change", True, what=f"secret_read|{verb} secrets (denied)", **ctx))
     if code in (401, 403):
         out.append(_ev(t, acct, "forbidden", what=f"{verb} {res or e.get('requestURI', '')}",
                        anonymous=user == "system:anonymous", write=verb in ("create", "update", "patch", "delete"), **ctx))
@@ -361,7 +390,13 @@ def from_k8s_audit(e: dict) -> List[Event]:
     sub = ref.get("subresource") or ""
     obj = e.get("requestObject") or {}
     if verb == "create" and sub in ("exec", "attach", "portforward"):
-        out.append(_ev(t, user, "workload_create", True, what="exec", name=ref.get("name"), **ctx))
+        cmd = urllib_unquote(str(e.get("requestURI") or "")) + " " + json.dumps(e.get("requestObject") or {})
+        if "/var/run/secrets" in cmd or "serviceaccount/token" in cmd:
+            out.append(_ev(t, user, "secret_read", True, what="list * service-account token via exec", **ctx))
+        elif re.search(r"command=tar|tar\s+-?c|\btar\b.*\bcf\b", cmd):
+            out.append(_ev(t, user, "data_access", True, what="files copied out of a pod (kubectl cp)", **ctx))
+        else:
+            out.append(_ev(t, user, "workload_create", True, what="exec", name=ref.get("name"), **ctx))
     if verb in ("create", "update", "patch") and res in ("clusterrolebindings", "rolebindings") and \
             ((obj.get("roleRef") or {}).get("name") in ADMIN_ROLES or any(
                 (s or {}).get("name") in ("system:anonymous", "system:unauthenticated", "system:authenticated")
@@ -604,7 +639,13 @@ def _aws_keep(e: dict, x: Event) -> bool:
     p = json.dumps(e.get("requestParameters") or {}, default=str).lower()
     me = (_aws_user(e) or "").rsplit("/", 1)[-1].lower()
     if op in SHARE_OPS:                                    # shared only if a group "all" or an account is ADDED
-        return bool(re.search(r'"add"\s*:\s*\{[^}]*("group"\s*:\s*"all"|userid|"[0-9]{12}")|"valuestoadd"\s*:\s*\[[^\]]*\S', p))
+        keep = bool(re.search(r'"add"\s*:\s*\{[^}]*("group"\s*:\s*"all"|userid|"[0-9]{12}")|"valuestoadd"\s*:\s*\[[^\]]*\S', p))
+        if keep:
+            x.kind, x.attrs["what"] = "external_share", f"{op}: shared outside the account"
+            x.attrs["dest"] = "all" if '"all"' in p else "another account"
+        return keep
+    if op in ("schedulekeydeletion",):
+        x.kind, x.attrs["what"] = "destructive_change", "schedule key deletion"
     if op == "putbucketlifecycle":                         # tampering only if objects expire within 30 days
         days = [int(d) for d in re.findall(r'"days"\s*:\s*"?(\d+)', p)]
         return bool(days) and min(days) <= 30 and "disabled" not in p
@@ -664,6 +705,13 @@ def _entra_extra(e: dict) -> List[Event]:
 
 def convert(e: dict) -> List[Event]:
     e = normalize(e)
+    if str(e.get("category", "")).lower() in ("kube-audit", "kube-audit-admin") and isinstance((e.get("properties") or {}).get("log"), str):
+        try:                                               # AKS: the Kubernetes audit event as a JSON string
+            inner = json.loads(e["properties"]["log"])
+        except ValueError:
+            return []
+        inner.setdefault("requestReceivedTimestamp", e.get("time") or _when(e))
+        return convert(inner)
     if "preview" in e and isinstance(e.get("result"), dict):
         r = e["result"]
         if any(k.startswith("data.protoPayload") for k in r):
@@ -749,6 +797,13 @@ def convert(e: dict) -> List[Event]:
     if "properties" in e and "category" in e:
         out += _entra_extra(e)
     evs = out + cloudlogs.convert(e)
+    if not evs and str(e.get("category", "")) in ("AuditLogs", "Audit") or not evs and "activityDisplayName" in (e.get("properties") or {}):
+        pr = e.get("properties") or {}
+        name = pr.get("activityDisplayName") or e.get("operationName") or ""
+        ib = pr.get("initiatedBy") or {}
+        who = (ib.get("user") or {}).get("userPrincipalName") or (ib.get("app") or {}).get("displayName") or e.get("identity") or "unknown"
+        if str(pr.get("result", e.get("resultType", "success"))).lower() in ("success", "", "0"):
+            evs = _dotted_event(_t(e.get("time")), who, name, pr.get("targetResources"), e.get("callerIpAddress"))
     state = str((e.get("properties") or {}).get("riskState", "")).lower()
     if state in ("dismissed", "remediated", "confirmedsafe"):        # 1.0.2: a risk an admin already cleared
         evs = [x for x in evs if x.kind != "idp_risk"]

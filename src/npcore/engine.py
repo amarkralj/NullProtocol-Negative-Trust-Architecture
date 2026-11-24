@@ -607,8 +607,10 @@ class Engine:
             once("destructive_change", person, w, f"destructive change: {what}", "sabotage", what)
         elif k == "denied_change" and self.cfg.signals_v11:                         # v1.1: a denied attempt to tamper, disable or destroy
             intended, w = str(what).split("|", 1)
-            kind = {"audit_change": "audit_tamper", "control_change": "control_disabled"}.get(intended, "destructive_change")
-            once(kind, person, 1.0, f"attempted, denied: {w}", "defense_evasion", "denied:" + w)
+            kind = {"audit_change": "audit_tamper", "control_change": "control_disabled",
+                    "secret_read": "secret_access"}.get(intended, "destructive_change")
+            once(kind, person, 0.5 if intended == "secret_read" else 1.0, f"attempted, denied: {w}", "defense_evasion",
+                 "denied:" + w)
         elif k == "protected_push":
             once("protected_push", person, 1.5, f"branch protection overridden to push to {what}", "defense_evasion", what)
         elif k == "external_share":
