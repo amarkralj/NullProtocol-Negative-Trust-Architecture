@@ -1,0 +1,10 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata: {name: lab-hook}
+webhooks:
+  - name: lab.hook.example
+    admissionReviewVersions: [v1]
+    sideEffects: None
+    failurePolicy: Ignore
+    clientConfig: {url: "https://127.0.0.1:9443/mutate"}
+    rules: [{operations: [CREATE], apiGroups: [""], apiVersions: [v1], resources: [pods]}]

@@ -1,0 +1,7 @@
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata: {name: lab-csr}
+spec:
+  request: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQ1ZqQ0NBVDRDQVFBd0VURVBNQTBHQTFVRUF3d0dZV1J0YVc0d2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQQotLS0tLUVORCBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0K
+  signerName: kubernetes.io/kube-apiserver-client
+  usages: [client auth]

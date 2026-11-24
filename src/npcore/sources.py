@@ -358,7 +358,7 @@ def from_gke(e: dict) -> List[Event]:
 def from_k8s_audit(e: dict) -> List[Event]:
     if e.get("stage") not in (None, "ResponseComplete", "Panic"):
         return []
-    u = e.get("user") or {}
+    u = e.get("impersonatedUser") or e.get("user") or {}   # impersonation: the audit log names the real actor here
     user = u.get("username") or "unknown"
     if user.startswith("system:") and user not in ("system:anonymous",) and "system:serviceaccount" not in user:
         return []                                       # control-plane components
