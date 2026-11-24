@@ -71,7 +71,8 @@ class EngineConfig:
     signals_v07: bool = False        # v0.7: Windows endpoint logs (same rules; version marks the endpoint adapter)
     signals_v08: bool = False        # v0.8: bursts on habitual egress channels, HR notice periods
     signals_v09: bool = False        # v0.9: upload routine judged by breadth, not per destination
-    signals_v11: bool = False        # v1.1: denied attempts to tamper, disable or destroy (adapters classify by verb/object)
+    patch: int = 0                   # 1.0.z patch level; rules added in a patch check `cfg.patch >= z`
+    signals_v11: bool = False        # 1.0.1 (first labelled v1.1): denied attempts to tamper, disable or destroy (adapters classify by verb/object)
     signals_v10: bool = False        # v1.0: GitHub, Google, Kubernetes, data-movement services, AI assistants and agents,
                                      #       concurrent networks, distributed spraying, device-code sign-ins
 
@@ -119,9 +120,12 @@ def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v
 
 def version_preset(version: str) -> EngineConfig:
     """The recommended NT configuration of each release (message-tone signal off)."""
-    cfg = preset("nt_no_sentiment", v02=version in ("v0.2", "v0.3", "v0.4", "v0.5", "v0.6", "v0.7", "v0.8", "v0.9", "v1.0", "v1.1"),
+    version = {"v1.1": "v1.0.1"}.get(version, version)   # 1.0.1 was first labelled v1.1 in recorded results
+    patch = int(version.split(".")[2]) if version.count(".") == 2 else 0
+    cfg = preset("nt_no_sentiment", v02=version.startswith(("v0.2", "v0.3", "v0.4", "v0.5", "v0.6", "v0.7", "v0.8", "v0.9", "v1.0")),
                  v03=version == "v0.3", v04=version == "v0.4", v05=version == "v0.5", v06=version == "v0.6",
-                 v07=version == "v0.7", v08=version == "v0.8", v09=version == "v0.9", v10=version == "v1.0", v11=version == "v1.1")
+                 v07=version == "v0.7", v08=version == "v0.8", v09=version == "v0.9", v10=version == "v1.0", v11=version.startswith("v1.0.") and patch >= 1)
+    cfg.patch = patch
     cfg.name = f"nt {version}"
     return cfg
 
@@ -542,7 +546,7 @@ class Engine:
             out.append(Evidence(e.t, subject, kind, weight, desc, behavior=behavior, source=source, **kw))
 
         if e.kind == "config_change" and what in ("privilege_grant", "credential_added", "mfa_method"):
-            w = 0.3 if e.attrs.get("ticket") else 2.0
+            w = 0.3 if e.attrs.get("ticket") else (0.5 if e.attrs.get("minor") and self.cfg.patch >= 2 else 2.0)
             once("identity_config_change", person, w, f"identity configuration changed: {what}", "privilege_misuse")
         elif e.kind == "config_change" and what == "new_principal":
             once("new_principal", person, 0.5, "new user, guest or application created", "privilege_misuse")
@@ -595,8 +599,12 @@ class Engine:
         if k == "control_change":
             once("control_disabled", person, 2.5, f"security control switched off: {what}", "defense_evasion", what)
         elif k == "destructive_change":
-            once("destructive_change", person, 1.0 if what == "repo.archived" else 2.0, f"destructive change: {what}",
-                 "sabotage", what)
+            from .opclass import critical
+            if self.cfg.patch >= 2:                        # 1.0.2: weight by impact
+                w = 0.5 if what == "repo.archived" else (2.0 if critical(what) else 0.5)
+            else:
+                w = 1.0 if what == "repo.archived" else 2.0
+            once("destructive_change", person, w, f"destructive change: {what}", "sabotage", what)
         elif k == "denied_change" and self.cfg.signals_v11:                         # v1.1: a denied attempt to tamper, disable or destroy
             intended, w = str(what).split("|", 1)
             kind = {"audit_change": "audit_tamper", "control_change": "control_disabled"}.get(intended, "destructive_change")
@@ -607,10 +615,15 @@ class Engine:
             once("external_share", person, 0.5 if str(what).startswith("mail") else 1.0,
                  f"{what} to {a.get('dest')}", "exfiltration", a.get("dest"))
         elif k == "secret_read":
-            once("secret_access", person, 2.0 if str(what).startswith("list *") else 1.0, f"Kubernetes secret read: {what}",
-                 "credential_access", what)
+            w = 2.0 if str(what).startswith("list *") else 1.0
+            if self.cfg.patch >= 2 and str(what).startswith(("get ", "watch ")):
+                w = 0.5                                    # one named secret in one namespace: what applications do
+            once("secret_access", person, w, f"Kubernetes secret read: {what}", "credential_access", what)
         elif k == "workload_create":
-            w = {"privileged_pod": 2.0, "host_namespace": 2.0, "daemonset": 1.0}.get(what, 0.5)
+            w = {"privileged_pod": 2.0, "host_namespace": 2.0, "dangerous_capabilities": 2.0, "daemonset": 1.0, "exec": 1.0,
+                 "system_namespace": 1.0, "remote_exec": 1.0, "admission_webhook": 1.5}.get(what, 0.5)
+            if what == "exec" and self.cfg.patch >= 2:
+                w = 0.5                                    # developers exec into pods routinely
             once("privileged_workload", person, w, f"{what} created ({a.get('ns')}/{a.get('name')})", "privilege_misuse", what)
         elif k == "forbidden":
             lst = self._forbidden[acct]

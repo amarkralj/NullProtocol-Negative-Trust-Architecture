@@ -39,7 +39,47 @@ from typing import Iterable, List
 from . import cloudlogs, okta, opclass
 from .sim import Event
 
-_t = cloudlogs._t
+TIME_KEYS = ("eventTime", "time", "timestamp", "published", "@timestamp", "at_sign_timestamp", "created_at",
+             "requestReceivedTimestamp", "stageTimestamp", "receiveTimestamp", "eventTimestamp", "CreationTime",
+             "createdDateTime", "p_event_time", "p_parse_time")
+
+
+def _t(ts) -> float:
+    """Timestamps in any common form; a missing or unreadable one is 0 (the replay shifts it like any other)."""
+    if ts in (None, "", "None", "null"):
+        return 0.0
+    try:
+        return cloudlogs._t(ts)
+    except (ValueError, TypeError):
+        try:
+            return cloudlogs._t(str(ts).replace(" ", "T", 1).rstrip("Z") + "Z")
+        except (ValueError, TypeError):
+            return 0.0
+
+
+def _when(e: dict):
+    for k in TIME_KEYS:
+        if e.get(k) not in (None, "", "None"):
+            return e[k]
+    return ((e.get("id") or {}).get("time") if isinstance(e.get("id"), dict) else None)
+
+
+def normalize(e: dict) -> dict:
+    """Field-name variants seen across pipelines (exports, SIEM normalisers) -> the vendor's native names."""
+    e = dict(e)
+    if "at_sign_timestamp" in e and "@timestamp" not in e:
+        e["@timestamp"] = e["at_sign_timestamp"]
+    if "eventSource" in e and "eventName" in e and not e.get("eventTime"):
+        e["eventTime"] = _when(e) or "1970-01-01T00:00:00Z"
+    if str(e.get("apiVersion", "")).startswith("audit.k8s.io") and not e.get("requestReceivedTimestamp"):
+        e["requestReceivedTimestamp"] = e.get("stageTimestamp") or _when(e) or "1970-01-01T00:00:00Z"
+    if e.get("kind") == "admin#reports#activity" and isinstance(e.get("id"), dict) and not e["id"].get("time"):
+        e["id"] = dict(e["id"], time=_when(e) or "1970-01-01T00:00:00Z")
+    if "eventType" in e and isinstance(e.get("actor"), dict) and not e.get("published"):
+        e["published"] = _when(e) or "1970-01-01T00:00:00Z"
+    if "protoPayload" in e and not e.get("timestamp"):
+        e["timestamp"] = _when(e) or "1970-01-01T00:00:00Z"
+    return e
 
 
 def _ev(t, acct, kind, sensitive=False, **attrs) -> Event:
@@ -82,7 +122,10 @@ def from_github_audit(e: dict) -> List[Event]:
         return [_ev(t, user, "protected_push", True, what=e.get("branch") or e.get("name") or a, **ctx)]
     if a in GH_NEW:
         return [_ev(t, user, "config_change", True, what="new_principal", detail=a, **ctx)]
-    return []
+    if a == "repo.access" or (a.endswith("visibility_change") and str(e.get("visibility", "")).lower() == "public"):
+        return [_ev(t, user, "external_share", True, what="repository made public", dest="public", **ctx)]
+    return _dotted_event(t, user, a, {k: e.get(k) for k in ("role", "permission", "visibility", "new_value", "settings")
+                                       if e.get(k) is not None}, ctx["ip"])   # 1.0.2: any other action by verb
 
 
 SECURITY_WORKFLOW = re.compile(r"secur|codeql|scan|sast|dast|lint|test|valid|check|audit|dependab|trivy|semgrep|snyk|gitleaks", re.I)
@@ -159,7 +202,15 @@ def from_gws(e: dict) -> List[Event]:
             return [_ev(t, user, "config_change", True, what="disable_mfa", target=p.get("USER_EMAIL"), ip=ip)]
         if name in GWS_PRIV:
             return [_ev(t, user, "config_change", True, what="privilege_grant", target=p.get("USER_EMAIL"), ip=ip)]
-    return []
+    if app == "drive" or (e.get("type") in ("acl_change", "access") and ("visibility" in p or "target_user" in p)):
+        flat = {"type": e.get("type") or (e.get("event") or {}).get("type"), "name": name, "parameters": p,
+                "email": user, "timestamp": (e.get("id") or {}).get("time"), "ip_address": ip}
+        out = from_drive(flat)
+        if out:
+            return out
+    if app == "drive":
+        return []
+    return _dotted_event(t, user, name, p, ip)              # 1.0.2: any other event by verb and object
 
 
 def _domain(addr) -> str:
@@ -237,6 +288,42 @@ SCANNERS = re.compile(r"kube-hunter|kubescape|kube-bench|peirates|kubiscan|kubel
                       r"\bnuclei\b|\bExpanse\b|\bzgrab|\bmasscan\b|\bcensys", re.I)
 
 
+DANGEROUS_CAPS = {"SYS_ADMIN", "SYS_PTRACE", "SYS_MODULE", "DAC_READ_SEARCH", "NET_ADMIN", "SYS_RAWIO", "BPF", "ALL"}
+ADMIN_ROLES = {"cluster-admin", "admin", "edit", "system:masters"}
+ESCALATE = {"*", "escalate", "bind", "impersonate"}
+
+
+def _role_is_powerful(obj: dict) -> bool:
+    for r in obj.get("rules") or []:
+        verbs, res = set(r.get("verbs") or []), set(r.get("resources") or [])
+        if verbs & ESCALATE or "*" in res or res & {"secrets", "pods/exec", "nodes/proxy", "serviceaccounts/token",
+                                                   "clusterrolebindings", "rolebindings"}:
+            return True
+    return False
+
+
+def from_gke(e: dict) -> List[Event]:
+    """Kubernetes audit entries as Google Cloud writes them (methodName io.k8s.<group>.<version>.<resource>[.<sub>].<verb>)
+    -> the native audit shape, then the same rules."""
+    pp = e.get("protoPayload") or {}
+    parts = pp.get("methodName", "").split(".")
+    if len(parts) < 5:
+        return []
+    verb, rest = parts[-1], parts[4:-1]
+    res, sub = rest[0], (rest[1] if len(rest) > 1 else "")
+    name = pp.get("resourceName", "")
+    ns = name.split("/namespaces/")[1].split("/")[0] if "/namespaces/" in name else None
+    st = pp.get("status") or {}
+    native = {"apiVersion": "audit.k8s.io/v1", "stage": "ResponseComplete", "verb": verb,
+              "user": {"username": (pp.get("authenticationInfo") or {}).get("principalEmail") or "unknown"},
+              "sourceIPs": [(pp.get("requestMetadata") or {}).get("callerIp")],
+              "userAgent": (pp.get("requestMetadata") or {}).get("callerSuppliedUserAgent", ""),
+              "objectRef": {"resource": res, "subresource": sub, "namespace": ns, "name": name.rsplit("/", 1)[-1]},
+              "responseStatus": {"code": 403 if st.get("code") == 7 else (401 if st.get("code") == 16 else 200)},
+              "requestReceivedTimestamp": e.get("timestamp"), "requestObject": pp.get("request") or {}}
+    return from_k8s_audit(native)
+
+
 def from_k8s_audit(e: dict) -> List[Event]:
     if e.get("stage") not in (None, "ResponseComplete", "Panic"):
         return []
@@ -252,6 +339,13 @@ def from_k8s_audit(e: dict) -> List[Event]:
     ctx = {"ip": ip, "ua": ua, "ns": ref.get("namespace")}
     acct = user if user != "system:anonymous" else f"anonymous@{ip}"
     out = []
+    system = user.startswith(("system:serviceaccount:kube-system:", "system:node:", "system:kube-", "eks:", "system:apiserver"))
+    try:
+        private = __import__("ipaddress").ip_address(str(ip)).is_private or __import__("ipaddress").ip_address(str(ip)).is_loopback
+    except ValueError:
+        private = False
+    if user == "system:anonymous" and (private or re.search(r"kube-probe|healthcheck|health-check|ELB-HealthChecker", ua, re.I)):
+        return []                                          # load-balancer and kubelet health checks
     if SCANNERS.search(ua):
         out.append(_ev(t, acct, "scanner_seen", what=SCANNERS.search(ua).group(), **ctx))
     if code in (401, 403):
@@ -260,6 +354,29 @@ def from_k8s_audit(e: dict) -> List[Event]:
         return out
     if code >= 300:
         return out
+    if system:
+        return out                                         # control-plane controllers do this all day
+    if user == "system:anonymous":
+        out.append(_ev(t, acct, "scanner_seen", what="anonymous request allowed", **ctx))
+    sub = ref.get("subresource") or ""
+    obj = e.get("requestObject") or {}
+    if verb == "create" and sub in ("exec", "attach", "portforward"):
+        out.append(_ev(t, user, "workload_create", True, what="exec", name=ref.get("name"), **ctx))
+    if verb in ("create", "update", "patch") and res in ("clusterrolebindings", "rolebindings") and \
+            ((obj.get("roleRef") or {}).get("name") in ADMIN_ROLES or any(
+                (s or {}).get("name") in ("system:anonymous", "system:unauthenticated", "system:authenticated")
+                for s in obj.get("subjects") or [])):
+        out.append(_ev(t, user, "config_change", True, what="privilege_grant", detail=f"{res} {ref.get('name')}",
+                       minor=res == "rolebindings", **ctx))             # namespaced binding: smaller blast radius
+    if verb in ("create", "update", "patch") and res in ("clusterroles", "roles") and _role_is_powerful(obj):
+        out.append(_ev(t, user, "config_change", True, what="privilege_grant", detail=f"powerful {res}", **ctx))
+    client_csr = res == "certificatesigningrequests" and (
+        (obj.get("spec") or {}).get("signerName") == "kubernetes.io/kube-apiserver-client" or
+        "client auth" in ((obj.get("spec") or {}).get("usages") or []))
+    if verb == "create" and ((res == "serviceaccounts" and sub == "token") or client_csr):
+        out.append(_ev(t, user, "config_change", True, what="credential_added", detail=f"{res}/{sub}", **ctx))
+    if verb in ("create", "update", "patch") and res in ("mutatingwebhookconfigurations", "validatingwebhookconfigurations"):
+        out.append(_ev(t, user, "workload_create", True, what="admission_webhook", name=ref.get("name"), **ctx))
     if res == "secrets" and verb in ("get", "list", "watch"):
         out.append(_ev(t, user, "secret_read", True, what=f"{verb} {ref.get('namespace') or '*'}/{ref.get('name') or '*'}", **ctx))
     if verb == "create":
@@ -267,14 +384,17 @@ def from_k8s_audit(e: dict) -> List[Event]:
         spec = obj.get("spec") or {}
         pod = ((spec.get("template") or {}).get("spec") or spec) if res != "cronjobs" else \
             (((spec.get("jobTemplate") or {}).get("spec") or {}).get("template") or {}).get("spec") or {}
-        priv = any(((c.get("securityContext") or {}).get("privileged") or
-                    "SYS_ADMIN" in ((c.get("securityContext") or {}).get("capabilities") or {}).get("add", []))
-                   for c in (pod.get("containers") or []) + (pod.get("initContainers") or []))
+        ctrs = (pod.get("containers") or []) + (pod.get("initContainers") or [])
+        priv = any((c.get("securityContext") or {}).get("privileged") for c in ctrs)
+        caps = any(set(((c.get("securityContext") or {}).get("capabilities") or {}).get("add") or []) & DANGEROUS_CAPS
+                   for c in ctrs)
         hostns = any(pod.get(k) for k in ("hostPID", "hostIPC", "hostNetwork")) or \
             any("hostPath" in v for v in pod.get("volumes") or [])
         what = None
         if priv:
             what = "privileged_pod"
+        elif caps:
+            what = "dangerous_capabilities"
         elif hostns:
             what = "host_namespace"
         elif res == "daemonsets":
@@ -283,6 +403,8 @@ def from_k8s_audit(e: dict) -> List[Event]:
             what = "node_port"
         elif res == "cronjobs":
             what = "cronjob"
+        elif res == "pods" and ref.get("namespace") in ("kube-system", "kube-public", "kube-node-lease") and not sub:
+            what = "system_namespace"
         if what:
             out.append(_ev(t, user, "workload_create", True, what=what, name=ref.get("name"), **ctx))
     return out
@@ -453,6 +575,48 @@ def _opclass_event(t, user, op, params, error, ip=None, ua=None) -> List[Event]:
     return [_ev(t, user, kind, True, what=what, op=op, ip=ip, ua=ua)]
 
 
+def _dotted_event(t, user, name, params, ip=None) -> List[Event]:
+    c = opclass.classify_dotted(name, params)
+    if not c:
+        return []
+    kind, what = c
+    if kind == "idp_risk":
+        return [_ev(t, user, "idp_risk", severity="high", source=name, ip=ip)]
+    return [_ev(t, user, kind, kind not in ("mail_rule",), what=what, op=name, ip=ip)]
+
+
+SHARE_OPS = ("modifyimageattribute", "modifysnapshotattribute", "modifydbsnapshotattribute", "modifydbclustersnapshotattribute")
+POLICY_OPS = ("attachuserpolicy", "attachrolepolicy", "attachgrouppolicy", "putuserpolicy", "putrolepolicy", "putgrouppolicy",
+              "createpolicyversion", "setdefaultpolicyversion", "createpolicy")
+
+
+def _aws_all(e: dict) -> List[Event]:
+    out = aws_extra(e)
+    if (e.get("eventName") or "").lower() in AWS_MOVE or e.get("eventName") == "GetObject":
+        return out
+    base = cloudlogs.convert(e)
+    return base if base else aws_by_verb(e)
+
+
+def _aws_keep(e: dict, x: Event) -> bool:
+    """1.0.2: judge CloudTrail changes by their parameters, and mark routine identity changes as minor."""
+    op = (e.get("eventName") or "").lower()
+    p = json.dumps(e.get("requestParameters") or {}, default=str).lower()
+    me = (_aws_user(e) or "").rsplit("/", 1)[-1].lower()
+    if op in SHARE_OPS:                                    # shared only if a group "all" or an account is ADDED
+        return bool(re.search(r'"add"\s*:\s*\{[^}]*("group"\s*:\s*"all"|userid|"[0-9]{12}")|"valuestoadd"\s*:\s*\[[^\]]*\S', p))
+    if op == "putbucketlifecycle":                         # tampering only if objects expire within 30 days
+        days = [int(d) for d in re.findall(r'"days"\s*:\s*"?(\d+)', p)]
+        return bool(days) and min(days) <= 30 and "disabled" not in p
+    if x.kind == "config_change" and (op in POLICY_OPS or x.attrs.get("what") == "privilege_grant") and \
+            not opclass.admin_grant(e.get("requestParameters")):
+        x.attrs["minor"] = True                            # an ordinary policy, not administrator rights
+    if op in ("changepassword", "updateloginprofile", "createloginprofile") and \
+            str((e.get("requestParameters") or {}).get("userName", me)).lower() in (me, ""):
+        x.attrs["minor"] = True                            # someone changing their own password
+    return True
+
+
 def aws_by_verb(e: dict) -> List[Event]:
     return _opclass_event(_t(e["eventTime"]), _aws_user(e), e.get("eventName", ""), e.get("requestParameters"),
                           e.get("errorCode"), e.get("sourceIPAddress"), e.get("userAgent"))
@@ -499,6 +663,7 @@ def _entra_extra(e: dict) -> List[Event]:
 
 
 def convert(e: dict) -> List[Event]:
+    e = normalize(e)
     if "preview" in e and isinstance(e.get("result"), dict):
         r = e["result"]
         if any(k.startswith("data.protoPayload") for k in r):
@@ -506,8 +671,12 @@ def convert(e: dict) -> List[Event]:
         e = json.loads(r["_raw"]) if isinstance(r.get("_raw"), str) else r
     if e.get("schemaType") == "ModelInvocationLog":
         return from_bedrock(e)
-    if e.get("apiVersion", "").startswith("audit.k8s.io"):
+    if str(e.get("apiVersion", "")).startswith("audit.k8s.io") or ("objectRef" in e and "verb" in e):
+        if not e.get("requestReceivedTimestamp"):
+            e["requestReceivedTimestamp"] = e.get("stageTimestamp") or _when(e) or "1970-01-01T00:00:00Z"
         return from_k8s_audit(e)
+    if str((e.get("protoPayload") or {}).get("methodName", "")).startswith("io.k8s."):
+        return from_gke(e)
     if (e.get("object") or {}).get("kind") == "Event" or (e.get("kind") == "Event" and "involvedObject" in e):
         return from_k8s_event(e)
     if e.get("kind") == "admin#reports#activity":
@@ -545,22 +714,45 @@ def convert(e: dict) -> List[Event]:
                     _t(__import__("datetime").datetime.strptime(e["time"], "%m/%d/%Y %I:%M:%S %p").isoformat()),
                     who, "idp_risk", severity="high" if lvl in ("high", "none", "hidden") else lvl,
                     source=f"Entra ID {p.get('riskEventType') or p.get('riskType') or 'risk detection'}")]
+    if "eventtype" in e and "eventType" not in e:            # some exports lower-case every key
+        names = {"eventtype": "eventType", "authenticationcontext": "authenticationContext", "debugcontext": "debugContext",
+                 "displaymessage": "displayMessage", "securitycontext": "securityContext", "legacyeventtype": "legacyEventType"}
+        e = {names.get(k, k): v for k, v in e.items()}
+        e["published"] = e.get("published") or _when(e) or "1970-01-01T00:00:00Z"
     if "eventType" in e and "actor" in e and isinstance(e.get("actor"), dict):
         x = okta.to_event(e, 0.0)
-        return [x] if x else []
+        if x:
+            return [x]
+        user = (e.get("actor") or {}).get("alternateId") or "unknown"
+        if str((e.get("outcome") or {}).get("result", "SUCCESS")).upper() not in ("SUCCESS", "ALLOW", ""):
+            return []
+        tgt = [x.get("alternateId") for x in e.get("target") or [] if isinstance(x, dict) and x.get("type") == "User"]
+        et = e.get("eventType", "")
+        if "show_password" in et and (not tgt or user in tgt):
+            return []                                      # a user looking at their own app password
+        evs = _dotted_event(_t(e.get("published")), user, et,
+                            {"target": e.get("target"), "debug": (e.get("debugContext") or {}).get("debugData")},
+                            (e.get("client") or {}).get("ipAddress"))
+        if "reset_password" in et and "okta" not in user.lower() and "support" not in user.lower():
+            for x in evs:
+                x.attrs["minor"] = True                    # a company admin resetting a password: routine help desk
+        return evs
     out = []
     if "eventSource" in e and "eventName" in e:
-        out += aws_extra(e)
-        if (e.get("eventName") or "").lower() in AWS_MOVE or e.get("eventName") == "GetObject":
-            return out
-        base = cloudlogs.convert(e)
-        return base if base else aws_by_verb(e)            # v1.1: unknown operations classified by verb and object
+        ui = e.get("userIdentity") or {}
+        if ui.get("type") == "AWSService" or ui.get("invokedBy"):     # 1.0.2: AWS acting on its own (autoscaling ...)
+            return []
+        return [x for x in _aws_all(e) if _aws_keep(e, x)]
     if "api" in e and "metadata" in e:
         base = cloudlogs.convert(e)
         return base if base else ocsf_by_verb(e)
     if "properties" in e and "category" in e:
         out += _entra_extra(e)
-    return out + cloudlogs.convert(e)
+    evs = out + cloudlogs.convert(e)
+    state = str((e.get("properties") or {}).get("riskState", "")).lower()
+    if state in ("dismissed", "remediated", "confirmedsafe"):        # 1.0.2: a risk an admin already cleared
+        evs = [x for x in evs if x.kind != "idp_risk"]
+    return evs
 
 
 def _rows(text: str) -> list:

@@ -48,3 +48,50 @@ def test_azure_activity_and_entra_risk_adapters():
     risk = {"time": "2024-01-01T00:00:00Z", "category": "UserRiskEvents", "operationName": "User Risk Detection",
             "identity": "ava", "properties": {"userPrincipalName": "ava@x.com", "riskEventType": "anonymizedIPAddress"}}
     assert [e.kind for e in sources.convert(risk)] == ["idp_risk"]
+
+
+# ---------------------------------------------------------------- 1.0.2
+from npcore.opclass import classify_dotted, critical  # noqa: E402
+
+
+def test_dotted_names_github_okta_workspace():
+    assert classify_dotted("org.saml_disabled")[0] == "control_change"
+    assert classify_dotted("system.mfa.factor.deactivate") == ("config_change", "disable_mfa")
+    assert classify_dotted("user.session.impersonation.grant") == ("config_change", "privilege_grant")
+    assert classify_dotted("2sv_disable") == ("config_change", "disable_mfa")
+    assert classify_dotted("org.enable_two_factor_requirement") is None      # switching protection ON is not evidence
+    assert classify_dotted("repo.create") is None
+
+
+def test_azure_paths_and_escaped_bodies():
+    assert classify("MICROSOFT.AUTOMATION/AUTOMATIONACCOUNTS/RUNBOOKS/DRAFT/WRITE") == ("config_change", "new_principal")
+    assert classify("Microsoft.KeyVault/vaults/secrets/getSecret/action")[0] == "data_access"
+    assert classify("Microsoft.KeyVault/vaults/read") is None
+    body = {"requestbody": '{"properties":{"allowBlobPublicAccess":true}}'}
+    assert classify("Microsoft.Storage/storageAccounts/write", body)[0] == "control_change"
+    assert classify("Microsoft.Storage/storageAccounts/write", {"requestbody": '{"properties":{"minimumTlsVersion":"TLS1_2"}}'}) is None
+
+
+def test_egress_and_impact():
+    assert classify("AuthorizeSecurityGroupEgress", {"cidrIp": "0.0.0.0/0"}) is None
+    assert critical("delete vaults") and critical("delete bucket") and not critical("terminate instances")
+
+
+def test_gke_kubernetes_translation_and_exclusions():
+    gke = {"timestamp": "2024-01-01T00:00:00Z", "protoPayload": {"methodName": "io.k8s.core.v1.pods.exec.create",
+           "resourceName": "core/v1/namespaces/default/pods/web/exec", "authenticationInfo": {"principalEmail": "dev@x.com"},
+           "requestMetadata": {"callerIp": "8.8.8.8"}}}
+    assert [(e.kind, e.attrs["what"]) for e in sources.convert(gke)] == [("workload_create", "exec")]
+    probe = {"apiVersion": "audit.k8s.io/v1", "verb": "get", "user": {"username": "system:anonymous"}, "sourceIPs": ["10.0.0.5"],
+             "userAgent": "kube-probe/1.29", "objectRef": {"resource": "healthz"}, "responseStatus": {"code": 200}}
+    assert sources.convert(probe) == []
+
+
+def test_aws_service_actions_and_minor_policies():
+    base = {"eventSource": "iam.amazonaws.com", "eventTime": "2024-01-01T00:00:00Z", "userIdentity": {"userName": "ana"}}
+    attach = dict(base, eventName="AttachUserPolicy", requestParameters={"policyArn": "arn:aws:iam::aws:policy/ReadOnlyAccess"})
+    admin = dict(base, eventName="AttachUserPolicy", requestParameters={"policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"})
+    assert sources.convert(attach)[0].attrs.get("minor") and not sources.convert(admin)[0].attrs.get("minor")
+    svc = dict(base, eventSource="ec2.amazonaws.com", eventName="TerminateInstances",
+               userIdentity={"type": "AWSService", "invokedBy": "autoscaling.amazonaws.com"})
+    assert sources.convert(svc) == []

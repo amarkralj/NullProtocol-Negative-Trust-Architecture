@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nullprotocol-negative-trust"
-version = "1.0.0"
+version = "1.0.1"
 description = "Reference implementation of Negative Trust architectures against insider threats"
 readme = "README.md"
 requires-python = ">=3.10"

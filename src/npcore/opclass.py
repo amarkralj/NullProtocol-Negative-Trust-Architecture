@@ -32,24 +32,26 @@ import re
 from typing import Optional, Tuple
 
 OFF = {"delete", "disable", "deactivate", "stop", "remove", "detach", "suspend", "unenroll", "unenable", "cancel",
-       "terminate", "purge", "destroy", "unset", "disassociate", "deregister"}
+       "terminate", "purge", "destroy", "unset", "disassociate", "deregister", "leave", "pause"}
 MAKE = {"create", "attach", "put", "add", "update", "set", "enable", "register", "associate", "upload", "import",
-        "write", "grant", "assign", "modify", "replace", "insert", "patch", "activate", "invite", "generate", "sign",
-        "authorize", "allow", "open", "share", "publish", "expose"}
+        "write", "grant", "assign", "modify", "replace", "insert", "patch", "activate", "invite", "generate", "sign", "deploy",
+        "authorize", "allow", "open", "share", "publish", "expose", "install", "promote", "change", "toggle"}
 READ = {"get", "list", "describe", "read", "search", "lookup", "batchget", "head", "query", "view", "scan", "select",
         "filter", "check", "validate", "estimate", "preview", "test", "simulate", "download"}
 
 LOGGING = ("trail", "logging", "loggroup", "logstream", "flowlog", "detector", "recorder", "configrule", "invocationlogging",
            "auditlog", "diagnosticsetting", "diagnostic", "monitor", "alarm", "insight", "guardduty", "securityhub",
            "inspector", "macie", "accessanalyzer", "sink", "logbucket", "datacollectionrule", "workspace", "sentinel",
-           "eventselector", "auditconfig", "logsink", "logmetric", "alertrule", "activitylogalert")
+           "eventselector", "auditconfig", "logsink", "logmetric", "alertrule", "activitylogalert", "deliverychannel",
+           "querylog", "resolverquerylog", "macie", "maciesession", "actiongroup", "metricalert", "eventhub",
+           "scheduledqueryrule", "watcher")
 CONTROL = ("guardrail", "publicaccessblock", "encryption", "webacl", "waf", "firewall", "securitygroup", "networkacl",
            "networksecuritygroup", "securityrule", "conditionalaccess", "versioning", "objectlock", "retention", "backup",
            "replication", "branchprotection", "ruleset", "passwordpolicy", "accountpasswordpolicy", "orgpolicy",
            "organizationpolicy", "servicecontrolpolicy", "permissionboundary", "keypolicy", "keyrotation", "defender",
            "policyassignment", "lock", "vpcserviceperimeter", "serviceperimeter", "accesslevel", "dlp", "safelinks",
-           "antiphish", "mfaenforcement", "securitycontact", "securitysetting")
-DATA = ("bucket", "knowledgebase", "database", "dbinstance", "dbcluster", "table", "snapshot", "volume", "instance",
+           "antiphish", "mfaenforcement", "securitycontact", "securitysetting", "organization")
+DATA = ("managedzone", "dnszone", "bucket", "knowledgebase", "database", "dbinstance", "dbcluster", "table", "snapshot", "volume", "instance",
         "repository", "secret", "filesystem", "cluster", "storageaccount", "container", "vault", "keyvault", "key",
         "dataset", "datastore", "index", "collection", "disk", "image", "server", "virtualmachine", "agent", "model",
         "project", "subscription", "resourcegroup", "account", "domain")
@@ -59,22 +61,35 @@ IDENTITY = ("user", "role", "accesskey", "loginprofile", "group", "policyversion
             "membership", "member", "permission", "apikey", "token", "certificate", "trust", "sshpublickey")
 MFA = ("mfadevice", "virtualmfadevice", "mfa", "twofactor", "2sv", "strongauth")
 RUNS_CODE = ("runbook", "automationaccount", "function", "lambda", "webhook", "job", "schedule", "trigger", "workflow",
-             "logicapp", "pipeline", "cloudbuild", "cloudscheduler", "eventsubscription", "deployment")
-WIDE_OPEN = re.compile(r'"(cidrIp|CidrIp|cidrIpv6|sourceAddressPrefix|sourceRanges?)"\s*:\s*\[?\s*"(0\.0\.0\.0/0|::/0|\*|Internet|Any)"')
-SWITCHED_OFF = re.compile(r'"(Status|status|state|State|enabled|Enabled|enable|mode)"\s*:\s*"?(Suspended|Disabled|disabled|false|Off|off|None)"?')
+             "logicapp", "pipeline", "cloudbuild", "cloudscheduler", "eventsubscription", "deployment", "build",
+             "deployifnotexists", "runcommand", "extension")
+WIDE_OPEN = re.compile(r'"(cidr_?ip(v6)?|sourceaddressprefix|sourceranges?|ipv6cidrblock)"\s*:\s*\[?\s*"(0\.0\.0\.0/0|::/0|\*|internet|any)"'
+                       r'|"(principal|aws)"\s*:\s*"\*"|"(publiclyaccessible|public)"\s*:\s*"?true'
+                       r'|"[a-z]*(visibility|acl|grantee|uri)"\s*:\s*"[^"]*(public|allusers|authenticatedusers)', re.I)
+SWITCHED_OFF = re.compile(r'"[a-z]*(enabl|status|state|mode|protection|mfadelete|logging|retention|versioning|encrypt|flowlog|'
+                          r'audit|monitor|defender|firewall)[a-z]*"\s*:\s*"?(suspended|disabled|false|off|none|paused)"?', re.I)
+CODE_PARAMS = re.compile(r'"(userdata|zipfile|imageuri|s3key|code|runbookcontent|script|commands)"\s*:', re.I)
 
 
 def _words(op: str) -> Tuple[str, str]:
     """Verb and object (lower case, no separators) from any provider's operation name."""
     if "/" in op:                                          # Azure: Microsoft.X/resourceA/resourceB/verb
-        parts = [p for p in op.split("/") if p]
-        verb = parts[-1].lower()
-        if verb == "action" and len(parts) >= 2:           # .../listKeys/action -> verb from the last resource name
-            m = re.match(r"([a-z]+)([A-Z].*)?", parts[-2])
-            return (m.group(1).lower() if m else parts[-2].lower()), (m.group(2) or parts[-3] if m else "").lower()
-        obj = parts[-2] if len(parts) >= 2 else ""
-        return {"write": "write", "delete": "delete", "read": "read"}.get(verb, verb), obj.lower().rstrip("s")
-    name = op.rsplit(".", 1)[-1]                           # GCP: google.iam.admin.v1.DeleteRole -> DeleteRole
+        parts = [x for x in op.split("/") if x]
+        last = parts[-1].lower()
+        res = parts[1:-1]
+        obj = "".join(res).lower().replace(".", "")        # the whole resource path, so runbooks/draft keeps "runbook"
+        if last == "action" and res:
+            m = re.match(r"([a-z]+)([A-Z].*)?$", res[-1])
+            verb = m.group(1) if m and m.group(2) else "invoke"
+            return verb.lower(), obj
+        return {"write": "write", "delete": "delete", "read": "read"}.get(last, last), obj
+    segs = [x for x in op.split(".") if x]
+    name = segs[-1] if segs else op
+    if re.fullmatch(r"[a-z]+", name) and len(segs) >= 2:   # lower-case dotted: v1.compute.firewalls.insert
+        return name, segs[-2].lower()
+    m = re.match(r"(.*?)(Created|Updated|Deleted|Enabled|Disabled|Removed|Added)$", name)
+    if m and m.group(1):                                   # past tense: inboundSsoProfileCreated
+        return ADJ.get(m.group(2).lower(), m.group(2).lower()), m.group(1).lower()
     m = re.match(r"([A-Za-z][a-z]+)(.*)", name)
     if not m:
         return "", ""
@@ -97,9 +112,22 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
             return "denied_change", f"{c[0]}|{c[1]}"
         return None
     verb, obj = _words(op)
+    p0 = json.dumps(params, separators=(",", ":"), default=str) if params not in (None, "", {}) else ""
+    if verb == "download" and _has(obj, ("log", "dump", "backup", "snapshot", "export")):
+        return "data_access", f"{verb} {obj}"
+    if verb in ("send", "start", "run", "invoke") and _has(obj, ("command", "session", "script")):
+        return "workload_create", "remote_exec"
+    if _has(obj, ("vault",)) and _has(obj, ("secret", "key", "certificate")) and \
+            verb in ("read", "get", "getsecret", "recover", "restore", "backup", "invoke", "list"):
+        return "data_access", f"key vault {verb} {obj}"   # secrets, keys and certificates retrieved or restored
+    if verb in ("begin", "invoke", "generate") and _has(obj, ("getaccess", "disk", "listkeys", "sas")) and "access" in op.lower() + obj:
+        return "data_access", f"{verb} {obj}"             # a download link to a whole disk
+    if verb in MAKE and _has(obj, ("suppression",)):
+        return "audit_change", f"{verb} {obj}"            # alerts suppressed
     if verb in READ or not verb:
         return None
     p = json.dumps(params, separators=(",", ":"), default=str) if params not in (None, "", {}) else ""
+    p = p.replace('\\"', '"').replace("\\\\", "")      # Azure puts the request body in an escaped JSON string
     if verb in OFF or verb == "unenable":
         if _has(obj, MFA):
             return "config_change", "disable_mfa"
@@ -113,20 +141,31 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
             return None
         return None
     if verb in MAKE:
-        if p and SWITCHED_OFF.search(p) and (_has(obj, LOGGING) or _has(obj, CONTROL)):
-            return ("audit_change" if _has(obj, LOGGING) else "control_change"), f"{verb} {obj} switched off"
-        if p and WIDE_OPEN.search(p):
+        if verb == "put" and "logging" in obj and params is not None and "loggingenabled" not in p0.lower():
+            return "audit_change", f"{verb} {obj} emptied"
+        m = SWITCHED_OFF.search(p) if p else None
+        if m:
+            return ("audit_change" if "log" in m.group(0).lower() or _has(obj, LOGGING) else "control_change"), \
+                f"{verb} {obj} switched off ({m.group(0)[:60]})"
+        if p and re.search(r'"(allow[a-z]*public[a-z]*|allowsharedkeyaccess)"\s*:\s*"?true|"publicnetworkaccess"\s*:\s*"enabled"'
+                           r'|"supportshttpstrafficonly"\s*:\s*"?false', p, re.I):
+            return "control_change", f"{verb} {obj} opened"
+        if p and WIDE_OPEN.search(p) and "egress" not in obj:   # open egress is the AWS default, not exposure
             return "control_change", f"{verb} {obj} open to the internet"
+        if _has(obj, RUNS_CODE + ("instanceattribute", "functioncode")) and (CODE_PARAMS.search(p) or "code" in obj):
+            return "config_change", "new_principal"           # code that will run was replaced (backdoor, startup script)
         if _has(obj, CONTROL) or _has(obj, LOGGING):        # a protective setting changed, not switched off: unknown
             return None                                     # direction (tightened or loosened) -> no evidence
         if _has(obj, MFA):
             return "config_change", "mfa_method"
-        if _has(obj, ("accesskey", "loginprofile", "serviceaccountkey", "credential", "apikey", "sshpublickey", "token",
-                      "certificate", "password")):
+        if _has(obj + op.lower(), ("accesskey", "loginprofile", "serviceaccountkey", "credential", "apikey", "sshpublickey",
+                                    "token", "certificate", "password", "jwt", "signblob", "hmac")):
             return "config_change", "credential_added"
-        if _has(obj, ("samlprovider", "openidconnectprovider", "oidcprovider", "federation", "identityprovider", "trust")):
+        if _has(obj, ("samlprovider", "openidconnectprovider", "oidcprovider", "federation", "identityprovider", "trust",
+                      "ssoprofile", "workforcepool", "workloadidentitypool", "identitypool")):
             return "config_change", "federation"
-        if _has(obj, ("policy", "roleassignment", "roledefinition", "permission", "membership", "member", "iampolicy")) \
+        if _has(obj, ("policy", "roleassignment", "roledefinition", "permission", "membership", "member", "iampolicy",
+                      "rolebinding", "ownership", "elevateaccess")) \
                 and not _has(obj, CONTROL) and not _has(obj, LOGGING):
             return "config_change", "privilege_grant"
         if verb in ("create", "add", "register", "invite") and _has(obj, ("user", "role", "serviceaccount",
@@ -135,3 +174,93 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
         if verb in ("create", "write", "put", "register") and _has(obj, RUNS_CODE):
             return "config_change", "new_principal"
     return None
+
+
+# ------------------------------------------------------------------------------------------------ 1.0.2: dotted names
+# GitHub audit actions (org.saml_disabled), Okta event types (user.session.impersonation.grant), Google Workspace
+# event names (2sv_disable, ADD_TRUSTED_DOMAINS): tokens split on '.', '_' and '-'; adjectives count as verbs.
+ADJ_ = None
+ADJ = {"updated": "update", "added": "add", "disabled": "disable", "enabled": "enable", "removed": "remove", "deleted": "delete", "created": "create",
+       "granted": "grant", "suspended": "suspend", "unenrolled": "unenroll", "dismissed": "dismiss"}
+SEC_WORDS = ("saml", "sso", "two", "2sv", "2fa", "mfa", "factor", "oauth_app_restrictions", "app_restrictions", "secret",
+             "scanning", "dependabot", "advanced_security", "code_scanning", "allow_list", "allowlist", "ip_allow",
+             "protection", "ruleset", "audit", "log", "titanium", "strong", "password_policy", "enforce", "sandbox",
+             "predelivery", "trusted_domain", "security", "threat", "policy", "push_protection", "vulnerability")
+PRIV_WORDS = ("privilege", "admin", "role", "impersonation", "org.owner", "moderator", "super")
+CRED_WORDS = ("token", "public_key", "deploy_key", "ssh_key", "api_key", "secret_key", "credential", "certificate",
+              "client_secret", "personal_access_token", "pat")
+SHARE_WORDS = ("forwarding_out_of_domain", "external", "public", "people_with_link", "anyone")
+RISK_WORDS = ("suspicious", "gov_attack", "password_leak", "leaked", "threat", "attack_warning", "compromise")
+
+
+def classify_dotted(name: str, params=None) -> Optional[Tuple[str, str]]:
+    if not name:
+        return None
+    n = name.lower()
+    toks = [ADJ.get(x, x) for x in re.split(r"[._\-\s]+", n) if x]
+    verbs = [x for x in toks if x in OFF or x in MAKE or x in ("dismiss", "show", "reset", "transfer", "takeout")]
+    v = verbs[-1] if verbs else ""
+    p = json.dumps(params, default=str).lower() if params not in (None, "", {}) else ""
+    if any(w in n for w in RISK_WORDS):
+        return "idp_risk", n
+    if "takeout" in n or "data_export" in n or ("export" in toks and v in ("create", "start")):
+        return "data_access", n
+    if any(w in n for w in ("forwarding_out_of_domain", "email_forwarding")):
+        return "mail_rule", n
+    if v in ("show",) and "password" in n:
+        return "data_access", "password retrieval: " + n
+    if v in OFF or v == "dismiss":
+        if any(w in n for w in ("mfa", "factor", "2sv", "two_factor", "strong", "titanium")):
+            return "config_change", "disable_mfa"
+        if any(w in n for w in ("audit", "log_stream", "audit_log")):
+            return "audit_change", n
+        if any(w in n for w in SEC_WORDS) and not n.startswith(("hook", "user.")):
+            return "control_change", n
+        if any(w in n for w in ("repo.destroy", "repository.destroy", "org.delete")):
+            return "destructive_change", n
+        return None
+    if v == "transfer" or "transfer" in n:
+        return "destructive_change", n
+    if v in MAKE or v in ("reset",):
+        if p and SWITCHED_OFF.search(p.replace("'", '"')) and any(w in n + p for w in SEC_WORDS):
+            return "control_change", n + " switched off"
+        if any(w in p for w in ('"new_value": "false"', '"new_value": "disabled"', '"new_value": "off"', "allow_all",
+                                 '"new_value": "true"' if "allow" in p or "reuse" in p else "@@")) and \
+                any(w in n + p for w in SEC_WORDS + ("reuse", "allow")):
+            return "control_change", n + " weakened"
+        if "trusted_domain" in n and v == "add":
+            return "control_change", n
+        if any(w in n for w in ("mfa", "factor", "2sv")) and v in ("reset",):
+            return "config_change", "mfa_method"
+        if "password" in n and v == "reset":
+            return "config_change", "credential_added"
+        if any(w in n for w in CRED_WORDS) and v in ("create", "add", "generate", "register", "grant", "upload"):
+            return "config_change", "credential_added"
+        if any(w in n for w in PRIV_WORDS) or any(w in p for w in ('"role": "admin"', "super_admin", '"permission": "admin"')):
+            if v in ("grant", "assign", "add", "create", "update", "set", "invite", "promote", "change", "modify"):
+                return "config_change", "privilege_grant"
+        if any(w in n for w in ("hook", "application", "integration", "oauth", "app")) and v in ("create", "add", "install", "authorize"):
+            return "config_change", "new_principal"
+        if any(w in n + " " + p for w in SHARE_WORDS) and any(w in n for w in ("access", "visibility", "acl", "share", "owner")):
+            return "external_share", n
+    return None
+
+
+# ------------------------------------------------------------------------------------------------ 1.0.2: impact
+CRITICAL_DATA = ("backup", "vault", "key", "snapshot", "bucket", "storageaccount", "database", "dbinstance", "dbcluster",
+                 "knowledgebase", "repository", "repo.", "filesystem", "table", "recoveryservice", "restorepoint", "secret",
+                 "organization", "project", "subscription", "resourcegroup", "logs", "trail")
+ADMIN_GRANTS = re.compile(r"administratoraccess|iamfullaccess|poweruseraccess|organizationaccountaccessrole|"
+                          r'"action"\s*:\s*\[?\s*"(\*|iam:\*|sts:\*|\*:\*)"|roles/(owner|editor|iam\.|resourcemanager\.|'
+                          r'securityadmin|cloudkms\.admin|storage\.admin)|"(owner|contributor|user access administrator)"'
+                          r"|cluster-admin|super_?admin", re.I)
+
+
+def critical(what: str) -> bool:
+    """Deleting these loses data or recovery; deleting VMs, disks or routes is routine operations."""
+    w = str(what).lower().replace(" ", "")
+    return any(c in w for c in CRITICAL_DATA)
+
+
+def admin_grant(params) -> bool:
+    return bool(ADMIN_GRANTS.search(json.dumps(params, default=str))) if params not in (None, "", {}) else False

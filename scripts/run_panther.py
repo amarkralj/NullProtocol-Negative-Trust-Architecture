@@ -22,7 +22,7 @@ from npcore.engine import Engine, version_preset
 PRE = pathlib.Path("results/v11_panther_expected.json")
 OUT = pathlib.Path("data/panther")
 FIRST, LATEST = pathlib.Path("results/v11_panther_run.json"), pathlib.Path("results/v11_panther_latest.json")
-VERSIONS = ("v1.0", "v1.1")
+VERSIONS = tuple(__import__("os").environ.get("NP_VERSIONS", "v1.0,v1.1").split(","))
 RULE_FILES = ["src/npcore/engine.py", "src/npcore/sources.py", "src/npcore/aiguard.py", "src/npcore/opclass.py",
               "src/npcore/signals.py", "src/npcore/cloudlogs.py", "src/npcore/okta.py"]
 
@@ -31,8 +31,17 @@ def fetch(sha, path):
     dest = OUT / path
     if not dest.exists():
         dest.parent.mkdir(parents=True, exist_ok=True)
-        with urllib.request.urlopen(f"https://raw.githubusercontent.com/panther-labs/panther-analysis/{sha}/{path}", timeout=60) as r:
-            data = r.read(2_000_000)
+        import time
+        for k in range(5):                                     # network retries only; nothing is scored before all files exist
+            try:
+                with urllib.request.urlopen(f"https://raw.githubusercontent.com/panther-labs/panther-analysis/{sha}/{path}",
+                                            timeout=60) as r:
+                    data = r.read(2_000_000)
+                break
+            except OSError:
+                if k == 4:
+                    raise
+                time.sleep(5 * (k + 1))
         data.decode("utf-8")                                   # text only
         dest.write_bytes(data)
     return dest
