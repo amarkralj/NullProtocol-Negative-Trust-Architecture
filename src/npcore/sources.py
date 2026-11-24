@@ -124,8 +124,13 @@ SECOND_FACTORS = {"google_authenticator", "idv_preregistered_phone", "idv_any_ph
 
 
 def _params(e: dict) -> dict:
+    ev = e.get("event") or {}
+    if isinstance(ev.get("parameters"), dict):
+        return dict(ev["parameters"])
+    if not ev and isinstance(e.get("parameters"), dict):     # flattened export: one event per record
+        return dict(e["parameters"])
     out = {}
-    for p in (e.get("event") or {}).get("parameters") or []:
+    for p in ev.get("parameters") or []:
         out[p.get("name")] = p.get("value", p.get("multiValue", p.get("boolValue", p.get("intValue"))))
     return out
 
@@ -135,7 +140,7 @@ def from_gws(e: dict) -> List[Event]:
     t = _t((e.get("id") or {}).get("time"))
     user = (e.get("actor") or {}).get("email") or "unknown"
     ip = e.get("ipAddress")
-    name = (e.get("event") or {}).get("name", "")
+    name = (e.get("event") or {}).get("name") or e.get("name", "")
     p = _params(e)
     ctx = {"ip": ip, "ip_type": "residential", "ua": None, "device": None, "sid": None, "sip": ip}
     if app == "login":
@@ -520,6 +525,17 @@ def convert(e: dict) -> List[Event]:
         return from_mcp(e)
     if "authorization" in e and "caller" in e or (isinstance(e.get("operationName"), dict) and "caller" in e):
         return from_azure_activity(e)
+    if str(e.get("category", "")).lower() in ("administrative", "security", "policy") and "/" in str(e.get("operationName", "")):
+        idn = e.get("identity") or {}
+        claims = idn.get("claims") or {} if isinstance(idn, dict) else {}
+        who = claims.get("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn") or claims.get("name") or \
+            claims.get("appid") or e.get("caller") or "unknown"
+        native = {"operationName": e["operationName"], "caller": who, "eventTimestamp": e.get("time"),
+                  "status": {"value": {"success": "Succeeded", "failure": "Failed"}.get(str(e.get("resultType", "")).lower(),
+                                                                                        e.get("resultType") or "Succeeded")},
+                  "eventName": {"value": "EndRequest" if str(e.get("resultType", "")).lower() != "start" else "BeginRequest"},
+                  "properties": e.get("properties")}
+        return from_azure_activity(native)
     if e.get("category") in ("UserRiskEvents", "RiskyUsers", "RiskyServicePrincipals") or \
             e.get("operationName") in ("User Risk Detection", "Risky user"):
         p = e.get("properties") or {}

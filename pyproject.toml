@@ -13,7 +13,7 @@ authors = [{name = "amarkralj"}]
 dependencies = []
 
 [project.optional-dependencies]
-bench = ["pandas>=2", "pyarrow>=14", "huggingface_hub>=0.20", "scikit-learn>=1.4", "numpy>=1.26"]
+bench = ["pandas>=2", "pyarrow>=14", "huggingface_hub>=0.20", "scikit-learn>=1.4", "numpy>=1.26", "pyyaml>=6"]
 dev = ["pytest>=8"]
 
 [project.urls]
