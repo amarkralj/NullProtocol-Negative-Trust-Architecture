@@ -375,10 +375,14 @@ def from_k8s_audit(e: dict) -> List[Event]:
         private = __import__("ipaddress").ip_address(str(ip)).is_private or __import__("ipaddress").ip_address(str(ip)).is_loopback
     except ValueError:
         private = False
-    if user == "system:anonymous" and (private or re.search(r"kube-probe|healthcheck|health-check|ELB-HealthChecker", ua, re.I)):
-        return []                                          # load-balancer and kubelet health checks
+    health = re.match(r"^/(healthz|livez|readyz|version|metrics|openid/v1/jwks|\.well-known)", str(e.get("requestURI") or ""))
+    if user == "system:anonymous" and (health or re.search(r"kube-probe|healthcheck|health-check|ELB-HealthChecker", ua, re.I)) \
+            and (private or health):
+        return []                                          # load-balancer and kubelet health checks, nothing else
     if SCANNERS.search(ua):
         out.append(_ev(t, acct, "scanner_seen", what=SCANNERS.search(ua).group(), **ctx))
+    if code in (401, 403) and system:
+        return out                                         # controllers retry denied writes during namespace teardown
     if code in (401, 403) and res == "secrets" and user != "system:anonymous":
         out.append(_ev(t, user, "denied_change", True, what=f"secret_read|{verb} secrets (denied)", **ctx))
     if code in (401, 403):
@@ -400,7 +404,8 @@ def from_k8s_audit(e: dict) -> List[Event]:
         elif re.search(r"command=tar|tar\s+-?c|\btar\b.*\bcf\b", cmd):
             out.append(_ev(t, user, "data_access", True, what="files copied out of a pod (kubectl cp)", **ctx))
         else:
-            out.append(_ev(t, user, "workload_create", True, what="exec", name=ref.get("name"), **ctx))
+            out.append(_ev(t, user, "workload_create", True, what="port_forward" if sub == "portforward" else "exec",
+                           name=ref.get("name"), **ctx))
     if verb in ("create", "update", "patch") and res in ("clusterrolebindings", "rolebindings") and \
             ((obj.get("roleRef") or {}).get("name") in ADMIN_ROLES or any(
                 (s or {}).get("name") in ("system:anonymous", "system:unauthenticated", "system:authenticated")

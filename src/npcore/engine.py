@@ -545,11 +545,12 @@ class Engine:
             if key in self._once:
                 if self.cfg.patch >= 3 and kind != "brute_force":           # 1.0.3: repeats with diminishing weight
                     n = self._repeats.get(key, 0)
-                    if n < 3 and e.t - self._once[key] >= 1 / 360:
+                    if (self.cfg.patch >= 4 or n < 3) and e.t - self._once[key] >= 1 / 360:
                         self._repeats[key] = n + 1
                         self._once[key] = e.t
+                        rw = weight * 0.25 * (0.5 ** n if self.cfg.patch >= 4 else 1)
                         kw = {"subject_kind": subject_kind} if subject_kind else {}
-                        out.append(Evidence(e.t, subject, kind, round(weight * 0.25, 3), "repeated: " + desc,
+                        out.append(Evidence(e.t, subject, kind, max(0.01, round(rw, 3)), "repeated: " + desc,
                                             behavior=behavior, source=source, **kw))
                 return
             self._once[key] = e.t
@@ -599,11 +600,12 @@ class Engine:
             if key in self._once:
                 if self.cfg.patch >= 3:                    # 1.0.3: a repeat is evidence too, with diminishing weight
                     n = self._repeats.get(key, 0)
-                    if n < 3 and e.t - self._once[key] >= 1 / 360:   # at most 3 repeats a day, 10 s apart
+                    if (self.cfg.patch >= 4 or n < 3) and e.t - self._once[key] >= 1 / 360:   # 10 s apart
                         self._repeats[key] = n + 1
                         self._once[key] = e.t
+                        rw = weight * 0.25 * (0.5 ** n if self.cfg.patch >= 4 else 1)   # 1.0.4: halves each time
                         kw = {"subject_kind": ACCOUNT} if account else {}
-                        out.append(Evidence(e.t, subject, kind, round(weight * 0.25, 3), "repeated: " + desc,
+                        out.append(Evidence(e.t, subject, kind, max(0.01, round(rw, 3)), "repeated: " + desc,
                                             behavior=behavior, source=source, **kw))
                 return
             self._once[key] = e.t
@@ -655,7 +657,7 @@ class Engine:
         elif k == "workload_create":
             w = {"privileged_pod": 2.0, "host_namespace": 2.0, "dangerous_capabilities": 2.0, "daemonset": 1.0, "exec": 1.0,
                  "system_namespace": 1.0, "remote_exec": 1.0, "admission_webhook": 1.5, "run_as_root": 0.5,
-                 "host_path": 2.0}.get(what, 0.5)
+                 "host_path": 2.0, "port_forward": 0.25}.get(what, 0.5)
             if what == "exec" and self.cfg.patch >= 2:
                 w = 0.5                                    # developers exec into pods routinely
             once("privileged_workload", person, w, f"{what} created ({a.get('ns')}/{a.get('name')})", "privilege_misuse", what)
