@@ -1,0 +1,1196 @@
+{
+ "summary": {
+  "splunk_cloud": {
+   "scored": 105,
+   "v0.9 detected": 89,
+   "v1.0 detected": 93,
+   "lost": 0,
+   "gained": 4,
+   "datasets with new kinds": 11,
+   "not readable": 9
+  },
+  "splunk_okta": {
+   "scored": 13,
+   "v0.9 detected": 13,
+   "v1.0 detected": 13,
+   "lost": 0,
+   "gained": 0,
+   "datasets with new kinds": 0
+  },
+  "otrf_windows": {
+   "not on disk": 113
+  }
+ },
+ "datasets": {
+  "splunk_cloud/aws_ec2_multiple_ssh_public_keys_uploaded": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_create_policy_version": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_createaccesskey": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_createloginprofile": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_setdefaultpolicyversion": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_updateloginprofile": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_multiple_appids_and_useragents_auth": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_multiple_appids_and_useragents_auth": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_service_principal_authentication": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_security_and_compliance_alert_triggered": {
+   "expected": [
+    "idp_risk"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_add_serviceprincipal_owner": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_enable_and_reset": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_guest_user_type_changed_to_member": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_set_immutableid": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_add_app_registration_owner": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_federated_identity_credential": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_service_principal_credentials": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_service_principal_credentials": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/full_access_as_app_permission_assigned": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_full_access_as_app_permission_assigned": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_mailbox_folder_read_granted": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_iam_role_created_with_external_trust": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_admin_consent": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_assign_global_administrator": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_assign_privileged_role": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_bypass_admin_consent": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_pim_role_activated": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_privileged_graph_perm_assigned": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_privileged_role_serviceprincipal": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_spn_privesc": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_admin_consent": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_bypass_admin_consent": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_grant_mail_read": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_high_priv_role_assigned": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_privileged_graph_perm_assigned": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_spn_privesc": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_register_new_mfa_method": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_suspicious_device_registration": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_register_new_mfa_method": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_mfasweep_events": {
+   "expected": [
+    "brute_force",
+    "mfa_fatigue"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_brute_force_login": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_login_failure": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_high_number_of_failed_authentications_for_user": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_successful_authentication_from_different_ips": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": [
+    "session_replay"
+   ]
+  },
+  "splunk_cloud/o365_high_number_authentications_for_user": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_mulitple_failed_console_login": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_distributed_spray": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": false,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "password_spray"
+   ],
+   "new_kinds_expected": [
+    "password_spray"
+   ]
+  },
+  "splunk_cloud/o365_distributed_spray": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": false,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "password_spray"
+   ],
+   "new_kinds_expected": [
+    "password_spray"
+   ]
+  },
+  "splunk_cloud/o365_multiple_users_from_ip": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_export_pst_file": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_new_forwarding_mailflow_rule_created": {
+   "expected": [
+    "mail_forwarding"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_compliance_content_search_exported": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_compliance_content_search_started": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_inbox_shared_with_all_users": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_multiple_mailboxes_accessed_via_api": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_oauth_app_ews_mailbox_access": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_oauth_app_graph_mailbox_access": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_email_forwarding_rule_created": {
+   "expected": [
+    "mail_forwarding"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_mailbox_forwarding_enabled": {
+   "expected": [
+    "mail_forwarding"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_add_service_principal": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_external_guest_user_invited": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_multiple_service_principals_created": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_add_service_principal": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_added_service_principal": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_multiple_service_principals_created": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_new_federated_domain": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_new_federated_domain_added": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_new_federation": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_concurrent_sessions_from_different_ips": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": false,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": [
+    "session_replay"
+   ]
+  },
+  "splunk_cloud/o365_concurrent_sessions_from_different_ips": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": false,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": [
+    "session_replay"
+   ]
+  },
+  "splunk_cloud/o365_sus_sharepoint_search": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_kms_key": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/s3_file_encryption": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_security_scanner": {
+   "expected": [
+    "discovery"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_user_consent_blocked": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_user_consent_declined": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_user_consent_granted": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_user_consent_blocked": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_user_consent_declined": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_user_consent_file_permissions": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_user_consent_mail_permissions": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_cloudwatch_logs_high_volume_retrieval": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_s3_public_bucket": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_ami_shared_public": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_snapshot_exfil": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_getpassworddata": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_anomalous_secrets_manager_batch_retrieval": {
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_sso_logon_errors": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_new_mfa_method_registered_for_user": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_temporary_access_pass": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_disable_blockconsent_for_riskapps": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_create_acl": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_delete_acl": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_bypass_mfa_via_trusted_ip": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_delete_security_services": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/delete_cloudwatch_log_group": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/put_bucketlifecycle": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/stop_delete_cloudtrail": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/update_cloudtrail": {
+   "expected": [
+    "audit_tamper"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365": {
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_iam_accessdenied_discovery_events": {
+   "expected": [
+    "discovery"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_iam_assume_role_policy_brute_force": {
+   "expected": [
+    "brute_force",
+    "password_spray"
+   ],
+   "v0.9": false,
+   "v1.0": false,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/aws_iam_excessive_list_command_usage": {
+   "expected": [
+    "discovery"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [
+    "session_replay"
+   ],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/azure_ad_multiple_denied_mfa_requests": {
+   "expected": [
+    "brute_force",
+    "mfa_fatigue"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_cloud/o365_multiple_failed_mfa_requests": {
+   "expected": [
+    "brute_force",
+    "mfa_fatigue"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_suspicious_activity_reported_by_user": {
+   "expected": [
+    "idp_risk"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_single_factor_auth": {
+   "expected": [
+    "no_mfa_login"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_threatinsight_threat_detected": {
+   "expected": [
+    "idp_risk"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_unauth_access": {
+   "expected": [
+    "app_denied"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_new_api_token_created": {
+   "expected": [
+    "identity_config_change"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_multiple_accounts_lockout": {
+   "expected": [
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_multiple_users_from_ip": {
+   "expected": [
+    "password_spray"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_web_session_multiple_ip": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_idp": {
+   "expected": [
+    "identity_config_change"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_mfa_method_disabled": {
+   "expected": [
+    "identity_config_change"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_multiple_city": {
+   "expected": [
+    "impossible_travel",
+    "session_replay"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_multiple_failed_mfa_pushes": {
+   "expected": [
+    "mfa_fatigue"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  },
+  "splunk_okta/okta_multiple_failed_mfa_requests": {
+   "expected": [
+    "mfa_fatigue"
+   ],
+   "v0.9": true,
+   "v1.0": true,
+   "new_kinds_v1.0": [],
+   "new_kinds_expected": []
+  }
+ }
+}

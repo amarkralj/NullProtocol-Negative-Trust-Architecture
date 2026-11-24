@@ -71,13 +71,16 @@ class EngineConfig:
     signals_v07: bool = False        # v0.7: Windows endpoint logs (same rules; version marks the endpoint adapter)
     signals_v08: bool = False        # v0.8: bursts on habitual egress channels, HR notice periods
     signals_v09: bool = False        # v0.9: upload routine judged by breadth, not per destination
+    signals_v10: bool = False        # v1.0: GitHub, Google, Kubernetes, data-movement services, AI assistants and agents,
+                                     #       concurrent networks, distributed spraying, device-code sign-ins
 
 
 def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v05: bool = False,
-           v06: bool = False, v07: bool = False, v08: bool = False, v09: bool = False) -> EngineConfig:
+           v06: bool = False, v07: bool = False, v08: bool = False, v09: bool = False, v10: bool = False) -> EngineConfig:
     """Architecture preset on a signal-library version. v02=True / v03=True give every architecture the
     same newer signals (fair comparison); NT presets also get that version's NT mechanisms."""
     cfg = _preset(name)
+    v09 = v09 or v10
     v08 = v08 or v09
     v07 = v07 or v08
     v06 = v06 or v07
@@ -96,6 +99,8 @@ def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v
         cfg.signals_v08 = True
     if v09:
         cfg.signals_v09 = True
+    if v10:
+        cfg.signals_v10 = True
     if v02 or v03:
         cfg.signals_v02 = True
         if name.startswith("nt") and name not in ("nt_no_attribution",):
@@ -110,9 +115,9 @@ def preset(name: str, v02: bool = False, v03: bool = False, v04: bool = False, v
 
 def version_preset(version: str) -> EngineConfig:
     """The recommended NT configuration of each release (message-tone signal off)."""
-    cfg = preset("nt_no_sentiment", v02=version in ("v0.2", "v0.3", "v0.4", "v0.5", "v0.6", "v0.7", "v0.8", "v0.9"),
+    cfg = preset("nt_no_sentiment", v02=version in ("v0.2", "v0.3", "v0.4", "v0.5", "v0.6", "v0.7", "v0.8", "v0.9", "v1.0"),
                  v03=version == "v0.3", v04=version == "v0.4", v05=version == "v0.5", v06=version == "v0.6",
-                 v07=version == "v0.7", v08=version == "v0.8", v09=version == "v0.9")
+                 v07=version == "v0.7", v08=version == "v0.8", v09=version == "v0.9", v10=version == "v1.0")
     cfg.name = f"nt {version}"
     return cfg
 
@@ -180,7 +185,7 @@ INTENT_KINDS = {"exfil_chain", "egress_personal_cloud", "email_personal", "looka
                 "social_engineering", "collusion_link", "bulk_copy", "archive", "leak_site_contact", "spyware_download",
                 "read_volume_spike", "cross_dept_sensitive_read", "clone_spike",
                 "post_termination_activity", "record_volume_spike", "edr_high", "identity_config_change",
-                "audit_tamper", "mail_forwarding", "bulk_data_access"}
+                "audit_tamper", "mail_forwarding", "bulk_data_access", "control_disabled", "destructive_change"}
 SESSION_WINDOW_H = 0.5
 
 
@@ -222,6 +227,13 @@ class Engine:
         self._sess: Dict[str, dict] = {}           # session id -> {ip: [first_t, last_t, device]}, first ip
         self._sens_egress: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
         self._borrowed: Dict[tuple, str] = {}      # (account, ctx) -> account owning the device used
+        # v1.0 state
+        self._nets: Dict[str, Dict[str, tuple]] = defaultdict(dict)   # account -> {network: (first_t, last_t)}
+        self._sess_geo: Dict[str, tuple] = {}      # session id -> (t, lat, lon)
+        self._tenant_fail: List[tuple] = []        # [(t, account, ip)] failed sign-ins, whole tenant
+        self._obj_reads: Dict[str, List[float]] = defaultdict(list)
+        self._forbidden: Dict[str, List[float]] = defaultdict(list)
+        self._ai_hour: Dict[tuple, int] = defaultdict(int)            # (principal, hour) -> input tokens
 
     def confirm_stepup(self, account: str, t: float) -> None:
         self._stepped.add((account, int(t // 24)))
@@ -346,6 +358,8 @@ class Engine:
             ev += self._idp_check(e)
         if self.cfg.signals_v06 and e.account in self.owners:
             ev += self._cloud_check(e)
+        if self.cfg.signals_v10 and e.account in self.owners:
+            ev += self._v10_check(e)
         if self.cfg.signals_v04 and e.account in self.owners:
             ev += self._identity_check(e, ev)
             # push bombing is evidence about the account under attack, not about its owner
@@ -546,6 +560,156 @@ class Engine:
             if len({x[1] for x in win}) >= 20 or sum(1 for x in win if x[2]) >= 10:
                 once("discovery", person, 1.0, f"{len({x[1] for x in win})} different read calls, "
                      f"{sum(1 for x in win if x[2])} denied, within an hour", "reconnaissance", source="correlation")
+        return out
+
+    def _v10_check(self, e) -> List[Evidence]:
+        """v1.0 rules (events from npcore.sources plus the earlier adapters). Each rule fires at most once a day per
+        subject and kind. Subjects: changes and data movement -> the person; attacks on a credential (spraying,
+        device-code phishing, concurrent networks, a session that jumps) -> the account; what an AI agent does with
+        its tools -> the agent's own account ("acct:agent:<id>"), so the person who runs the agent is not blamed."""
+        import ipaddress
+        import math
+        from . import aiguard
+        out: List[Evidence] = []
+        acct, person = e.account, self.owners.get(e.account, e.account)
+        k, what, a = e.kind, e.attrs.get("what"), e.attrs
+        day = int(e.t // 24)
+
+        def once(kind, subject, weight, desc, behavior, extra=None, account=False, source="v1.0 rule"):
+            key = ("v10", kind, subject, extra, day)
+            if key in self._once:
+                return
+            self._once[key] = e.t
+            kw = {"subject_kind": ACCOUNT} if account else {}
+            out.append(Evidence(e.t, subject, kind, weight, desc, behavior=behavior, source=source, **kw))
+
+        def window(lst, h=1.0):
+            lst[:] = [x for x in lst if e.t - (x[0] if isinstance(x, tuple) else x) <= h]
+
+        agent = "acct:agent:" + acct
+        # ---- code platforms and cloud control planes
+        if k == "control_change":
+            once("control_disabled", person, 2.5, f"security control switched off: {what}", "defense_evasion", what)
+        elif k == "destructive_change":
+            once("destructive_change", person, 1.0 if what == "repo.archived" else 2.0, f"destructive change: {what}",
+                 "sabotage", what)
+        elif k == "protected_push":
+            once("protected_push", person, 1.5, f"branch protection overridden to push to {what}", "defense_evasion", what)
+        elif k == "external_share":
+            once("external_share", person, 0.5 if str(what).startswith("mail") else 1.0,
+                 f"{what} to {a.get('dest')}", "exfiltration", a.get("dest"))
+        elif k == "secret_read":
+            once("secret_access", person, 2.0 if str(what).startswith("list *") else 1.0, f"Kubernetes secret read: {what}",
+                 "credential_access", what)
+        elif k == "workload_create":
+            w = {"privileged_pod": 2.0, "host_namespace": 2.0, "daemonset": 1.0}.get(what, 0.5)
+            once("privileged_workload", person, w, f"{what} created ({a.get('ns')}/{a.get('name')})", "privilege_misuse", what)
+        elif k == "forbidden":
+            lst = self._forbidden[acct]
+            lst.append(e.t)
+            window(lst)
+            anon = a.get("anonymous")
+            if len(lst) >= (3 if anon else 5):
+                once("discovery", ("acct:" + acct) if anon else person, 1.0, f"{len(lst)} denied API requests within an hour",
+                     "reconnaissance", account=bool(anon))
+            elif a.get("write") and not anon:
+                once("discovery", person, 0.5, f"denied write: {what}", "reconnaissance", what)
+        elif k == "scanner_seen":
+            ext = acct.startswith(("anonymous@", "cluster:"))
+            once("discovery", ("acct:" + acct) if ext else person, 1.5, f"cluster scanner seen: {what}", "reconnaissance",
+                 what, account=ext)
+        elif k == "object_read":
+            lst = self._obj_reads[acct]
+            lst.append(e.t)
+            window(lst)
+            if len(lst) >= 50:
+                once("bulk_data_access", person, 1.5, f"{len(lst)} objects read within an hour", "exfiltration")
+        elif k == "device_code_login":
+            once("device_code_phish", "acct:" + acct, 1.0, f"sign-in with the device-code flow ({a.get('app')})",
+                 "account_takeover", account=True)
+        # ---- AI assistants and agents
+        elif k == "ai_invoke":
+            subj = agent if a.get("agent") else person
+            inj = aiguard.injection(a.get("prompt") or "")
+            if inj:
+                once("prompt_injection", subj, 1.0, f"prompt-injection / jailbreak phrasing ({', '.join(inj)})",
+                     "policy_violation", account=subj == agent)
+            sec = aiguard.secrets(a.get("prompt") or "")
+            if sec:
+                once("sensitive_prompt", subj, 0.5, f"credentials in a prompt ({', '.join(sec)})", "data_handling",
+                     account=subj == agent)
+            risky = aiguard.risky_tools(a.get("tools") or [])
+            if risky:
+                once("agent_high_risk_tool", agent, 0.5, f"agent called tools that run code, write files or reach the "
+                     f"network: {', '.join(risky)}", "excessive_agency", account=True)
+            hour = int(e.t)
+            self._ai_hour[(acct, hour)] += int(a.get("in_tok") or 0)
+            peers = sorted(v for (p, _), v in self._ai_hour.items() if p != acct)
+            med = peers[len(peers) // 2] if peers else 0
+            if self._ai_hour[(acct, hour)] >= max(500_000, 10 * med):
+                once("ai_usage_spike", subj, 0.5, f"{self._ai_hour[(acct, hour)]:,} input tokens within an hour",
+                     "unbounded_consumption", "tokens", account=subj == agent)
+            if int(a.get("out_tok") or 0) >= 10_000:
+                once("ai_usage_spike", subj, 0.5, f"{a['out_tok']:,} output tokens in one response",
+                     "unbounded_consumption", "output", account=subj == agent)
+            r1, r2 = a.get("region"), a.get("inference_region")
+            if r1 and r2 and r1.split("-")[0] != r2.split("-")[0]:
+                once("ai_usage_spike", subj, 0.5, f"request from {r1} served in {r2} (another geography)",
+                     "unbounded_consumption", "region", account=subj == agent)
+        elif k == "agent_exec":
+            cli = aiguard.autonomy_override(a.get("cmdline") or "")
+            if cli:
+                once("agent_autonomy_override", agent, 1.0, f"{cli} started with every approval switched off",
+                     "excessive_agency", cli, account=True)
+        # ---- credentials: distributed spraying, concurrent networks, a session that jumps
+        if k == "login_failure":
+            self._tenant_fail.append((e.t, acct, a.get("ip")))
+            window(self._tenant_fail)
+            accts = {x[1] for x in self._tenant_fail}
+            ips = {x[2] for x in self._tenant_fail if x[2]}
+            if len(accts) >= 10 and len(ips) >= 5:
+                for x in sorted(accts):
+                    key = ("v10", "password_spray", "acct:" + x, "distributed", day)
+                    if key not in self._once:
+                        self._once[key] = e.t
+                        out.append(Evidence(e.t, "acct:" + x, "password_spray", 0.5,
+                                            f"failed sign-ins on {len(accts)} accounts from {len(ips)} networks within an hour "
+                                            f"(distributed spraying)", subject_kind=ACCOUNT, behavior="credential_attack",
+                                            source="correlation"))
+        ip = a.get("ip")
+        ua = str(a.get("ua") or "")
+        if ua.lower().replace("-", " ").startswith("aws internal"):   # AWS console placeholder: names no device
+            ua = ""
+        if k in ("login", "api_read") and ip and not a.get("error"):
+            try:
+                addr = ipaddress.ip_address(str(ip))
+            except ValueError:
+                addr = None
+            if addr is not None and addr.is_global:
+                net = str(ipaddress.ip_network(f"{addr}/{16 if addr.version == 4 else 48}", strict=False))
+                nets = self._nets[acct]
+                f, _, uas = nets.get(net, (e.t, e.t, set()))
+                uas = uas | ({ua} if ua else set())
+                nets[net] = (f, e.t, uas)
+                # another network of the same IP family, in use within 10 minutes, by a different client
+                others = [n for n, (_, l, u2) in nets.items() if n != net and e.t - l <= 1 / 6 and
+                          ipaddress.ip_network(n).version == addr.version and not (uas & u2)]
+                if others:
+                    once("session_replay", "acct:" + acct, 1.0, f"account used from {net} and {others[0]} within 10 minutes",
+                         "account_takeover", "concurrent", account=True, source="correlation")
+        sid, lat, lon = a.get("sid"), a.get("lat"), a.get("lon")
+        if sid and lat is not None and lon is not None:
+            prev = self._sess_geo.get(sid)
+            if prev is not None:
+                p1, p2 = math.radians(prev[1]), math.radians(lat)
+                km = 6371 * math.acos(max(-1.0, min(1.0, math.sin(p1) * math.sin(p2) + math.cos(p1) * math.cos(p2)
+                                                    * math.cos(math.radians(lon - prev[2])))))
+                hours = max(e.t - prev[0], 1 / 60)
+                if km > 500 and km / hours > 1000:
+                    once("session_replay", "acct:" + acct, 3.0, f"the same session {str(sid)[:20]} moved {km:.0f} km in "
+                         f"{60 * hours:.0f} min (stolen session cookie)", "account_takeover", "geo", account=True,
+                         source="correlation")
+            self._sess_geo[sid] = (e.t, lat, lon)
         return out
 
     def _intent(self, person: str) -> bool:
