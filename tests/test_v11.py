@@ -21,7 +21,7 @@ def test_parameters_decide_direction():
     assert classify("PutBucketVersioning", {"VersioningConfiguration": {"Status": "Enabled"}}) is None
     assert classify("AuthorizeSecurityGroupIngress", {"items": [{"cidrIp": "0.0.0.0/0"}]})[0] == "control_change"
     assert classify("AuthorizeSecurityGroupIngress", {"items": [{"cidrIp": "10.0.0.0/8"}]}) is None
-    assert classify("UpdateAccountPasswordPolicy") is None          # tightened or loosened: unknown, no evidence
+    assert "direction unknown" in classify("UpdateAccountPasswordPolicy")[1]   # 1.0.2: unknown -> weak evidence (0.3)
 
 
 def test_reads_and_routine_admin_are_quiet():

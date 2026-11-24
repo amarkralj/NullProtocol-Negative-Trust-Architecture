@@ -68,6 +68,8 @@ WIDE_OPEN = re.compile(r'"(cidr_?ip(v6)?|sourceaddressprefix|sourceranges?|ipv6c
                        r'|"[a-z]*(visibility|acl|grantee|uri)"\s*:\s*"[^"]*(public|allusers|authenticatedusers)', re.I)
 SWITCHED_OFF = re.compile(r'"[a-z]*(enabl|status|state|mode|protection|mfadelete|logging|retention|versioning|encrypt|flowlog|'
                           r'audit|monitor|defender|firewall)[a-z]*"\s*:\s*"?(suspended|disabled|false|off|none|paused)"?', re.I)
+SWITCHED_ON = re.compile(r'"[a-z]*(enabl|status|state|mode|protection|mfadelete|logging|retention|versioning|encrypt|flowlog|'
+                         r'audit|monitor|defender|firewall)[a-z]*"\s*:\s*"?(enabled|true|on|active|enforced)"?', re.I)
 CODE_PARAMS = re.compile(r'"(userdata|zipfile|imageuri|s3key|code|runbookcontent|script|commands)"\s*:', re.I)
 
 
@@ -138,6 +140,8 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
         return "data_access", f"{verb} {obj} (network traffic captured)"
     if verb in MAKE and _has(obj, ("suppression",)):
         return "audit_change", f"{verb} {obj}"            # alerts suppressed
+    if "listkeys" in obj or "listaccountsas" in obj or "listservicesas" in obj:
+        return "data_access", f"{verb} {obj} (storage keys or SAS retrieved)"
     if verb in READ or not verb:
         return None
     p = json.dumps(params, separators=(",", ":"), default=str) if params not in (None, "", {}) else ""
@@ -168,8 +172,13 @@ def classify(op: str, params=None, error: Optional[str] = None) -> Optional[Tupl
             return "control_change", f"{verb} {obj} open to the internet"
         if _has(obj, RUNS_CODE + ("instanceattribute", "functioncode")) and (CODE_PARAMS.search(p) or "code" in obj):
             return "config_change", "new_principal"           # code that will run was replaced (backdoor, startup script)
-        if _has(obj, CONTROL) or _has(obj, LOGGING):        # a protective setting changed, not switched off: unknown
-            return None                                     # direction (tightened or loosened) -> no evidence
+        if _has(obj, CONTROL) or _has(obj, LOGGING):        # a protective setting changed
+            cidrs = re.findall(r'"cidr_?ip(?:v6)?"\s*:\s*"([^"]+)"', p, re.I)
+            internal = bool(cidrs) and all(__import__("ipaddress").ip_network(c, strict=False).is_private for c in cidrs
+                                           if re.fullmatch(r"[0-9a-fA-F:.]+/\d+", c))
+            if "egress" in obj or internal or (p and SWITCHED_ON.search(p)):
+                return None                                 # switched ON / outbound default: tightening, not evidence
+            return "control_change", f"{verb} {obj} modified (direction unknown)"   # recorded, weak (minor)
         if _has(obj, MFA):
             return "config_change", "mfa_method"
         if _has(obj + op.lower(), ("accesskey", "loginprofile", "serviceaccountkey", "credential", "apikey", "sshpublickey",

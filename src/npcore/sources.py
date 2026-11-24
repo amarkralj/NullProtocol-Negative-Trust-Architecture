@@ -93,6 +93,10 @@ def normalize(e: dict) -> dict:
     e = _decase(e) if any(isinstance(k, str) and k in _LOWER and k not in KNOWN for k in e) else dict(e)
     if "at_sign_timestamp" in e and "@timestamp" not in e:
         e["@timestamp"] = e["at_sign_timestamp"]
+    for k in ("eventTime", "time", "timestamp", "published", "createdDateTime", "CreationTime", "eventTimestamp"):
+        v = e.get(k)                                       # "2022-09-27 17:09:18" -> ISO 8601, UTC assumed
+        if isinstance(v, str) and re.fullmatch(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(\.\d+)?", v.strip()):
+            e[k] = v.strip().replace(" ", "T") + "Z"
     if "eventSource" in e and "eventName" in e and not e.get("eventTime"):
         e["eventTime"] = _when(e) or "1970-01-01T00:00:00Z"
     if str(e.get("apiVersion", "")).startswith("audit.k8s.io") and not e.get("requestReceivedTimestamp"):
@@ -405,6 +409,11 @@ def from_k8s_audit(e: dict) -> List[Event]:
                        minor=res == "rolebindings", **ctx))             # namespaced binding: smaller blast radius
     if verb in ("create", "update", "patch") and res in ("clusterroles", "roles") and _role_is_powerful(obj):
         out.append(_ev(t, user, "config_change", True, what="privilege_grant", detail=f"powerful {res}", **ctx))
+    elif verb in ("create", "update", "patch") and res in ("clusterroles", "roles") and any(
+            set(r.get("verbs") or []) & {"create", "update", "patch"} and set(r.get("resources") or []) &
+            {"pods", "deployments", "daemonsets", "statefulsets", "jobs", "cronjobs"} for r in obj.get("rules") or []):
+        out.append(_ev(t, user, "config_change", True, what="privilege_grant", detail=f"{res} can run workloads",
+                       minor=True, **ctx))
     client_csr = res == "certificatesigningrequests" and (
         (obj.get("spec") or {}).get("signerName") == "kubernetes.io/kube-apiserver-client" or
         "client auth" in ((obj.get("spec") or {}).get("usages") or []))
@@ -423,6 +432,9 @@ def from_k8s_audit(e: dict) -> List[Event]:
         priv = any((c.get("securityContext") or {}).get("privileged") for c in ctrs)
         caps = any(set(((c.get("securityContext") or {}).get("capabilities") or {}).get("add") or []) & DANGEROUS_CAPS
                    for c in ctrs)
+        root = any((c.get("securityContext") or {}).get("runAsUser") == 0 or
+                   (c.get("securityContext") or {}).get("runAsNonRoot") is False for c in ctrs) or \
+            (pod.get("securityContext") or {}).get("runAsUser") == 0
         hostns = any(pod.get(k) for k in ("hostPID", "hostIPC", "hostNetwork")) or \
             any("hostPath" in v for v in pod.get("volumes") or [])
         what = None
@@ -434,6 +446,8 @@ def from_k8s_audit(e: dict) -> List[Event]:
             what = "host_namespace"
         elif res == "daemonsets":
             what = "daemonset"
+        elif root:
+            what = "run_as_root"
         elif res == "services" and spec.get("type") in ("NodePort", "LoadBalancer"):
             what = "node_port"
         elif res == "cronjobs":
@@ -727,7 +741,8 @@ def convert(e: dict) -> List[Event]:
         return from_gke(e)
     if (e.get("object") or {}).get("kind") == "Event" or (e.get("kind") == "Event" and "involvedObject" in e):
         return from_k8s_event(e)
-    if e.get("kind") == "admin#reports#activity":
+    if e.get("kind") == "admin#reports#activity" or (isinstance(e.get("id"), dict) and "applicationName" in e["id"]
+                                                     and isinstance(e.get("actor"), dict) and ("name" in e or "events" in e or "event" in e)):
         return from_gws(e)
     if "protoPayload" in e:
         return from_gcp(e)
@@ -778,6 +793,9 @@ def convert(e: dict) -> List[Event]:
         et = e.get("eventType", "")
         if "show_password" in et and (not tgt or user in tgt):
             return []                                      # a user looking at their own app password
+        if "org2org" in json.dumps(e.get("target") or []).lower() and et.startswith("application."):
+            return [_ev(_t(e.get("published")), user, "config_change", True, what="federation", detail=et,
+                        ip=(e.get("client") or {}).get("ipAddress"))]
         evs = _dotted_event(_t(e.get("published")), user, et,
                             {"target": e.get("target"), "debug": (e.get("debugContext") or {}).get("debugData")},
                             (e.get("client") or {}).get("ipAddress"))

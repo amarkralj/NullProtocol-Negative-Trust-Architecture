@@ -597,7 +597,10 @@ class Engine:
         agent = "acct:agent:" + acct
         # ---- code platforms and cloud control planes
         if k == "control_change":
-            once("control_disabled", person, 2.5, f"security control switched off: {what}", "defense_evasion", what)
+            if "direction unknown" in str(what) and self.cfg.patch >= 2:
+                once("control_disabled", person, 0.3, f"security control modified: {what}", "defense_evasion", what)
+            else:
+                once("control_disabled", person, 2.5, f"security control switched off: {what}", "defense_evasion", what)
         elif k == "destructive_change":
             from .opclass import critical
             if self.cfg.patch >= 2:                        # 1.0.2: weight by impact
@@ -623,7 +626,7 @@ class Engine:
             once("secret_access", person, w, f"Kubernetes secret read: {what}", "credential_access", what)
         elif k == "workload_create":
             w = {"privileged_pod": 2.0, "host_namespace": 2.0, "dangerous_capabilities": 2.0, "daemonset": 1.0, "exec": 1.0,
-                 "system_namespace": 1.0, "remote_exec": 1.0, "admission_webhook": 1.5}.get(what, 0.5)
+                 "system_namespace": 1.0, "remote_exec": 1.0, "admission_webhook": 1.5, "run_as_root": 0.5}.get(what, 0.5)
             if what == "exec" and self.cfg.patch >= 2:
                 w = 0.5                                    # developers exec into pods routinely
             once("privileged_workload", person, w, f"{what} created ({a.get('ns')}/{a.get('name')})", "privilege_misuse", what)

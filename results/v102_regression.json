@@ -968,6 +968,7 @@
    "v1.0.2": true,
    "new_kinds_v1.0.2": [
     "control_disabled",
+    "multi_signal",
     "session_replay"
    ],
    "new_kinds_expected": []
@@ -980,6 +981,7 @@
    "v1.0.2": true,
    "new_kinds_v1.0.2": [
     "control_disabled",
+    "multi_signal",
     "session_replay"
    ],
    "new_kinds_expected": []
