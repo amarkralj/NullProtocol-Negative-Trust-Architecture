@@ -385,7 +385,7 @@ def from_k8s_audit(e: dict) -> List[Event]:
         out.append(_ev(t, acct, "forbidden", what=f"{verb} {res or e.get('requestURI', '')}",
                        anonymous=user == "system:anonymous", write=verb in ("create", "update", "patch", "delete"), **ctx))
         return out
-    if code >= 300:
+    if code >= 300 or (code == 101 and (ref.get("subresource") or "") not in ("exec", "attach", "portforward")):
         return out
     if system:
         return out                                         # control-plane controllers do this all day
@@ -393,7 +393,7 @@ def from_k8s_audit(e: dict) -> List[Event]:
         out.append(_ev(t, acct, "scanner_seen", what="anonymous request allowed", **ctx))
     sub = ref.get("subresource") or ""
     obj = e.get("requestObject") or {}
-    if verb == "create" and sub in ("exec", "attach", "portforward"):
+    if verb in ("create", "get") and sub in ("exec", "attach", "portforward"):   # real clusters: GET + upgrade (101)
         cmd = urllib_unquote(str(e.get("requestURI") or "")) + " " + json.dumps(e.get("requestObject") or {})
         if "/var/run/secrets" in cmd or "serviceaccount/token" in cmd:
             out.append(_ev(t, user, "secret_read", True, what="list * service-account token via exec", **ctx))
@@ -421,6 +421,9 @@ def from_k8s_audit(e: dict) -> List[Event]:
         out.append(_ev(t, user, "config_change", True, what="credential_added", detail=f"{res}/{sub}", **ctx))
     if verb in ("create", "update", "patch") and res in ("mutatingwebhookconfigurations", "validatingwebhookconfigurations"):
         out.append(_ev(t, user, "workload_create", True, what="admission_webhook", name=ref.get("name"), **ctx))
+    if verb in ("delete", "deletecollection") and res and res not in ("events", "leases", "endpointslices"):
+        what = "deletecollection" if verb == "deletecollection" else ("namespace" if res == "namespaces" else "delete")
+        out.append(_ev(t, user, "workload_delete", True, what=what, res=res, name=ref.get("name"), **ctx))
     if res == "secrets" and verb in ("get", "list", "watch"):
         out.append(_ev(t, user, "secret_read", True, what=f"{verb} {ref.get('namespace') or '*'}/{ref.get('name') or '*'}", **ctx))
     if verb == "create":
@@ -435,8 +438,8 @@ def from_k8s_audit(e: dict) -> List[Event]:
         root = any((c.get("securityContext") or {}).get("runAsUser") == 0 or
                    (c.get("securityContext") or {}).get("runAsNonRoot") is False for c in ctrs) or \
             (pod.get("securityContext") or {}).get("runAsUser") == 0
-        hostns = any(pod.get(k) for k in ("hostPID", "hostIPC", "hostNetwork")) or \
-            any("hostPath" in v for v in pod.get("volumes") or [])
+        hostns = any(pod.get(k) for k in ("hostPID", "hostIPC", "hostNetwork"))
+        hostpath = any("hostPath" in v for v in pod.get("volumes") or [])
         what = None
         if priv:
             what = "privileged_pod"
@@ -444,6 +447,8 @@ def from_k8s_audit(e: dict) -> List[Event]:
             what = "dangerous_capabilities"
         elif hostns:
             what = "host_namespace"
+        elif hostpath:
+            what = "host_path"
         elif res == "daemonsets":
             what = "daemonset"
         elif root:

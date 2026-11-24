@@ -242,6 +242,8 @@ class Engine:
         self._obj_reads: Dict[str, List[float]] = defaultdict(list)
         self._forbidden: Dict[str, List[float]] = defaultdict(list)
         self._ai_hour: Dict[tuple, int] = defaultdict(int)            # (principal, hour) -> input tokens
+        self._repeats: Dict[tuple, int] = {}                          # 1.0.3: repeats of a rule hit per day
+        self._deletes: Dict[str, List[float]] = defaultdict(list)     # 1.0.3: deletes per principal
 
     def confirm_stepup(self, account: str, t: float) -> None:
         self._stepped.add((account, int(t // 24)))
@@ -538,8 +540,17 @@ class Engine:
         what = e.attrs.get("what")
 
         def once(kind, subject, weight, desc, behavior, subject_kind=None, source="cloud audit log"):
-            key = (kind, subject, what if kind != "brute_force" else None, int(e.t // 24))
+            detail = e.attrs.get("detail") if self.cfg.patch >= 3 else None    # 1.0.3: a role and a binding differ
+            key = (kind, subject, what if kind != "brute_force" else None, detail, int(e.t // 24))
             if key in self._once:
+                if self.cfg.patch >= 3 and kind != "brute_force":           # 1.0.3: repeats with diminishing weight
+                    n = self._repeats.get(key, 0)
+                    if n < 3 and e.t - self._once[key] >= 1 / 360:
+                        self._repeats[key] = n + 1
+                        self._once[key] = e.t
+                        kw = {"subject_kind": subject_kind} if subject_kind else {}
+                        out.append(Evidence(e.t, subject, kind, round(weight * 0.25, 3), "repeated: " + desc,
+                                            behavior=behavior, source=source, **kw))
                 return
             self._once[key] = e.t
             kw = {"subject_kind": subject_kind} if subject_kind else {}
@@ -586,6 +597,14 @@ class Engine:
         def once(kind, subject, weight, desc, behavior, extra=None, account=False, source="v1.0 rule"):
             key = ("v10", kind, subject, extra, day)
             if key in self._once:
+                if self.cfg.patch >= 3:                    # 1.0.3: a repeat is evidence too, with diminishing weight
+                    n = self._repeats.get(key, 0)
+                    if n < 3 and e.t - self._once[key] >= 1 / 360:   # at most 3 repeats a day, 10 s apart
+                        self._repeats[key] = n + 1
+                        self._once[key] = e.t
+                        kw = {"subject_kind": ACCOUNT} if account else {}
+                        out.append(Evidence(e.t, subject, kind, round(weight * 0.25, 3), "repeated: " + desc,
+                                            behavior=behavior, source=source, **kw))
                 return
             self._once[key] = e.t
             kw = {"subject_kind": ACCOUNT} if account else {}
@@ -616,6 +635,15 @@ class Engine:
                  "denied:" + w)
         elif k == "protected_push":
             once("protected_push", person, 1.5, f"branch protection overridden to push to {what}", "defense_evasion", what)
+        elif k == "workload_delete" and self.cfg.patch >= 3:
+            lst = self._deletes[acct]
+            lst.append(e.t)
+            window(lst, 1 / 6)
+            if what in ("deletecollection", "namespace") or len(lst) >= 5:
+                once("destructive_change", person, 2.0, f"bulk or namespace deletion in Kubernetes ({len(lst)} deletes "
+                     f"in 10 min, last: {a.get('res')})", "sabotage", "k8s-bulk")
+            else:
+                once("destructive_change", person, 0.5, f"Kubernetes {a.get('res')} deleted", "sabotage", "k8s-" + str(a.get("res")))
         elif k == "external_share":
             once("external_share", person, 0.5 if str(what).startswith("mail") else 1.0,
                  f"{what} to {a.get('dest')}", "exfiltration", a.get("dest"))
@@ -626,7 +654,8 @@ class Engine:
             once("secret_access", person, w, f"Kubernetes secret read: {what}", "credential_access", what)
         elif k == "workload_create":
             w = {"privileged_pod": 2.0, "host_namespace": 2.0, "dangerous_capabilities": 2.0, "daemonset": 1.0, "exec": 1.0,
-                 "system_namespace": 1.0, "remote_exec": 1.0, "admission_webhook": 1.5, "run_as_root": 0.5}.get(what, 0.5)
+                 "system_namespace": 1.0, "remote_exec": 1.0, "admission_webhook": 1.5, "run_as_root": 0.5,
+                 "host_path": 2.0}.get(what, 0.5)
             if what == "exec" and self.cfg.patch >= 2:
                 w = 0.5                                    # developers exec into pods routinely
             once("privileged_workload", person, w, f"{what} created ({a.get('ns')}/{a.get('name')})", "privilege_misuse", what)

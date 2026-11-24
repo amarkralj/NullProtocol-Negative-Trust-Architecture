@@ -1,0 +1,1929 @@
+{
+ "summary": {
+  "pre_registration": "results/v10_expected.json",
+  "pre_registration_sha256": "c547d294a6404e0972a16612da1567e7c61d30756e5c96995f437754d9dd2c3d",
+  "rule_files_sha256": {
+   "src/npcore/engine.py": "6d1d6b55550669f1ccf4c817ebe5ec6ebc7a5eaec2874fa7a68e78849ef982e7",
+   "src/npcore/sources.py": "c9a333e8f5b43ba2703af468e244bc09b57d05a31e33ee2ae23c9188ae3969de",
+   "src/npcore/aiguard.py": "e84d133724f6747fb48de79beb8044793bc6f3841dc2baf11f08c408f8dfe7db",
+   "src/npcore/opclass.py": "2ff17866d73fac6c61c4a81c69d990340df78a828a0e6568c63281b1ca324491",
+   "src/npcore/signals.py": "d936b603007d186ecde5167eb5ec77043b5f65b7a8e27994fba2ee3e515620d9",
+   "src/npcore/cloudlogs.py": "8f5172c9989e44733bd265e6c6eb1e184de3296fb3dc03de714c9141b184f463",
+   "src/npcore/okta.py": "f89d41b0b631e4ec023d7ae180ba04dbc731c696d39c5220daff2e3d2c69b591",
+   "src/npcore/trust.py": "2816b3c688348969959073266894a2a457a248a9672570405392c056d92e0ec5",
+   "src/npcore/policy.py": "68ec3a31df2dcf9689dfd469f740e0392136a1a01c11e39f36cb5094c25081fe"
+  },
+  "scored": 45,
+  "versions": [
+   "v1.0.2",
+   "v1.0.3"
+  ],
+  "detected_v1.0.3": 44,
+  "detected_v1.0.2": 44,
+  "not_readable": 1,
+  "by_group": {
+   "session_hijacking": {
+    "detected": 6,
+    "v1.0.2 detected": 6
+   },
+   "github_supply_chain": {
+    "detected": 11,
+    "v1.0.2 detected": 11,
+    "not readable": 1,
+    "not scored": 2
+   },
+   "google_workspace_gcp": {
+    "detected": 9,
+    "v1.0.2 detected": 9,
+    "not scored": 3
+   },
+   "kubernetes": {
+    "detected": 8,
+    "v1.0.2 detected": 8,
+    "not scored": 1
+   },
+   "aws_exfiltration": {
+    "detected": 2,
+    "v1.0.2 detected": 2,
+    "not scored": 1
+   },
+   "ai_agents": {
+    "detected": 8,
+    "v1.0.2 detected": 8,
+    "not scored": 1,
+    "format test: read": 2
+   }
+  }
+ },
+ "datasets": {
+  "T1185/o365_concurrent_sessions_from_different_ips": {
+   "group": "session_hijacking",
+   "files": [
+    "attack_techniques/T1185/o365_concurrent_sessions_from_different_ips/o365_concurrent_sessions_from_different_ips.log"
+   ],
+   "events_mapped": 9,
+   "expected": [
+    "session_replay"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "off_hours_login": [
+      "user-9dbd12@example.org"
+     ],
+     "new_device": [
+      "user-9dbd12@example.org"
+     ],
+     "session_replay": [
+      "acct:user-9dbd12@example.org"
+     ],
+     "bulk_data_access": [
+      "user-9dbd12@example.org"
+     ],
+     "multi_signal": [
+      "user-9dbd12@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-9dbd12@example.org": 3,
+     "acct:user-9dbd12@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "off_hours_login": [
+      "user-9dbd12@example.org"
+     ],
+     "new_device": [
+      "user-9dbd12@example.org"
+     ],
+     "session_replay": [
+      "acct:user-9dbd12@example.org"
+     ],
+     "bulk_data_access": [
+      "user-9dbd12@example.org"
+     ],
+     "multi_signal": [
+      "user-9dbd12@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-9dbd12@example.org": 3,
+     "acct:user-9dbd12@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1185/azure_ad_concurrent_sessions_from_different_ips": {
+   "group": "session_hijacking",
+   "files": [
+    "attack_techniques/T1185/azure_ad_concurrent_sessions_from_different_ips/azuread.log"
+   ],
+   "events_mapped": 22,
+   "expected": [
+    "session_replay"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "off_hours_login": [
+      "user-8d31b7@example.org"
+     ],
+     "new_device": [
+      "user-8d31b7@example.org"
+     ],
+     "session_replay": [
+      "acct:user-8d31b7@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-8d31b7@example.org": 1,
+     "acct:user-8d31b7@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "off_hours_login": [
+      "user-8d31b7@example.org"
+     ],
+     "new_device": [
+      "user-8d31b7@example.org"
+     ],
+     "session_replay": [
+      "acct:user-8d31b7@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-8d31b7@example.org": 1,
+     "acct:user-8d31b7@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1185/aws_concurrent_sessions_from_different_ips": {
+   "group": "session_hijacking",
+   "files": [
+    "attack_techniques/T1185/aws_concurrent_sessions_from_different_ips/asl_ocsf_cloudtrail.json",
+    "attack_techniques/T1185/aws_concurrent_sessions_from_different_ips/cloudtrail.json"
+   ],
+   "events_mapped": 5,
+   "expected": [
+    "session_replay"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "session_replay": [
+      "acct:arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "session_replay": [
+      "acct:arn:aws:iam::000000000000:root"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1539/okta_web_session_multiple_ip": {
+   "group": "session_hijacking",
+   "files": [
+    "attack_techniques/T1539/okta_web_session_multiple_ip/okta_web_session_multiple_ip.log"
+   ],
+   "events_mapped": 2,
+   "expected": [
+    "session_replay"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "no_mfa_login": [
+      "user-cda02f@example.org"
+     ],
+     "off_hours_login": [
+      "user-cda02f@example.org"
+     ],
+     "new_device": [
+      "user-cda02f@example.org"
+     ],
+     "impossible_travel": [
+      "acct:user-cda02f@example.org"
+     ],
+     "session_replay": [
+      "acct:user-cda02f@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-cda02f@example.org": 1,
+     "acct:user-cda02f@example.org": 4
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "no_mfa_login": [
+      "user-cda02f@example.org"
+     ],
+     "off_hours_login": [
+      "user-cda02f@example.org"
+     ],
+     "new_device": [
+      "user-cda02f@example.org"
+     ],
+     "impossible_travel": [
+      "acct:user-cda02f@example.org"
+     ],
+     "session_replay": [
+      "acct:user-cda02f@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-cda02f@example.org": 1,
+     "acct:user-cda02f@example.org": 4
+    }
+   },
+   "status": "detected"
+  },
+  "T1110.003/azure_ad_distributed_spray": {
+   "group": "session_hijacking",
+   "files": [
+    "attack_techniques/T1110.003/azure_ad_distributed_spray/azure_ad_distributed_spray.log"
+   ],
+   "events_mapped": 31,
+   "expected": [
+    "password_spray"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "password_spray": [
+      "acct:user-289d44@example.org",
+      "acct:user-ea4520@example.org",
+      "acct:user-eabf67@example.org",
+      "acct:user-508a5c@example.org",
+      "acct:user-7a1488@example.org",
+      "acct:user-d4c66a@example.org",
+      "acct:user-3eb81f@example.org",
+      "acct:user-fa8047@example.org",
+      "acct:user-dbbcb1@example.org",
+      "acct:user-bf5797@example.org",
+      "acct:user-2aeb11@example.org",
+      "acct:user-bebb57@example.org",
+      "acct:user-4c99e3@example.org",
+      "acct:user-ab8000@example.org",
+      "acct:user-36c213@example.org",
+      "acct:user-b4aa2d@example.org",
+      "acct:user-e2ef83@example.org",
+      "acct:user-19eca6@example.org",
+      "acct:user-7a0477@example.org",
+      "acct:user-56daff@example.org",
+      "acct:user-0f09c8@example.org",
+      "acct:user-5d81b2@example.org",
+      "acct:user-937246@example.org",
+      "acct:user-cd207e@example.org",
+      "acct:user-4ff229@example.org",
+      "acct:user-9bcc5c@example.org",
+      "acct:user-ba9003@example.org",
+      "acct:user-13b942@example.org",
+      "acct:user-cbd1ed@example.org",
+      "acct:user-7820b9@example.org",
+      "acct:user-93c669@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "password_spray": [
+      "acct:user-289d44@example.org",
+      "acct:user-ea4520@example.org",
+      "acct:user-eabf67@example.org",
+      "acct:user-508a5c@example.org",
+      "acct:user-7a1488@example.org",
+      "acct:user-d4c66a@example.org",
+      "acct:user-3eb81f@example.org",
+      "acct:user-fa8047@example.org",
+      "acct:user-dbbcb1@example.org",
+      "acct:user-bf5797@example.org",
+      "acct:user-2aeb11@example.org",
+      "acct:user-bebb57@example.org",
+      "acct:user-4c99e3@example.org",
+      "acct:user-ab8000@example.org",
+      "acct:user-36c213@example.org",
+      "acct:user-b4aa2d@example.org",
+      "acct:user-e2ef83@example.org",
+      "acct:user-19eca6@example.org",
+      "acct:user-7a0477@example.org",
+      "acct:user-56daff@example.org",
+      "acct:user-0f09c8@example.org",
+      "acct:user-5d81b2@example.org",
+      "acct:user-937246@example.org",
+      "acct:user-cd207e@example.org",
+      "acct:user-4ff229@example.org",
+      "acct:user-9bcc5c@example.org",
+      "acct:user-ba9003@example.org",
+      "acct:user-13b942@example.org",
+      "acct:user-cbd1ed@example.org",
+      "acct:user-7820b9@example.org",
+      "acct:user-93c669@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1528/device_code_authentication": {
+   "group": "session_hijacking",
+   "files": [
+    "attack_techniques/T1528/device_code_authentication/azure-audit.log"
+   ],
+   "events_mapped": 17,
+   "expected": [
+    "device_code_phish"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "off_hours_login": [
+      "user-ecaee6@example.org",
+      "principal-6be2f2"
+     ],
+     "new_device": [
+      "acct:user-ecaee6@example.org",
+      "user-ecaee6@example.org",
+      "principal-6be2f2"
+     ],
+     "session_replay": [
+      "acct:user-ecaee6@example.org"
+     ],
+     "device_code_phish": [
+      "acct:user-ecaee6@example.org"
+     ],
+     "multi_signal": [
+      "acct:user-ecaee6@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-ecaee6@example.org": 1,
+     "principal-6be2f2": 1,
+     "acct:user-ecaee6@example.org": 4
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "off_hours_login": [
+      "user-ecaee6@example.org",
+      "principal-6be2f2"
+     ],
+     "new_device": [
+      "acct:user-ecaee6@example.org",
+      "user-ecaee6@example.org",
+      "principal-6be2f2"
+     ],
+     "session_replay": [
+      "acct:user-ecaee6@example.org"
+     ],
+     "device_code_phish": [
+      "acct:user-ecaee6@example.org"
+     ],
+     "multi_signal": [
+      "acct:user-ecaee6@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-ecaee6@example.org": 1,
+     "principal-6be2f2": 1,
+     "acct:user-ecaee6@example.org": 4
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.001/github_disable_classic_branch_protection": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.001/github_disable_classic_branch_protection/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "control_disabled"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.001/github_delete_branch_ruleset": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.001/github_delete_branch_ruleset/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "control_disabled"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.001/github_disable_two_factor_requirement": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.001/github_disable_two_factor_requirement/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "control_disabled"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.001/github_disable_ip_allow_list": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.001/github_disable_ip_allow_list/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "control_disabled"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "control_disabled": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.008/github_audit_log_stream_disabled": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.008/github_audit_log_stream_disabled/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "audit_tamper"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "audit_tamper": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 3
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "audit_tamper": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 3
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.008/github_audit_log_stream_modified": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.008/github_audit_log_stream_modified/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "audit_tamper"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "audit_tamper": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 3
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "audit_tamper": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 3
+    }
+   },
+   "status": "detected"
+  },
+  "T1195.002/github_actions_disable_security_workflow": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1195.002/github_actions_disable_security_workflow/github_actions_disable_security_workflow.log"
+   ],
+   "events_mapped": 2,
+   "expected": [
+    "control_disabled"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "control_disabled": [
+      "principal-4789c4"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-4789c4": 4
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "control_disabled": [
+      "principal-4789c4"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-4789c4": 4
+    }
+   },
+   "status": "detected"
+  },
+  "T1562.001/github_created_self_hosted_runner": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1562.001/github_created_self_hosted_runner/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "new_principal"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "new_principal": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "new_principal": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1485/github_delete_repository": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1485/github_delete_repository/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "destructive_change"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "destructive_change": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "destructive_change": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1485/github_remove_organization": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1485/github_remove_organization/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "destructive_change"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "destructive_change": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "destructive_change": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-d93ea8": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1485/github_archived_repository": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1485/github_archived_repository/github.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "destructive_change"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "destructive_change": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "destructive_change": [
+      "principal-d93ea8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1199/github_push_master": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1199/github_push_master/github_push_develop.json",
+    "attack_techniques/T1199/github_push_master/github_push_master.log"
+   ],
+   "events_mapped": 0,
+   "expected": [
+    "protected_push"
+   ],
+   "status": "not readable"
+  },
+  "T1195.001/github_pull_request": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1195.001/github_pull_request/github_pull_request.json"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1195.001/github_security_advisor_alert": {
+   "group": "github_supply_chain",
+   "files": [
+    "attack_techniques/T1195.001/github_security_advisor_alert/github_security_advisor_alert.json"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1567.002/gsuite_share_drive": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1567.002/gsuite_share_drive/gdrive_share_external.log"
+   ],
+   "events_mapped": 3,
+   "expected": [
+    "external_share"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "external_share": [
+      "principal-e69b98",
+      "user-ac1f2d@example.org",
+      "user-eefbc6@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-eefbc6@example.org": 1,
+     "user-ac1f2d@example.org": 1,
+     "principal-e69b98": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "external_share": [
+      "principal-e69b98",
+      "user-ac1f2d@example.org",
+      "user-eefbc6@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-eefbc6@example.org": 1,
+     "user-ac1f2d@example.org": 1,
+     "principal-e69b98": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1566.001/gdrive_susp_file_share": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1566.001/gdrive_susp_file_share/gdrive_susp_attach.log"
+   ],
+   "events_mapped": 2,
+   "expected": [
+    "external_share"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "external_share": [
+      "principal-e033b8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-e033b8": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "external_share": [
+      "principal-e033b8"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-e033b8": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1566.001/gsuite_outbound_email_to_external": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1566.001/gsuite_outbound_email_to_external/gsuite_external_domain.log"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "external_share"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "external_share": [
+      "principal-2a5084"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "external_share": [
+      "principal-2a5084"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1621/gcp_failed_mfa": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1621/gcp_failed_mfa/gws_login.log"
+   ],
+   "events_mapped": 5,
+   "expected": [
+    "mfa_fatigue",
+    "brute_force"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "mfa_fatigue": [
+      "acct:user-dc8238@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-dc8238@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "mfa_fatigue": [
+      "acct:user-dc8238@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-dc8238@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1621/multiple_failed_mfa_gws": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1621/multiple_failed_mfa_gws/gws_login.log"
+   ],
+   "events_mapped": 10,
+   "expected": [
+    "mfa_fatigue",
+    "brute_force"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "mfa_fatigue": [
+      "acct:user-dc8238@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-dc8238@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "mfa_fatigue": [
+      "acct:user-dc8238@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-dc8238@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1110.003/gcp_gws_multiple_login_failure": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1110.003/gcp_gws_multiple_login_failure/gws_login.json"
+   ],
+   "events_mapped": 30,
+   "expected": [
+    "password_spray",
+    "brute_force"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "password_spray": [
+      "acct:user-edeb05@example.org",
+      "acct:user-8c9546@example.org",
+      "acct:user-6ed3c3@example.org",
+      "acct:user-ed79ec@example.org",
+      "acct:user-ea30f0@example.org",
+      "acct:user-4cd8a0@example.org",
+      "acct:user-3f943e@example.org",
+      "acct:user-fead1e@example.org",
+      "acct:user-b20fd5@example.org",
+      "acct:user-08958d@example.org",
+      "acct:user-48a667@example.org",
+      "acct:user-fede4b@example.org",
+      "acct:user-f5915d@example.org",
+      "acct:user-e43236@example.org",
+      "acct:user-db2668@example.org",
+      "acct:user-193c1b@example.org",
+      "acct:user-707f37@example.org",
+      "acct:user-d2c781@example.org",
+      "acct:user-b0f8a1@example.org",
+      "acct:user-80b7d9@example.org",
+      "acct:user-d1b015@example.org",
+      "acct:user-d892fb@example.org",
+      "acct:user-3b3307@example.org",
+      "acct:user-cdd5e0@example.org",
+      "acct:user-c6b61e@example.org",
+      "acct:user-cfc8c1@example.org",
+      "acct:user-26bd77@example.org",
+      "acct:user-c8ba88@example.org",
+      "acct:user-979873@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-cfc8c1@example.org": 1,
+     "acct:user-c6b61e@example.org": 1,
+     "acct:user-3b3307@example.org": 1,
+     "acct:user-d892fb@example.org": 1,
+     "acct:user-cdd5e0@example.org": 1,
+     "acct:user-26bd77@example.org": 1,
+     "acct:user-c8ba88@example.org": 1,
+     "acct:user-979873@example.org": 1,
+     "acct:user-48a667@example.org": 1,
+     "acct:user-edeb05@example.org": 1,
+     "acct:user-8c9546@example.org": 1,
+     "acct:user-6ed3c3@example.org": 1,
+     "acct:user-ed79ec@example.org": 1,
+     "acct:user-ea30f0@example.org": 1,
+     "acct:user-4cd8a0@example.org": 1,
+     "acct:user-3f943e@example.org": 1,
+     "acct:user-fead1e@example.org": 1,
+     "acct:user-b20fd5@example.org": 1,
+     "acct:user-08958d@example.org": 1,
+     "acct:user-e43236@example.org": 1,
+     "acct:user-db2668@example.org": 1,
+     "acct:user-193c1b@example.org": 1,
+     "acct:user-fede4b@example.org": 1,
+     "acct:user-707f37@example.org": 1,
+     "acct:user-f5915d@example.org": 1,
+     "acct:user-d2c781@example.org": 1,
+     "acct:user-b0f8a1@example.org": 1,
+     "acct:user-80b7d9@example.org": 1,
+     "acct:user-d1b015@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "password_spray": [
+      "acct:user-edeb05@example.org",
+      "acct:user-8c9546@example.org",
+      "acct:user-6ed3c3@example.org",
+      "acct:user-ed79ec@example.org",
+      "acct:user-ea30f0@example.org",
+      "acct:user-4cd8a0@example.org",
+      "acct:user-3f943e@example.org",
+      "acct:user-fead1e@example.org",
+      "acct:user-b20fd5@example.org",
+      "acct:user-08958d@example.org",
+      "acct:user-48a667@example.org",
+      "acct:user-fede4b@example.org",
+      "acct:user-f5915d@example.org",
+      "acct:user-e43236@example.org",
+      "acct:user-db2668@example.org",
+      "acct:user-193c1b@example.org",
+      "acct:user-707f37@example.org",
+      "acct:user-d2c781@example.org",
+      "acct:user-b0f8a1@example.org",
+      "acct:user-80b7d9@example.org",
+      "acct:user-d1b015@example.org",
+      "acct:user-d892fb@example.org",
+      "acct:user-3b3307@example.org",
+      "acct:user-cdd5e0@example.org",
+      "acct:user-c6b61e@example.org",
+      "acct:user-cfc8c1@example.org",
+      "acct:user-26bd77@example.org",
+      "acct:user-c8ba88@example.org",
+      "acct:user-979873@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:user-cfc8c1@example.org": 1,
+     "acct:user-c6b61e@example.org": 1,
+     "acct:user-3b3307@example.org": 1,
+     "acct:user-d892fb@example.org": 1,
+     "acct:user-cdd5e0@example.org": 1,
+     "acct:user-26bd77@example.org": 1,
+     "acct:user-c8ba88@example.org": 1,
+     "acct:user-979873@example.org": 1,
+     "acct:user-48a667@example.org": 1,
+     "acct:user-edeb05@example.org": 1,
+     "acct:user-8c9546@example.org": 1,
+     "acct:user-6ed3c3@example.org": 1,
+     "acct:user-ed79ec@example.org": 1,
+     "acct:user-ea30f0@example.org": 1,
+     "acct:user-4cd8a0@example.org": 1,
+     "acct:user-3f943e@example.org": 1,
+     "acct:user-fead1e@example.org": 1,
+     "acct:user-b20fd5@example.org": 1,
+     "acct:user-08958d@example.org": 1,
+     "acct:user-e43236@example.org": 1,
+     "acct:user-db2668@example.org": 1,
+     "acct:user-193c1b@example.org": 1,
+     "acct:user-fede4b@example.org": 1,
+     "acct:user-707f37@example.org": 1,
+     "acct:user-f5915d@example.org": 1,
+     "acct:user-d2c781@example.org": 1,
+     "acct:user-b0f8a1@example.org": 1,
+     "acct:user-80b7d9@example.org": 1,
+     "acct:user-d1b015@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1556/gcp_disable_mfa": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1556/gcp_disable_mfa/gws_admin.log"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "identity_config_change"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "identity_config_change": [
+      "user-098a48@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-098a48@example.org": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "identity_config_change": [
+      "user-098a48@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-098a48@example.org": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1078.004/gcp_single_factor_auth": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1078.004/gcp_single_factor_auth/gws_login.log"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "no_mfa_login"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "no_mfa_login": [
+      "user-dc8238@example.org"
+     ],
+     "off_hours_login": [
+      "user-dc8238@example.org"
+     ],
+     "new_device": [
+      "user-dc8238@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-dc8238@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "no_mfa_login": [
+      "user-dc8238@example.org"
+     ],
+     "off_hours_login": [
+      "user-dc8238@example.org"
+     ],
+     "new_device": [
+      "user-dc8238@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-dc8238@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1078/gcploit_exploitation_framework": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1078/gcploit_exploitation_framework/gcploit_exploitation_framework.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "identity_config_change",
+    "new_principal"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "identity_config_change": [
+      "user-c14944@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-c14944@example.org": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "identity_config_change": [
+      "user-c14944@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-c14944@example.org": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1566.001/gsuite_susp_attachment_ext": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1566.001/gsuite_susp_attachment_ext/gsuite_gmail_file_ext.log"
+   ],
+   "events_mapped": 1,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1566.001/gsuite_susp_subj": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1566.001/gsuite_susp_subj/gsuite_susp_subj_attach.log"
+   ],
+   "events_mapped": 1,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1566.001/gsuite_susp_url": {
+   "group": "google_workspace_gcp",
+   "files": [
+    "attack_techniques/T1566.001/gsuite_susp_url/gsuite_susp_url.log"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1552.007/kube_audit_get_secret": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1552.007/kube_audit_get_secret/kube_audit_get_secret.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "secret_access"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "secret_access": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "secret_access": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1204/kubernetes_privileged_pod": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1204/kubernetes_privileged_pod/kubernetes_privileged_pod.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "privileged_workload"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-b2f220": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-b2f220": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1204/kubernetes_audit_daemonset_created": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1204/kubernetes_audit_daemonset_created/kubernetes_audit_daemonset_created.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "privileged_workload"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-b2f220": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-b2f220": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1204/kube_audit_create_node_port_service": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1204/kube_audit_create_node_port_service/kube_audit_create_node_port_service.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "privileged_workload"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1053.007/kubernetes_audit_cron_job_creation": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1053.007/kubernetes_audit_cron_job_creation/kubernetes_audit_cron_job_creation.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "privileged_workload"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "privileged_workload": [
+      "principal-b2f220"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1204/kubernetes_unauthorized_access": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1204/kubernetes_unauthorized_access/kubernetes_unauthorized_access.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "discovery",
+    "brute_force"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "discovery": [
+      "principal-5af134"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "discovery": [
+      "principal-5af134"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "T1046/kubernetes_scanning": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1046/kubernetes_scanning/kubernetes_scanning.json"
+   ],
+   "events_mapped": 8,
+   "expected": [
+    "discovery"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "discovery": [
+      "acct:principal-c5100b",
+      "acct:principal-ae926e"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-c5100b": 1,
+     "acct:principal-ae926e": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "discovery": [
+      "acct:principal-c5100b",
+      "acct:principal-ae926e"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-c5100b": 1,
+     "acct:principal-ae926e": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1526/kubernetes_kube_hunter": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1526/kubernetes_kube_hunter/kubernetes_kube_hunter.json"
+   ],
+   "events_mapped": 1,
+   "expected": [
+    "discovery"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "discovery": [
+      "acct:principal-3611c1"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-3611c1": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "discovery": [
+      "acct:principal-3611c1"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-3611c1": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1526/kubernetes_audit_pull_image": {
+   "group": "kubernetes",
+   "files": [
+    "attack_techniques/T1526/kubernetes_audit_pull_image/kubernetes_audit_pull_image.json"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "T1119/aws_exfil_datasync": {
+   "group": "aws_exfiltration",
+   "files": [
+    "attack_techniques/T1119/aws_exfil_datasync/cloudtrail.json"
+   ],
+   "events_mapped": 3,
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "bulk_data_access": [
+      "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000": 2
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "bulk_data_access": [
+      "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "AWSReservedSSO_SPLKAdministratorAccess_5463320000000000": 2
+    }
+   },
+   "status": "detected"
+  },
+  "T1530/aws_exfil_high_no_getobject": {
+   "group": "aws_exfiltration",
+   "files": [
+    "attack_techniques/T1530/aws_exfil_high_no_getobject/cloudtrail.json"
+   ],
+   "events_mapped": 100,
+   "expected": [
+    "bulk_data_access"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "bulk_data_access": [
+      "principal-93d887"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-93d887": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "bulk_data_access": [
+      "principal-93d887"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "principal-93d887": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1537/aws_exfil_risk_events": {
+   "group": "aws_exfiltration",
+   "files": [
+    "attack_techniques/T1537/aws_exfil_risk_events/aws_risk.log"
+   ],
+   "events_mapped": 0,
+   "expected": null,
+   "status": "not scored"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_possible_prompt_injection": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_possible_prompt_injection.ndjson"
+   ],
+   "events_mapped": 15,
+   "expected": [
+    "prompt_injection"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "prompt_injection": [
+      "user-d838b4@example.org",
+      "user-73f59c@example.org",
+      "user-94a675@example.org",
+      "user-c41995@example.org",
+      "user-44793e@example.org",
+      "user-d46904@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-73f59c@example.org": 1,
+     "user-d838b4@example.org": 1,
+     "user-d46904@example.org": 1,
+     "user-44793e@example.org": 1,
+     "user-c41995@example.org": 1,
+     "user-94a675@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "prompt_injection": [
+      "user-d838b4@example.org",
+      "user-73f59c@example.org",
+      "user-94a675@example.org",
+      "user-c41995@example.org",
+      "user-44793e@example.org",
+      "user-d46904@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-73f59c@example.org": 1,
+     "user-d838b4@example.org": 1,
+     "user-d46904@example.org": 1,
+     "user-44793e@example.org": 1,
+     "user-c41995@example.org": 1,
+     "user-94a675@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_sensitive_data_in_prompts": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_sensitive_data_in_prompts.ndjson"
+   ],
+   "events_mapped": 13,
+   "expected": [
+    "sensitive_prompt"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "sensitive_prompt": [
+      "user-534611@example.org",
+      "user-8926b0@example.org",
+      "user-d8b91d@example.org",
+      "user-c8f12e@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "sensitive_prompt": [
+      "user-534611@example.org",
+      "user-8926b0@example.org",
+      "user-d8b91d@example.org",
+      "user-c8f12e@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-d8b91d@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_high_risk_filesystem_and_exec_tool_invocation": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_high_risk_filesystem_and_exec_tool_invocation.ndjson"
+   ],
+   "events_mapped": 19,
+   "expected": [
+    "agent_high_risk_tool"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "agent_high_risk_tool": [
+      "acct:principal-1144c4",
+      "acct:principal-17a52c",
+      "acct:agent:user-c97567@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "agent_high_risk_tool": [
+      "acct:principal-1144c4",
+      "acct:principal-17a52c",
+      "acct:agent:user-c97567@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-1144c4": 1,
+     "acct:agent:user-c97567@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_excessive_use_of_tokens": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_excessive_use_of_tokens.ndjson"
+   ],
+   "events_mapped": 40,
+   "expected": [
+    "ai_usage_spike"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "ai_usage_spike": [
+      "acct:principal-17a52c",
+      "user-29b35b@example.org",
+      "user-41802f@example.org",
+      "user-20ce8b@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "ai_usage_spike": [
+      "acct:principal-17a52c",
+      "user-29b35b@example.org",
+      "user-41802f@example.org",
+      "user-20ce8b@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "status": "detected"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_unusually_large_prompts": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_unusually_large_prompts.ndjson"
+   ],
+   "events_mapped": 133,
+   "expected": [
+    "ai_usage_spike"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "ai_usage_spike": [
+      "acct:principal-83182e",
+      "acct:principal-bd9810",
+      "acct:principal-94e8d3"
+     ]
+    },
+    "as_expected": true,
+    "levels": {}
+   },
+   "v1.0.3": {
+    "detections": {
+     "ai_usage_spike": [
+      "acct:principal-83182e",
+      "acct:principal-bd9810",
+      "acct:principal-94e8d3"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-bd9810": 1,
+     "acct:principal-94e8d3": 1
+    }
+   },
+   "status": "detected"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_cross_region_possible_inference_abuse": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_cross_region_possible_inference_abuse.ndjson"
+   ],
+   "events_mapped": 2,
+   "expected": [
+    "ai_usage_spike"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "sensitive_prompt": [
+      "user-d838b4@example.org",
+      "user-d46904@example.org"
+     ],
+     "ai_usage_spike": [
+      "user-d838b4@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-d838b4@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "sensitive_prompt": [
+      "user-d838b4@example.org",
+      "user-d46904@example.org"
+     ],
+     "ai_usage_spike": [
+      "user-d838b4@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-d838b4@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "aws_bedrock_claude/aws_bedrock_claude_hostile_prompt_sentiment": {
+   "group": "ai_agents",
+   "files": [
+    "aws_bedrock_claude/aws_bedrock_claude_hostile_prompt_sentiment.ndjson"
+   ],
+   "events_mapped": 15,
+   "expected": null,
+   "status": "not scored"
+  },
+  "m365_copilot/copilot_prompt_logs": {
+   "group": "ai_agents",
+   "files": [
+    "m365_copilot/copilot_prompt_logs.csv"
+   ],
+   "events_mapped": 25,
+   "expected": [
+    "prompt_injection"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "prompt_injection": [
+      "user-216519@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-216519@example.org": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "prompt_injection": [
+      "user-216519@example.org"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "user-216519@example.org": 1
+    }
+   },
+   "status": "detected"
+  },
+  "T1480/ai_cli_override": {
+   "group": "ai_agents",
+   "files": [
+    "attack_techniques/T1480/ai_cli_override/gemini_yolo.log"
+   ],
+   "events_mapped": 6,
+   "expected": [
+    "agent_autonomy_override"
+   ],
+   "v1.0.2": {
+    "detections": {
+     "agent_autonomy_override": [
+      "acct:principal-38ce3d"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-38ce3d": 1
+    }
+   },
+   "v1.0.3": {
+    "detections": {
+     "agent_autonomy_override": [
+      "acct:principal-38ce3d"
+     ]
+    },
+    "as_expected": true,
+    "levels": {
+     "acct:principal-38ce3d": 1
+    }
+   },
+   "status": "detected"
+  },
+  "mcp/mcp_server_data": {
+   "group": "ai_agents",
+   "files": [
+    "mcp/mcp.log"
+   ],
+   "events_mapped": 65,
+   "expected": "format test",
+   "status": "format test: read",
+   "v1.0.3": {
+    "detections": {},
+    "levels": {}
+   }
+  },
+  "ollama/ollama_server_data": {
+   "group": "ai_agents",
+   "files": [
+    "ollama/app.log",
+    "ollama/server.log"
+   ],
+   "events_mapped": 1086,
+   "expected": "format test",
+   "status": "format test: read",
+   "v1.0.3": {
+    "detections": {},
+    "levels": {}
+   }
+  }
+ }
+}
