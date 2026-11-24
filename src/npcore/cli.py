@@ -209,7 +209,7 @@ def main(argv=None) -> int:
         _check_ocsf(a.file, a.directory)
     elif a.cmd == "respond":
         from . import sources
-        from .respond import Responder, respond_replay
+        from .respond import respond_replay
         events = sources.load([pathlib.Path(f) for f in a.files])
         if not events:
             print("no events could be read from", a.files); return 1

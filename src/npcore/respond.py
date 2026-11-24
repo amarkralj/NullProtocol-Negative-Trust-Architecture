@@ -35,7 +35,7 @@ import urllib.parse
 import urllib.request
 import uuid
 from dataclasses import dataclass, field, asdict
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from .integrations import CAEP, RISK
 from .ledger import Ledger

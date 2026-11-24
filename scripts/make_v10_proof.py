@@ -27,7 +27,7 @@ def first_commit(path):
 
 inputs = {}
 for res in ("results/v10_first_run.json", "results/v10_holdout_run.json"):
-    for key, row in json.loads(pathlib.Path(res).read_text())["datasets"].items():
+    for _key, row in json.loads(pathlib.Path(res).read_text())["datasets"].items():
         for f in row.get("files", []):
             inputs[f] = sha(ROOT / f)
 

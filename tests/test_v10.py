@@ -2,7 +2,6 @@
 # Copyright (C) 2026 amarkralj (https://github.com/amarkralj)
 """v1.0: AI detectors, new adapters, new rules, response layer (signed events, approval gate, ledger, live HTTP)."""
 import http.server
-import json
 import threading
 
 from npcore import aiguard, sources
@@ -32,7 +31,8 @@ def test_injection_patterns():
 
 
 def test_secret_patterns():
-    assert "aws_access_key" in aiguard.secrets('export AWS_ACCESS_KEY_ID="ASIAXXXXTUICNBJW4OYL"')
+    fake_key = "ASIA" + "TESTKEY0" * 2                 # built at run time: no key-shaped string in the repository
+    assert "aws_access_key" in aiguard.secrets(f'export AWS_ACCESS_KEY_ID="{fake_key}"')
     assert "connection_string" in aiguard.secrets("DATABASE_URL=postgresql://app:hunter22@db.internal/prod")
     assert "card_number" in aiguard.secrets("card 4111 1111 1111 1111")          # Luhn-valid test number
     assert not aiguard.secrets("card 4111 1111 1111 1112")                      # fails Luhn
@@ -106,12 +106,12 @@ def test_set_signature_roundtrip_and_tamper():
     tok = sign_set({"jti": "1", "events": {}}, b"k" * 32)
     assert verify_set(tok, b"k" * 32)["jti"] == "1"
     h, p, s = tok.split(".")
-    for bad in (f"{h}.{p}x.{s}", tok, f"{h}.{p}.{s[:-2]}AA"):
+    for bad, key in ((f"{h}.{p}x.{s}", b"k" * 32), (tok, b"x" * 32), (f"{h}.{p}.{s[:-2]}AA", b"k" * 32)):
         try:
-            verify_set(bad, b"k" * 32 if bad != tok else b"x" * 32)
-            assert False, "tampered token verified"
-        except (ValueError, Exception):
-            pass
+            verify_set(bad, key)
+        except ValueError:
+            continue
+        raise AssertionError("tampered or wrongly keyed token verified")
 
 
 def test_plan_uses_documented_endpoints_and_approval():
